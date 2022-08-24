@@ -1,0 +1,185 @@
+﻿@model TeknikServis.Entittes.Models.TeknikView
+
+@{
+    ViewBag.Title = "TeknikSil";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("TeknikSil", "Teknik", FormMethod.Post, new { id = "FrmTeknikSilKarti" }))
+    {
+        @Html.HiddenFor(x => x.TeknikServisID)
+      
+    <div class="row">
+
+        <div class="col-md-6" style="margin-top: 1px;">
+
+            <div class="form-group">
+
+
+                <label>Kayıt No</label>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+
+                    </div>
+
+                    @Html.TextBoxFor(x => x.TeknikServisID, new { disabled = "disabled" })
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-6" style="margin-top: 1px;">
+
+            <div class="form-group">
+
+
+                <label>Arıza Türü</label>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <span class="input-group-text"><i class="fa fa-question"></i></span>
+
+                    </div>
+
+                    @Html.TextBoxFor(x => x.ArizaTuru, new { disabled = "disabled" })
+
+
+
+
+                </div>
+            </div>
+        </div>
+        @if (Session["Role"].ToString() == "Admin")
+        {
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Ait Olduğu Firma</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-suitcase"></i></span>
+
+                        </div>
+
+                        @Html.TextBoxFor(x => x.AitOlduguFirma, new { disabled = "disabled" })
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Session["Role"].ToString() == "Firma")
+        {
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+
+
+                    <label>Beyanınız</label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-comment"></i></span>
+
+                        </div>
+
+                        @Html.TextBoxFor(x => x.MusteriBeyani, new { disabled = "disabled" })
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+        @if (Session["Role"].ToString() == "Personel" || Session["Role"].ToString() == "Admin")
+        {
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+
+                    <label>Müşteri Beyanı</label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-comment"></i></span>
+
+                        </div>
+
+                        @Html.TextBoxFor(x => x.MusteriBeyani, new { disabled = "disabled" })
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="col-md-6" style="margin-top: 1px;">
+
+            <div class="form-group">
+
+                <label>Durumu</label>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <span class="input-group-text"><i class="fa fa-info"></i></span>
+
+                    </div>
+
+                    @Html.TextBoxFor(x => x.Durumu, new { disabled = "disabled" })
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <br />
+
+
+
+
+    </div>
+
+    <div class="modal-footer">
+
+
+        <button type="button" onclick="TeknikSilMain(@Model.TeknikServisID)" class="btn btn-danger"><span class="glyphicon glyphicon-trash" style="vertical-align:middle;margin-top: -5px"></span> Sil</button>
+        <button type="button" onclick="FormKapat('TeknikSilModal')" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+        
+
+    </div>
+    }
+</div>
+
+
+
+

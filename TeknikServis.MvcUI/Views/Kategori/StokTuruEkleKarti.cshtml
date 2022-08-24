@@ -1,0 +1,108 @@
+﻿
+@model TeknikServis.Entittes.Models.StokTurleri
+
+@{
+    ViewBag.Title = "StokTuruEkleKarti";
+    Layout = null;
+}
+
+
+<div class="modal-header">
+    <h5 class="modal-title" style="color:lightslategrey">Malzeme Alt Türü Ekle</h5>  <h5 class="modal-title">  &nbsp;  </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('TanimEkleModal')">
+        <span aria-hidden="true">&times;</span>
+
+
+    </button>
+</div>
+
+<div class="box box-danger">
+    @using (Html.BeginForm("StokTuruEkleKarti", "Kategori", FormMethod.Post, new { id = "FrmStokTuruEkleKarti" }))
+    {
+
+
+
+        @Html.HiddenFor(x => x.StokTuruID)
+
+
+
+    <div class="row">
+
+        <div class="col-md-6" style="padding-top:1rem !important;padding-left:1.5rem;">
+
+            <div class="form-group">
+                <label>Üst Kategori</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <span class="input-group-text"><i class="fa fa-cog"></i></span>
+
+                    </div>
+
+                    @Html.DropDownListFor(x => x.StokKategoriID, new SelectList(ViewBag.StokKategorileri, "StokKategoriID", "StokKategoriAdi"), new { @class = "form-control", id = "dropDownKategori" })
+
+                    <script>
+                        $(function () {
+                            $('#dropDownKategori').select2({
+
+
+                                placeholder: "Seçim Yapın..",
+
+
+                                width: '10rem'
+                            });
+                        });
+                    </script>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div style="padding-top:1rem !important;padding-left:1.5rem;" class="col-md-6">
+            <div class="form-group">
+                <label>Eklenecek Alt Tür Kategorisi</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                    </div>
+                    @Html.TextBoxFor(x => x.StokTuruAdi, new { @class = "form-control" })
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+        <br />
+        <div class="modal-footer">
+            <div class="col-md-4" style="margin:0">
+                @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+                <button style="margin:0" type="button" onclick="StokTurKaydet()" class="btn btn-block btn-outline-primary">Kaydet</button>
+
+            </div>
+            <div class="col-md-3" style="margin:0">
+                @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+                <button type="button" onclick="FormKapat('TanimEkleModal')" class="btn btn-block btn-outline-danger">Vazgeç</button>
+
+            </div>
+        </div>
+    }
+</div>
+

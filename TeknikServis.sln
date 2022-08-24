@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeknikServis.Dal", "TeknikServis.Dal\TeknikServis.Dal.csproj", "{DA34CBBA-7405-4D84-881F-32C072925DDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeknikServis.Bll", "TeknikServis.Bll\TeknikServis.Bll.csproj", "{F86ACAD3-A715-4C8B-9A90-4287DEB21391}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeknikServis.Entittes", "TeknikServis.Entittes\TeknikServis.Entittes.csproj", "{355125E1-708E-4308-8935-C84ED5DB5CCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeknikServis.MvcUI", "TeknikServis.MvcUI\TeknikServis.MvcUI.csproj", "{D457AD41-C807-4798-8827-C2FBCCD6062E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeknikServis.Interfaces", "TeknikServis.Interfaces\TeknikServis.Interfaces.csproj", "{2250CA02-79BF-45F9-A7B1-8328B3039931}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeknikServis.Cache", "TeknikServis.Cache\TeknikServis.Cache.csproj", "{4B931AB1-5B44-4A7E-A088-181E1E505DE5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA34CBBA-7405-4D84-881F-32C072925DDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA34CBBA-7405-4D84-881F-32C072925DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA34CBBA-7405-4D84-881F-32C072925DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA34CBBA-7405-4D84-881F-32C072925DDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F86ACAD3-A715-4C8B-9A90-4287DEB21391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F86ACAD3-A715-4C8B-9A90-4287DEB21391}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F86ACAD3-A715-4C8B-9A90-4287DEB21391}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F86ACAD3-A715-4C8B-9A90-4287DEB21391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{355125E1-708E-4308-8935-C84ED5DB5CCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{355125E1-708E-4308-8935-C84ED5DB5CCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{355125E1-708E-4308-8935-C84ED5DB5CCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{355125E1-708E-4308-8935-C84ED5DB5CCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D457AD41-C807-4798-8827-C2FBCCD6062E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D457AD41-C807-4798-8827-C2FBCCD6062E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D457AD41-C807-4798-8827-C2FBCCD6062E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D457AD41-C807-4798-8827-C2FBCCD6062E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2250CA02-79BF-45F9-A7B1-8328B3039931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2250CA02-79BF-45F9-A7B1-8328B3039931}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2250CA02-79BF-45F9-A7B1-8328B3039931}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2250CA02-79BF-45F9-A7B1-8328B3039931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B931AB1-5B44-4A7E-A088-181E1E505DE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B931AB1-5B44-4A7E-A088-181E1E505DE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B931AB1-5B44-4A7E-A088-181E1E505DE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B931AB1-5B44-4A7E-A088-181E1E505DE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {683C3381-9A33-4417-861E-FE8DAA7EE4C8}
+	EndGlobalSection
+EndGlobal

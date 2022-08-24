@@ -1,0 +1,159 @@
+﻿
+@model TeknikServis.Entittes.Models.KullaniciView
+
+@{
+    ViewBag.Title = "PersonelGoruntuleKart";
+    Layout = null;
+
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+
+
+    @Html.HiddenFor(x => x.KullaniciID)
+
+
+    <div class="card-widget widget-user">
+
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-info">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('KullaniciModal2')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h3 class="widget-user-username">Kaydı Oluşturan :</h3>
+
+            @*<h5 class="widget-user-desc">@Html.Label(Model.EMail)</h5>*@
+
+            <h5 class="widget-user-desc">@Model.AdSoyad</h5>
+        </div>
+        <div class="widget-user-image">
+            @if (Model.ProfilResmi != null)
+            {
+                <img class="img-circle elevation-2" src="data:image/*;base64,@(Convert.ToBase64String(Model.ProfilResmi))" alt="User Avatar">
+            }
+
+            else
+
+            {
+                <img class="img-circle elevation-2" src="~/Content/Images/defaultuser.JPG" alt="User Avatar">
+            }
+
+        </div>
+
+
+
+
+        <div class="card-footer">
+
+
+
+            <div class="col-md-12" style="display: inline-block;">
+                <div class="col-md-8" style="margin:auto">
+                    <div style="text-align:center" class="col-md-12">
+                        <label style="text-align:center">Kullanıcının Bilgileri</label>
+                        @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+
+
+                    </div>
+                    <hr />
+                    <br />  
+
+                    <div class="form-group col-md-8" style="margin:auto">
+
+                        <div class="input-group mb-3" style="margin:auto">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-building"></i></span>
+
+                            </div>
+                            @Html.TextBoxFor(x => x.CalistigiFirma, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-8" style="margin:auto">
+
+                        <div class="input-group mb-3" style="margin:auto">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+
+                            </div>
+                            @Html.TextBoxFor(x => x.EMail, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-8" style="margin:auto">
+
+                        <div class="input-group mb-3" style="margin:auto">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-phone"></i></span>
+
+                            </div>
+                            @Html.TextBoxFor(x => x.CepTelNo, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" style="display:inline-block;float:right">
+
+                <div style="text-align:center" class="col-md-12">
+                    <label style="text-align:center">Kullanıcının Tüm Kayıtları</label>
+                    @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+
+
+                </div>
+                <hr />
+                <br />
+
+
+
+
+
+
+                <div id="PanelKulKayitList">
+                    @{
+                        Html.RenderAction("KullanicininKayitlari", "Teknik", new { KullaniciID = Model.KullaniciID });
+                    }
+                </div>
+
+
+
+
+            </div>
+            </div>
+            <!-- /.col -->
+        </div>
+
+
+            <!-- /.row -->
+  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

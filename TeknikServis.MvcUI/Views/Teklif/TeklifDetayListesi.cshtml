@@ -1,0 +1,221 @@
+﻿
+@model List<TeknikServis.Entittes.Models.TeklifDetay>
+
+@{
+    Layout = null;
+    ViewBag.Title = "TeklifDetayListesi";
+}
+<!-- /.row -->
+
+
+
+
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            @if (Model.Count == 0)
+            {
+
+                if (Session["Role"].ToString() == "Admin")
+                {
+                    <br />
+                    <div class="callout callout-info lead">
+                        <h4>Uyarı!</h4>
+                        <p>Henüz hiçbir teklif oluşturmadınız.</p>
+                    </div>
+                }
+
+                else
+                {
+
+                    <br />
+                    <div class="callout callout-info lead">
+                        <h4>Uyarı!</h4>
+                        <p>Henüz hiçbir teklif oluşturulmadı!</p>
+                    </div>
+
+
+                }
+
+
+
+
+
+
+
+            }
+
+            @if (Model.Count != 0)
+            {
+                <table id="example1" class="table table-bordered table-striped">
+
+                    <thead>
+                        <tr style="text-align: center">
+                            <th>
+                                Barkod No
+                            </th>
+                            <th>
+                                Ürün
+                            </th>
+                            <th>
+                                Miktar
+                            </th>
+                            <th>
+                                Birim
+                            </th>
+                            <th>
+                                Birim Fiyat
+                            </th>
+                            <th>
+                                Toplam Fiyat
+                            </th>
+
+                            <th>
+                                KDV Oranı
+                            </th>
+
+                            <th>
+                                KDV
+                            </th>
+
+
+                            <th>
+                                KDV Dahil
+                            </th>
+                            <th>
+                                Kayıt Tarihi
+                            </th>
+
+
+
+
+
+                            <th>
+                                Sil
+                            </th>
+
+
+
+
+
+
+
+
+
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderByDescending(file => file.TeklifDetayID).ToList())
+
+                        {
+
+
+                        <tr style="text-align: center">
+
+                            <td>
+                                <a href="#" onclick=""> @Html.DisplayFor(modelItem => item.TeklifDetayID)</a>
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UrunAciklama)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Miktar)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Birim)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BirimFiyat)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GenelToplam)
+                            </td>
+
+                            <td>
+                                %@Html.DisplayFor(modelItem => item.KdvOrani)
+
+
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.KDVFiyat)
+
+
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.KDVDahilFiyat)
+
+
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EklenmeTarihi)
+
+
+                            </td>
+                            <td>
+
+                                <a href="#" onclick="TeklifDetaySilK(@item.TeklifDetayID);TeklifDetayListeleKartTeknik();">Kaldır</a>
+
+
+
+
+
+                            </td>
+
+
+
+
+
+                        </tr>
+
+
+                        }
+
+
+
+                    </tbody>
+
+                </table>
+            }
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+    <!-- /.row -->
+    <!-- /.container-fluid -->
+</section>
+
+
+
+<script>
+    $(function () {
+        $('#example1').DataTable()
+        $('#example2').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': true
+        })
+    });
+
+
+
+
+</script>
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->

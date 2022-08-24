@@ -1,0 +1,125 @@
+﻿
+@model List<TeknikServis.Entittes.Models.GorevView>
+
+@{
+    Layout = null;
+    ViewBag.Title = "AitGorevListesi";
+}
+<!-- /.row -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="card direct-chat direct-chat-primary">
+
+
+
+    <div class="direct-chat-messages">
+
+
+        @if (Model.Count == 0)
+        {
+            <div class="direct-chat-msg right">
+                <div class="direct-chat-infos clearfix">
+                    <span class="direct-chat-name float-right">MTX</span>
+                    <span class="direct-chat-timestamp float-left">29 Ekim 00:00</span>
+                </div>
+
+                <img class="direct-chat-img" src="~/Content/Images/mtx-logo-micro.png" alt="message user image">
+
+                <div class="direct-chat-text">
+                   Henüz oluşturduğunuz bir görev yok.
+                </div>
+
+            </div>
+        }
+
+        @if (Model.Count != 0)
+        {
+
+            foreach (var item in Model.OrderByDescending(file => file.GorevID).ToList())
+
+            {
+
+    <div class="direct-chat-msg right">
+        <div class="direct-chat-infos clearfix">
+            @if (item.toplugorevmi != true)
+            {
+                <span class="direct-chat-name float-left">@Html.DisplayFor(modelItem => item.AitKullaniciAdi)</span>
+            }
+            else
+            {
+                <span class="direct-chat-name float-left">Genel Görev</span>
+            }
+
+            <span class="direct-chat-timestamp float-right"> @Html.DisplayFor(modelItem => item.AtamaTarihi)</span>
+        </div>
+
+        @if (item.KullaniciResim != null)
+        {
+
+            <img class="direct-chat-img" src="data:image/*;base64,@(Convert.ToBase64String(item.KullaniciResim))" alt="message user image">
+
+        }
+        else
+        {
+            <img class="direct-chat-img" src="~/Content/Images/mtx-logo-micro.png" alt="message user image">
+        }
+
+        <!-- checkbox -->
+
+
+        <div class="direct-chat-text right" style="background-color:dodgerblue; border-color:darkgray;color:blanchedalmond;border-radius:0.3rem">
+
+            <div style="border-radius:1rem" class="icheck-gray-dark checkbox-circle d-inline ml-2">
+                <input style="color:azure" type="checkbox" value="" name="@item.GorevID" id="@item.GorevID">
+                <label for="@item.GorevID"></label>
+            </div>
+            <!-- todo text -->
+            <span class="text">  @Html.DisplayFor(modelItem => item.Konu)<a href="#"></a></span>
+            <!-- Emphasis label -->
+            <small class="badge badge-info"><i class="far fa-clock"></i> </small>
+
+
+
+
+        </div>
+
+    </div>
+
+          
+
+
+            }
+        }
+
+
+
+
+
+
+       
+
+    </div>
+
+
+
+
+
+</div>
+
+
+
+
+
+

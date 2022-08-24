@@ -1,0 +1,172 @@
+﻿@model TeknikServis.Entittes.Models.Teknik
+
+@{
+    ViewBag.Title = "Kaydet";
+
+
+}
+
+
+
+
+<section class="content-header">
+    <h1>
+        Kullanıcılar
+        <small>Kullanıcı Ekle</small>
+    </h1>
+
+</section>
+<br />
+<div class="box box-default">
+
+
+
+    <div class="box-header with-border" style="padding-left:35px">
+        <div class="box-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group box-body">
+
+
+                        <div class="form-group">
+                            <span class="control-label col-md-3">Kullanıcı Adı</span>
+                            <div class="col-md-5">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+
+                                    @Html.EditorFor(model => model.TeknikServisID, new { htmlAttributes = new { @class = "form-control", @placeholder = "TEKID" } })
+                                    @Html.ValidationMessageFor(model => model.TeknikServisID, "", new { @class = "text-danger" })
+
+                                </div>
+
+                            </div>
+
+                            <!-- /.input group -->
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <span class="control-label col-md-3">Ad Soyad</span>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-vcard"></i>
+                                </div>
+
+                                @Html.EditorFor(model => model.MusteriBeyani, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ad Soyad" } })
+                                @Html.ValidationMessageFor(model => model.MusteriBeyani, "", new { @class = "text-danger" })
+
+                            </div>
+
+
+                        </div>
+
+                        <!-- /.input group -->
+                    </div>
+                    <div>
+
+                    </div>
+                    <div class="form-group">
+                        <span class="control-label col-md-3">E-posta</span>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-at"></i>
+                                </div>
+
+                                @Html.EditorFor(model => model.CalisanYorumu, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-posta" } })
+                                @Html.ValidationMessageFor(model => model.CalisanYorumu, "", new { @class = "text-danger" })
+
+                            </div>
+
+
+                        </div>
+
+                        <!-- /.input group -->
+                    </div>
+                    <div>
+
+                    </div>
+                    <div class="form-group">
+                        <span class="control-label col-md-3">Telefon</span>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+
+                                @Html.EditorFor(model => model.GarantiDurumuID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cep Telefonu" } })
+                                @Html.ValidationMessageFor(model => model.GarantiDurumuID, "", new { @class = "text-danger" })
+
+                            </div>
+
+
+                        </div>
+
+                        <!-- /.input group -->
+                    </div>
+                    <div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <span class="control-label col-md-3">Şifre</span>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-key"></i>
+                                </div>
+
+                                @Html.EditorFor(model => model.Durumu, new { htmlAttributes = new { @class = "form-control", @placeholder = "Şifre" } })
+                                @Html.ValidationMessageFor(model => model.Durumu, "", new { @class = "text-danger" })
+
+                            </div>
+
+
+                        </div>
+
+                        <!-- /.input group -->
+                    </div>
+                    <div>
+
+                    </div>
+
+                    <br />
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-5">
+                            <input type="submit" value="Kaydet" class="btn btn-primary btn-block btn-flat" />
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+
+            <div>
+                <br />
+                <div class="col-md-offset-0 col-md-1">
+                    @Html.ActionLink(" ", "TeknikListesi", null, new { @class = "btn btn-block btn-warning form-group col-md-6 fa fa-reply" })
+                </div>
+
+            </div>
+            <div>
+            </div>
+        </div>
+
+
+
+
+
+

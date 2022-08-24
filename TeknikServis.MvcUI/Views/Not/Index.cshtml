@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<section class="content-header">
+    <h1>
+
+        <small>Duyurular</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> </a></li>
+
+    </ol>
+
+
+
+
+<div class="box box-default">
+
+
+    <div class="box box-default">
+
+
+
+        <div class="row" style="margin-right: 0px; margin-left:0px;"><div class="col-sm-12"></div><div class="col-sm-12"></div></div><div class="row" style="margin-right: 0px; margin-left:0px;">
+
+
+            <div id="PanelTeknikListe" class="col-sm-12">
+
+                @{
+                    Html.RenderAction("BildirimListesi");
+
+
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</section>
+<br />  
+
+
+
+
+
+<div id="DuyuruModal" class="modal" style="z-index: 99999999;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Duyuru Ekle Ya Da Düzenle </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('DuyuruModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="DuyuruModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+<div id="ChatModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Chat</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('ChatModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="ChatModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+

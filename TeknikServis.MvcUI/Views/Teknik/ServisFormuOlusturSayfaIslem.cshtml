@@ -1,0 +1,468 @@
+﻿@model TeknikServis.Entittes.Models.ServisFormu
+@using System.Web.Optimization;
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="tr" lang="tr">
+<head>
+
+    @Styles.Render("~/bundles/Css")
+    @Scripts.Render("~/bundles/Js")
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta name="author" content="Generic" />
+
+    <style>
+
+
+
+
+
+
+
+
+        tr:nth-child(even) {
+        }
+    </style>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            text-indent: 0;
+        }
+
+        .s1 {
+            color: #FFF;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 11pt;
+        }
+
+        .s2 {
+            color: #D9D9D9;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 8pt;
+        }
+
+        .s3 {
+            color: #D9D9D9;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 10pt;
+        }
+
+        .s4 {
+            color: black;
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 8pt;
+        }
+
+        .s5 {
+            color: #2F5395;
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 8pt;
+        }
+
+        .s6 {
+            color: black;
+            font-family: Arial;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 9pt;
+        }
+
+        .s7 {
+            color: black;
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 8pt;
+        }
+
+        .s8 {
+            color: #FFF;
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 8pt;
+        }
+
+        .s9 {
+            color: #BCD6ED;
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 8pt;
+        }
+
+        .p, p {
+            color: #BCD6ED;
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 8pt;
+            margin: 0pt;
+        }
+
+        .s10 {
+            color: black;
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 7pt;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-header">
+                <img style=" width: 24cm;" src="~/Content/Images/servisustimg.png" />
+            </div>
+            <br />
+        </div>
+        <!-- /.col -->
+    </div>
+    <p style="padding-left: 6pt; line-height: 36pt;text-align: left;" />
+    <p style=" text-align: left;">
+        <br />
+    </p>
+    <table align="left" style="margin: 0;margin-left:1cm; margin-inline-end:0;margin-inline-start:0">
+        <tr style="height:14pt">
+            <td style="width:271pt" colspan="2">
+                <p class="s4" style="padding-top: 2pt;padding-left: 1pt; text-align: left;">Müşteri Bilgileri</p>
+            </td>
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:61pt;border-top-style:solid;border-top-width:1pt">
+                <p class="s5" style="padding-top: 1pt;padding-left: 5pt; text-align: left;">Firma Ünvanı :</p>
+            </td>
+            <td style="width:210pt">
+                <p class="s6" style="padding-top: 1pt;padding-left: 1pt; text-align: left;">@Model.FirmaUnvanı</p>
+            </td>
+        </tr>
+        <tr style="height:12pt">
+            <td style="width:61pt">
+                <p class="s5" style="padding-top: 1pt;padding-left: 32pt; text-align: left;">Yetkili :</p>
+            </td>
+            <td style="width:210pt">
+                <p class="s6" style="padding-top: 1pt;padding-left: 1pt; text-align: left;">@Model.yetkili</p>
+            </td>
+        </tr>
+        <tr style="height:12pt">
+            <td style="width:61pt">
+                <p class="s5" style="padding-top: 1pt;padding-left: 29pt; text-align: left;">E -mail :</p>
+            </td>
+            <td style="width:210pt">
+                <p class="s6" style="padding-left: 1pt; text-align: left;">
+                    <a href="mailto:info@elisotomotiv.com" class="s7" target="_blank">@Model.Eposta</a>
+                </p>
+            </td>
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:61pt;border-left-style:solid;border-left-width:1pt;border-left-color:#C0C0C0">
+                <p class="s5" style="padding-top: 1pt;padding-left: 33pt; text-align: left;">Posta :</p>
+            </td>
+            <td style="width:210pt">
+                <p class="s6" style="padding-left: 1pt; text-align: left;">@Model.iletisimadres</p>
+            </td>
+        </tr>
+        @*<tr style="height:13pt">
+            <td style="width:271pt" colspan="2">
+                <p class="s6" style="padding-left: 62pt; text-align: left;">Onikişubat / Kahramanmaraş</p>
+            </td>
+        </tr>*@
+        <tr style="height:13pt">
+            <td style="width:61pt;border-left-style:solid;border-left-width:1pt;border-left-color:#C0C0C0">
+                <p class="s5" style="padding-top: 1pt;padding-left: 26pt; text-align: left;">Telefon :</p>
+            </td>
+            <td style="width:210pt">
+                <p class="s6" style="padding-top: 1pt;padding-left: 1pt; text-align: left;">@Model.Tel</p>
+            </td>
+        </tr>
+    </table>
+
+    <table align="right" style="margin-right:2cm">
+        <tr style="height:14pt">
+            <td style="width:161pt;border-bottom-style:solid;border-bottom-width:1pt" colspan="2">
+                <p class="s4" style="padding-top: 2pt;padding-left: 1pt; text-align: left;">Belge Bilgileri</p>
+            </td>
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:92pt;border-top-style:solid;border-top-width:1pt">
+                <p class="s5" style="padding-top: 1pt;padding-left: 42pt; text-align: left;">Belge Tarihi :</p>
+            </td>
+            <td style="width:69pt;border-top-style:solid;border-top-width:1pt">
+                <p class="s4" style="padding-top: 1pt;padding-left: 1pt; text-align: left;">@Model.belgetarihi</p>
+            </td>
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:92pt">
+                <p class="s5" style="padding-top: 1pt;padding-left: 5pt; text-align: left;">Servis Başlangıç Tarihi:</p>
+            </td>
+            <td style="width:69pt">
+                <p class="s6" style="padding-top: 1pt;padding-left: 1pt; text-align: left;">@Model.servisbaslangic</p>
+            </td>
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:92pt">
+                <p class="s5" style="padding-top: 1pt;padding-left: 4pt; text-align: left;">Servis Başlangıç Saati :</p>
+            </td>
+            <td style="width:69pt">
+                <p class="s6" style="padding-top: 1pt;padding-left: 1pt; text-align: left;">-</p>
+            </td>
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:92pt">
+                <p class="s5" style="padding-top: 1pt;padding-left: 24pt; text-align: left;">Servis Bitiş Tarhi :</p>
+            </td>
+            <td style="width:69pt">
+                <p class="s6" style="padding-top: 1pt;padding-left: 1pt; text-align: left;">@Model.servisbitis</p>
+            </td>
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:92pt">
+                <p class="s5" style="padding-top: 1pt;padding-left: 24pt; text-align: left;">Servis Bitiş Saati :</p>
+            </td>
+            <td style="width:69pt">
+                <p class="s6" style="padding-top: 1pt;padding-left: 1pt; text-align: left;">-</p>
+            </td>
+        </tr>
+        <tr style="height:14pt">
+            <td style="width:92pt">
+                <p class="s5" style="padding-top: 1pt;padding-left: 54pt; text-align: left;">Kullanıcı :</p>
+            </td>
+            <td style="width:69pt">
+                <p class="s6" style="padding-top: 1pt;padding-left: 1pt;text-align: left;">@Model.kullanici</p>
+            </td>
+        </tr>
+    </table>
+
+    <br />
+    <p style=" text-align: left;">
+        <br />
+    </p>
+    <p style=" text-align: left;">
+        <br />
+    </p>
+
+
+    <br />      <br />      <br />
+    <br />
+    <br />  <p style="padding-left: 6pt; line-height: 88pt;text-align: left;">
+        <span style=" color: black; font-family:&quot;Times New Roman&quot;, serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 10pt;">	</span>
+    </p>
+    <p style=" text-align: left;">
+        <br />
+    </p>
+    <table style="border-collapse:collapse;margin-left:7.012pt" cellspacing="0">
+        <tr style="height:13pt">
+            <td style="width:220pt" bgcolor="#BCD6ED">
+                <p class="s8" style="padding-top: 1pt;padding-left: 46pt; text-align: left;">Arıza Bilgisi</p>
+            </td>
+            <td style="width:459pt" bgcolor="#BCD6ED">
+                <p class="s8" style="padding-top: 1pt;padding-left: 23pt; text-align: center;">AÇIKLAMA</p>
+            </td>
+        </tr>
+        <tr style="height:14pt">
+            <td style="width:117pt">
+                <p class="s6" style="padding-top: 1pt;padding-left: 1pt; text-align: left;">Donanım</p>
+            </td>
+            <td style="width:459pt">
+                <p class="s6" style="padding-top: 1pt;padding-left: 24pt; text-align: left;">@Model.arizaaciklama</p>
+            </td>
+        </tr>
+    </table>
+    <p style=" text-align: left;">
+        <br />
+    </p>
+    <table style="border-collapse:collapse;margin-left:7.012pt" cellspacing="0">
+        <tr style="height:13pt">
+            <td style="width:180pt" bgcolor="#BCD6ED">
+                <p class="s8" style="padding-top: 1pt;padding-left: 20pt; text-align: left;">Tarih</p>
+            </td>
+            <td style="width:63pt" bgcolor="#BCD6ED">
+                <p class="s8" style="padding-top: 1pt;padding-left: 29pt; text-align: left;">Tür</p>
+            </td>
+            <td style="width:332pt" bgcolor="#BCD6ED">
+                <p class="s8" style="padding-top: 1pt;padding-left: 165pt; text-align: left;">Yapılan İşlemler</p>
+            </td>
+            <td style="width:117pt" bgcolor="#BCD6ED">
+                <p class="s9" style="padding-top: 1pt;padding-left: 55pt; text-align: left;">Hizmet/Zaman</p>
+            </td>
+        </tr>
+
+        @foreach (var item in Model.YapilanIslemler)
+        {
+            <tr style="height:13pt">
+                <td style="width:64pt">
+                    <p class="s6" style="padding-top: 1pt;padding-left: 1pt; text-align: left;">@item.KayitZamani</p>
+                </td>
+                <td style="width:63pt">
+                    <p class="s6" style="padding-top: 1pt;padding-left: 22pt; ">@item.IslemTuru</p>
+                </td>
+                <td style="width:332pt">
+                    <p class="s6" style="padding-top: 1pt;padding-left: 60pt; ">@item.YapilanIslem</p>
+                </td>
+                <td style="width:117pt" />
+            </tr>
+        }
+        </table>
+    <p style=" text-align: left;">
+        <br />
+    </p>
+
+
+
+
+    <p style=" text-align: left;">
+        <br />
+    </p>
+    <p style=" text-align: left;">
+        <br />
+    </p>
+    <p style=" text-align: left;">
+        <br />
+    </p>
+    <p style=" text-align: left;">
+        <br />
+    </p>
+    <p style=" text-align: left;">
+        <br />
+    </p>
+    <table style="border-collapse:collapse;margin-left:7.012pt" cellspacing="0">
+        <tr style="height:13pt">
+            <td style="width:1800pt" bgcolor="#BCD6ED">
+                <p class="s8" style="padding-top: 1pt;padding-left: 20pt; text-align: left;"></p>
+            </td>
+
+        </tr>
+
+    </table>
+    <p style=" text-align: left;">
+        <br />
+    </p>
+    
+    <p style=" text-align: left;">
+        <br />
+    </p>
+
+    <table style="border-collapse:collapse;margin-left:5.95286pt" cellspacing="0">
+        <tr style="height:13pt">
+            <td style="width:507pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9" rowspan="2">
+                <p style=" text-align: left;">
+                    <br />
+                </p>
+                <p class="s4" style="padding-right: 3pt; text-align: right;">ALT TOPLAM</p>
+            </td>
+            <td style="width:69pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9" />
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:69pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+                <p class="s6" style="padding-top: 1pt;padding-left: 30pt; text-align: left;">@Model.KDVDahilFiyat @Model.FiyatTuru</p>
+            </td>
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:507pt;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9" />
+            <td style="width:69pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9" />
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:507pt;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+                <p class="s4" style="padding-top: 1pt;padding-right: 1pt; text-align: right;">NET TOPLAM</p>
+            </td>
+            <td style="width:69pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+
+                <p class="s6" style="padding-top: 1pt;padding-left: 30pt; text-align: left;">@Model.KDVDahilFiyat @Model.FiyatTuru</p>
+            </td>
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:507pt;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9" />
+            <td style="width:69pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9" />
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:507pt;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9" />
+            <td style="width:69pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9" />
+        </tr>
+    </table>
+    <p style=" text-align: left;">
+        <br />
+    </p>
+
+
+
+    <br />
+    <p class="s10" style="padding-top: 4pt;padding-left: 8pt; text-align: left;">Bu form içeriğindeki yapılan destek hizmetlerindeki açıklamalara itiraz edilmediği takdirde işlem tamamlanmış ve onaylanmış olarak kayıt edilecektir.</p>
+
+
+    <br />
+    <br />
+    <table width="800px" style="border-collapse:collapse;margin-left:55.02371pt" cellspacing="0">
+        <tr style="height:13pt">
+            <td style="width:244pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+                <p class="s6" style="padding-top: 1pt;padding-left: 75pt;text-align: left;">A) EVET ONAYLIYORUM</p>
+            </td>
+            <td style="width:332pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+                <p class="s6" style="padding-top: 1pt;padding-left: 112pt;;text-align: left;">B) HAYIR ONAYLAMIYORUM</p>
+            </td>
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:244pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+                <p class="s6" style="padding-top: 1pt;padding-left: 41pt;text-align: left;">Adı :</p>
+            </td>
+            <td style="width:332pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+                <p class="s6" style="padding-top: 1pt;padding-left: 60pt; text-align: left;">Adı :</p>
+            </td>
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:244pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+                <p class="s6" style="padding-top: 1pt;padding-left: 29pt; text-align: left;">Soyadı :</p>
+            </td>
+            <td style="width:332pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+                <p class="s6" style="padding-top: 1pt;padding-left: 47pt; text-align: left;">Soyadı :</p>
+            </td>
+        </tr>
+        <tr style="height:13pt">
+            <td style="width:244pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+                <p class="s6" style="padding-top: 1pt;padding-left: 30pt; text-align: left;">Görevi :</p>
+            </td>
+            <td style="width:332pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+                <p class="s6" style="padding-top: 1pt;padding-left: 48pt; text-align: left;">Görevi :</p>
+            </td>
+        </tr>
+        <tr style="height:49pt">
+            <td style="width:244pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+                <p class="s6" style="padding-top: 1pt;padding-left: 76pt; text-align: left;">FİRMA KAŞESİ VE İMZA</p>
+            </td>
+            <td style="width:332pt;border-top-style:solid;border-top-width:1pt;border-top-color:#D9D9D9;border-left-style:solid;border-left-width:1pt;border-left-color:#D9D9D9;border-bottom-style:solid;border-bottom-width:1pt;border-bottom-color:#D9D9D9;border-right-style:solid;border-right-width:1pt;border-right-color:#D9D9D9">
+                <p class="s6" style="padding-top: 1pt; text-align: center;">FİRMA KAŞESİ VE İMZA</p>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="content-header">
+    <h1>
+        Firmalar /
+        <small>Firma Listesi</small>
+    </h1>
+
+</section>
+<br />
+
+
+
+
+<div class="box box-default">
+
+
+    <div class="box box-default">
+
+
+
+        <div class="row" style="margin-right: 0px; margin-left:0px;"><div class="col-sm-12"></div><div class="col-sm-12"></div></div><div class="row" style="margin-right: 0px; margin-left:0px;">
+
+
+            <div id="PanelFirmaListe" class="col-sm-12">
+                @{
+                    Html.RenderAction("FirmaListesi");
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="FirmaModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Müşteri Ekle Ve Düzenle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('FirmaModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="FirmaModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div id="FirmaDestekler" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+           
+
+
+            <div id="FirmaModalBody" class="modal-body" style="padding:0">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div id="EnvanterModal" class="modal">
+    <div class="modal-dialog-scrollable modal-lg" style=" margin: 1.75rem auto;">
+        <div class="modal-content">
+
+
+
+            <div id="EnvanterModalBody" class="modal-body" style="padding:0">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div id="EnvanterSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Envanter Kaydını Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('EnvanterSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="EnvanterSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div id="FirmaSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Firmayı Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('FirmaSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="FirmaSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+

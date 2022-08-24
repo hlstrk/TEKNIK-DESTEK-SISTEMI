@@ -1,0 +1,180 @@
+﻿@model List<TeknikServis.Entittes.Models.NotView>
+
+@{
+    Layout = null;
+    ViewBag.Title = "BildirimListesi";
+}
+
+
+
+
+
+
+
+<div class="col-12" style="margin:auto;width:100%">
+
+
+
+
+
+
+    <!-- /.card-header -->
+
+
+    @if (Model.Count == 0)
+    {
+
+
+        <br />
+        <div class="callout callout-success lead">
+            <h4>Uyarı!</h4>
+            <p>Henüz hiçbir bildirim yok!.</p>
+        </div>
+
+
+
+
+
+
+
+
+
+    }
+
+    else if (Model.Count != 0)
+    {
+
+
+        <table data-order='[[ 0, "desc" ]]' id="duyurumod" class="table table-striped">
+
+            <thead>
+
+
+
+                <tr style="text-align: center">
+                    <th style="text-align: center">
+                        Duyuru
+                    </th>
+
+                    @if (Session["Role"].ToString() == "Admin")
+                    {
+                        <th style="text-align: center">
+                            Oluşturan
+                        </th>
+
+                        <th style="text-align: center">
+
+                        </th>
+                    }
+
+
+
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderByDescending(file => file.NotID).ToList())
+
+                {
+
+
+                    <tr style="text-align: center">
+
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NotIcerigi)
+                        </td>
+
+
+
+                        @if (Session["Role"].ToString() == "Admin")
+                        {
+                            <td>
+                                @if (item.KullaniciID == Convert.ToInt32(Session["KullaniciID"]))
+                                {
+
+
+                                    <span class="badge badge-success">Siz</span>
+
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.KullaniciAdi)
+                                }
+
+                            </td>
+
+
+
+
+
+
+
+                            <td>
+
+
+
+
+                                <a class="btn btn-outline-danger btn-rounded btn-sm" onclick="removeAnc(@item.NotID);"
+                                   data-toggle="tooltip" data-placement="bottom" title="Duyuruyu Kaldır">
+                                    <span class="fa fa-times"></span>
+                                </a>
+
+                          
+
+
+
+                            </td>
+                        }
+
+
+
+
+
+
+                    </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+            </tbody>
+        </table>
+    }
+    <br />
+
+
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+<script>
+    $('#duyurumod').DataTable({
+        'paging': true,
+        'lengthChange': true,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': false,
+
+        "pageLength": 8
+    })
+</script>
+
+<!-- /.col -->
+<!-- /.row -->
+<!-- /.container-fluid -->
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->

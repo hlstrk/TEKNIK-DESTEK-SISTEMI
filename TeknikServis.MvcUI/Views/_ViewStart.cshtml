@@ -1,0 +1,28 @@
+﻿@{
+
+    if (Session["Role"]!=null)
+    {
+        string arayuz = Session["Role"].ToString();
+
+        switch (arayuz)
+        {
+            case "Admin":
+                Layout = "~/Views/Shared/AdminLayout.cshtml";
+                break;
+
+            case "Personel":
+                Layout = "~/Views/Shared/PersonelLayout.cshtml";
+                break;
+
+            case "FirmaPersonel":
+                Layout = "~/Views/Shared/FirmaPersonelLayout.cshtml";
+                break;
+
+            default:
+                //Admin layout
+                Layout = "~/Views/Shared/FirmaLayout.cshtml";
+                break;
+        }
+    }
+
+}   

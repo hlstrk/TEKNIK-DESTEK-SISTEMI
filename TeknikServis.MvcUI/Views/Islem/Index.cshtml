@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<br />
+
+
+
+
+<div class="box box-default">
+
+    <div class="box-body">
+        <div class="col-md-12 ">
+            <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <div class="row"><div class="col-sm-10"></div><div class="col-sm-10"></div></div>
+                <div class="row" style="margin:auto">
+
+                    <div id="PanelIslemListe" class="col-12">
+                        @{
+                            Html.RenderAction("IslemListesi");
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-10"><div class="dataTables_info" id="example2_info" role="status" aria-live="polite"></div></div><div class="col-sm-10">
+
+                        <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                            <ul class="pagination"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirm Delete</h4>
+            </div>
+            <div class="modal-body">
+                <!-- The problem seems to be here:-->
+                <p>Are you sure you want to delete invoice number: <b id="InvoiceID"></b></p>
+            </div>
+            <div class="modal-footer">
+                <form asp-controller="Billing" asp-action="Delete" method="post" class="form-inline" role="form">
+                    <input type="hidden" id="id">
+                    <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash" style="vertical-align:middle;margin-top: -5px"></span> Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="IslemModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">İşlem Ekle Ve Düzenle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('IslemModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="TeknikModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+

@@ -1,0 +1,194 @@
+﻿@model List<TeknikServis.Entittes.Models.Not>
+
+@{
+    Layout = null;
+    ViewBag.Title = "BildirimListesi";
+}
+
+
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div  class="row">
+            <div class="col-8" style="margin:auto">
+
+
+             
+
+
+
+                    <!-- /.card-header -->
+                  
+
+                        @if (Model.Count == 0)
+                        {
+
+
+                            <br />
+                            <div class="callout callout-success lead">
+                                <h4>Uyarı!</h4>
+                                <p>Henüz hiçbir bildirim yok!.</p>
+                            </div>
+
+
+
+
+
+
+
+
+
+                        }
+
+                        else if (Model.Count != 0)
+                        {
+
+                           
+                            <table data-order='[[ 0, "desc" ]]' id="example4" class="table table-bordered table-striped">
+
+                                <thead>
+
+
+
+                                    <tr style="text-align: center">
+                                        <th style="text-align: center">
+                                           Duyuru
+                                        </th>
+                                        
+                                        @if (Session["Role"].ToString() == "Admin")
+                                        {
+                                            <th style="text-align: center">
+                                                Oluşturan
+                                            </th>
+
+                                            <th style="text-align: center">
+
+                                            </th>
+                                        }
+
+
+
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.OrderByDescending(file => file.NotID).ToList())
+
+                                    {
+
+
+                                    <tr style="text-align: center">
+
+
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NotIcerigi)
+                                        </td>
+
+                                        
+
+                                        @if (Session["Role"].ToString() == "Admin")
+                                        {
+                                            <td>
+                                                @if (item.KullaniciAdi == (Session["AdID"].ToString()))
+                                                {
+
+
+                                                    <span class="badge badge-warning">Siz</span>
+
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.KullaniciAdi)
+                                                }
+
+                                            </td>
+
+
+
+
+
+
+
+                                            <td>
+
+
+
+
+
+
+                                                <a href="#" onclick="NotSilK(@item.NotID);NotListele();">Kaldır</a>
+
+
+
+                                            </td>
+                                        }
+
+
+
+
+
+
+                                        </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        <br />
+
+                 
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+  
+    <!-- /.container-fluid -->
+</section>
+
+
+
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

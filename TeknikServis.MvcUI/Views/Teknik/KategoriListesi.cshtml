@@ -1,0 +1,271 @@
+﻿
+
+@model List<TeknikServis.Entittes.Models.Tanim>
+
+@{
+    ViewBag.Title = "KategoriListesi";
+
+}
+
+
+<!-- /.row -->
+
+
+
+
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-8" style="margin:auto; padding-top:30px">
+
+
+                <div class="card">
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        &nbsp;
+                        &nbsp;
+                        <a style="margin-bottom:20px;" onclick="FormGoster('../Teknik/TanimKarti/?TanimGrupID=','TanimEkleModal')" class="btn btn-m btn-success btn-m pull-right">Kategori Ekle</a>
+                        &nbsp;
+                        <br />  
+
+
+
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr style="text-align: center">
+                                    <th style="text-align: center">
+                                        Barkod No
+                                    </th>
+                                    <th style="text-align: center">
+                                        Grubu
+                                    </th>
+
+                                    <th style="text-align: center">
+                                        Tanım Adı
+                                    </th>
+                                    <th style="text-align: center">
+                                        Sil
+                                    </th>
+
+
+
+
+
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.OrderByDescending(file => file.TanimID).ToList())
+
+                                {
+
+
+                                <tr style="text-align: center;cursor:pointer" ondblclick="FormGoster('../Teknik/TanimKarti/?TanimID=@item.TanimID', 'TanimEkleModal')">
+
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TanimID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TanimGrup.TanimGrupAdi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TanimAdi)
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-rounded btn-sm" onclick="FormGoster('../Teknik/TanimSil/?TanimID=@item.TanimID','TanimSilModal')"
+                                                data-toggle="tooltip" data-placement="bottom" title="Sil">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+
+
+                                }
+
+
+
+                            </tbody>
+
+
+                        </table>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<div id="TanimEkleModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kategori Ekle/Düzenle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('TanimEkleModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="TanimEkleModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div id="TanimSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kategoriyi Ve Tanımı Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('TanimSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="TanimkSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@if (Model.Count == 0)
+{
+
+    if (Session["Role"].ToString() == "Personel")
+    {
+        <br />
+        <div class="callout callout-info lead">
+            <h4>Uyarı!</h4>
+            <p>Şu anda size atanan hiçbir teknik servis/arıza kaydı bulunmamaktadır.</p>
+        </div>
+
+    }
+    else
+    {
+        <br />
+        <div class="callout callout-info lead">
+            <h4>Uyarı!</h4>
+            <p>Henüz hiçbir destek talebi oluşturmadınız.</p>
+        </div>
+
+    }
+
+
+
+
+
+
+
+}
+
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->
+
+
+
+
+
+
+
+<script>
+
+    $(function () {
+        //alert('merhaba');
+
+        //$.get("/Anasayfa/KategoriYukle", function (data)
+        //{
+        //    console.log(data);
+        //    $("#liste").html(data);
+        //});
+
+        $("#btnListele").click(function () {
+            $("#btnListele").attr("disabled", "disabled");
+            $("#loading").show(300);
+            $.get("/Anasayfa/KategoriYukle", function (data) {
+                console.log(data);
+                $("#liste").html(data);
+
+                $("#loading").hide(300);
+                $("#btnListele").removeAttr("disabled");
+            });
+        });
+
+
+
+
+        $("#btnKaydet").click(function () {
+            $("#btnKaydet").attr("disabled", "disabled");
+            $("#loading").show(300);
+
+            var kategoriAdi = $("#txtKategori").val();
+
+            $.get("/Anasayfa/KategoriKaydet", { kadi: kategoriAdi }, function (data) {
+                console.log(data);
+                $("#liste").html(data);
+
+                $("#loading").hide(300);
+                $("#btnKaydet").removeAttr("disabled");
+            });
+        });
+
+
+    });
+
+    function Kaydet() {
+
+        var adi = $("#txtKategori").val();
+        var id = $("#txtId").val();
+
+        $.ajax({
+            url: "/Anasayfa/KategoriKaydet2",
+            method: 'POST',
+            data: { kadi: adi, kid: id },
+            beforeSend: function () { $("#loading").show(300); }
+        })
+            .done(function (d) {
+                console.log(d);
+                $("#liste").html(d);
+            })
+            .fail(function () {
+                console.log("Hata oluştu.");
+                alert("Hata oluştu.");
+            })
+            .always(function () {
+                $("#loading").hide(300);
+
+            });
+    }
+
+</script>
+
+
+
+
+
+
+

@@ -1,0 +1,198 @@
+﻿@model List<TeknikServis.Entittes.Models.NotView>
+
+
+
+
+@{
+    ViewBag.Title = "ToDoList";
+    Layout = null;
+}
+
+
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="ion ion-clipboard mr-1"></i>
+            Yapılacaklar Listesi
+        </h3>
+
+
+        <div class="card-tools">
+            <ul class="pagination pagination-sm">
+                <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
+                <li onclick="ToDoListele(1)" class="page-item"><a style="color:royalblue;cursor:pointer" class="page-link">1</a></li>
+                <li onclick="ToDoListele(2)" class="page-item"><a style="color: royalblue; cursor: pointer" class="page-link">2</a></li>
+                <li onclick="ToDoListele(3)" class="page-item"><a style="color: royalblue; cursor: pointer" class="page-link">3</a></li>
+                <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+
+
+    <!-- /.card-header -->
+    <div class="card-body">
+
+        @if (Model.Count == 0)
+        {
+
+
+            <br />
+            <ul class="todo-list" data-widget="todo-list">
+
+
+                <li>
+                    <!-- drag handle -->
+                    <span class="handle">
+                        <i class="fas fa-ellipsis-v"></i>
+                        <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <!-- checkbox -->
+                    <div class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo1" id="todoCheck1">
+                        <label for="todoCheck1"></label>
+                    </div>
+                    <!-- todo text -->
+                    <span class="text"> Bu alanda kendinize Notlar Bırakabilirsiniz<a href="#"></a></span>
+                    <!-- Emphasis label -->
+                    <small class="badge badge-info"><i class="far fa-clock"></i> </small>
+
+                </li>
+
+
+            </ul>
+
+
+
+
+
+
+
+
+
+        }
+
+        else if (Model.Count != 0)
+        {
+            <ul class="todo-list" data-widget="todo-list">
+
+                @foreach (var item in Model.OrderByDescending(file => file.NotID).ToList())
+
+                {
+                    <li class="page-item">
+                        <!-- drag handle -->
+                        <span class="handle">
+                            <i class="fas fa-ellipsis-v"></i>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </span>
+                        <!-- checkbox -->
+                        <div class="icheck-primary d-inline ml-2">
+                            @if (item.YapildiMi == true)
+                            {
+                                <input type="checkbox" value="checked" name="todo1" id="@item.NotID" checked>
+                            }
+                            else
+                            {
+                                <input type="checkbox" value="checked" name="todo1" id="@item.NotID">
+                            }
+
+
+                            <label onclick="ToDoDegistir(@item.NotID)" for="@item.NotID"></label>
+                        </div>
+                        <!-- todo text -->
+                        <span class="text"> @Html.DisplayFor(modelItem => item.NotIcerigi)</span>
+                        <!-- Emphasis label -->
+                        @{
+                            double zaman = 0;
+                            var gosterilecek = "";
+                            var renk = "";
+
+                            var gun = (DateTime.Now - Convert.ToDateTime(item.OZamani)).TotalDays;
+
+                            if (gun < 1)
+                            {
+
+                                zaman = (Math.Round(gun * 84600));
+                                if (zaman > 60)
+                                {
+                                    if (zaman > 3600)
+                                    {
+                                        gosterilecek = Math.Round(zaman / 3600) + " Saat";
+                                    }
+                                    else
+                                    {
+                                        gosterilecek = Math.Round(zaman / 60) + " Dakika";
+                                    }
+
+                                }
+
+                                renk = "badge-success";
+                            }
+                            if (gun > 1)
+                            {
+                                zaman = (Math.Round(gun));
+                                gosterilecek = (Math.Round(zaman) + " Gün");
+                                renk = "badge-warning";
+
+
+                            }
+                            if (gun > 3)
+                            {
+                                zaman = (Math.Round(gun));
+                                gosterilecek = (Math.Round(zaman) + " Gün");
+                                renk = "badge-secondary";
+                            }
+                            if (gun > 7)
+                            {
+                                zaman = (Math.Round(gun));
+                                gosterilecek = (Math.Round(zaman / 7) + " Hafta");
+                                renk = "badge-danger";
+                            }
+                            if (gun > 30)
+                            {
+                                zaman = (Math.Round(gun));
+                                gosterilecek = (Math.Round(zaman / 30) + " Ay");
+                                renk = "badge-info";
+
+
+
+
+
+                            }
+
+
+
+
+                        }
+
+
+                        <small class="badge @renk"><i class="far fa-clock"></i> @gosterilecek</small>
+                        <!-- General tools such as edit or delete-->
+                        <div class="tools">
+
+                            <i onclick="ToDoSil(@item.NotID)" class="fa fa-trash"></i>
+                            <i onclick="FormGoster('../Anasayfa/YapilacakEkleModal/?NotID=@item.NotID', 'YapilacakModal')" class="fas fa-edit"></i>
+
+                        </div>
+                    </li>
+                }
+
+            </ul>
+
+
+        }
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer clearfix">
+        <button type="button" onclick="FormGoster('../Anasayfa/YapilacakEkleModal/?NotID=0','YapilacakModal')" class="btn btn-info float-right"><i class="fas fa-plus"></i> Yeni Ekle</button>
+    </div>
+</div>
+
+
+
+
+

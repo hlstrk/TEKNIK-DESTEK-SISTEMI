@@ -1,0 +1,162 @@
+﻿
+@model TeknikServis.Entittes.Models.Gorev
+@{
+    ViewBag.Title = "GorevEkle";
+    Layout = null;
+}
+
+
+
+
+
+@using (Html.BeginForm("GorevEkle", "Anasayfa", FormMethod.Post, new { id = "FrmGorevEkleKartiDB" }))
+{
+    @Html.HiddenFor(x => x.GorevID)
+    @Html.Hidden("silinmismi", false)
+    <div  class="row">
+
+        <div class="form-group col-md-12">
+
+            <div class="col-md-12" style="margin-top: 1px;">
+
+
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Toplu Görev Mi</label>
+                        <div class="input-group mb-3">
+
+                            @Html.CheckBoxFor(x => x.toplugorevmi, new
+                       {
+
+                           data_toggle = "toggle",
+                           data_onstyle = "danger",
+                           data_offstyle = "success",
+                           data_on = "Evet",
+                           data_off = "Hayır",
+                           data_size = "sm",
+                           id = "slidergaktif",
+                           onchange = "TopluGorevCheck()"
+                       })
+
+                            <script>
+                                $(function () {
+                                    $('#slidergaktif').bootstrapToggle();
+                                });
+                                console.log("Fonksiyon dIşı");
+                                var state = 0;
+                                function TopluGorevCheck() {
+                                    console.log("Fonksiyon");
+
+                                    if (state == 0) {
+                                        document.getElementById("gorevkullanici").style.display = "none";
+                                        console.log("State : 0")
+                                        console.log(state);
+                                        state = 1;
+                                    }
+                                    else {
+
+                                        console.log("State : 1")
+
+
+                                        document.getElementById("gorevkullanici").style.display = "block";
+                                        state = 0;
+                                    }
+
+                                };
+
+
+                            </script>
+
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+                <div class="col-md-8" style="margin-top: 1px;">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-heading"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.Konu, new { @class = "form-control", @placeholder = "Atanan Görevin Konusu", @id = "GorevB" })
+
+                    </div>
+                </div>
+                <div class="col-md-8" style="margin-top: 1px;">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-bullhorn"></i></span>
+
+                        </div>
+                        @Html.TextAreaFor(x => x.GorevIcerigi, new { @class = "form-control", @placeholder = "Atanan Görev", @id = "GorevI" })
+
+                    </div>
+                </div>
+
+                <div class="col-md-12" style="margin-top: 1px;" id="gorevkullanici">
+                    <hr />
+                    <div class="form-group">
+                        <label>Kullanıcı Seçiniz</label>
+                        <div class="input-group mb-3" style="width:18rem">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+
+                            </div>
+
+
+
+
+
+                            @Html.DropDownListFor(model => model.AitOlanKullaniciID, new SelectList(ViewBag.PersonelGorev, "KullaniciID", "AdSoyad"), new { @class = "form-control", id = "dropDowngorev" })
+
+                            <script>
+                                $("#dropDowngorev").selectize({
+                                    create: false,
+                                    sortField: "text",
+                                    maxOptions: 4,
+                                    placeholder: "Arama Yap..."
+
+
+                                });
+                            </script>
+
+                        </div>
+                    </div>
+                   
+
+                        <br />
+                        <br />
+                        <br />
+                  
+                </div>
+
+                
+
+
+
+
+
+
+                <div class="col-md-12">
+                    <button id="eklemenot" style="text-align:right;margin-right:1rem;margin-top:1.4rem;border-block-color:lawngreen;" type="button" onclick="GorevKaydet()" class="btn btn-outline-success float-right"><i class="fas fa-plus-circle"></i></button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+}

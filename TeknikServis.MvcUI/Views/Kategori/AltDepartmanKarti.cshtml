@@ -1,0 +1,140 @@
+﻿
+@model TeknikServis.Entittes.Models.Departmanlar
+
+
+@{
+    ViewBag.Title = "DepartmanKarti";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+<div class="box box-danger">
+    @using (Html.BeginForm("DepartmanKarti", "Kategori", FormMethod.Post, new { id = "FrmIslemKarti" }))
+    {
+        @Html.HiddenFor(x => x.DepartmanID)
+
+    <div class="row">
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>Yapılan İşlem</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-tasks"></i></span>
+
+                        </div>
+
+                        @Html.DropDownList("Departman", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", id = "Departman" }) &nbsp;/ &nbsp;
+                        @Html.DropDownList("AltDepartman", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", id = "AltDepartman" }) &nbsp;/ &nbsp;
+                        @Html.DropDownList("Bolum", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", id = "Bolum" })
+
+
+
+
+
+
+
+                        <script>
+                            $(function () {
+                                $('#Departman').select2({
+
+
+
+
+
+                                    width: '10rem'
+                                });
+                            });
+                            $(function () {
+                                $('#AltDepartman').select2({
+
+
+
+
+
+                                    width: '10rem'
+                                });
+                            });
+
+                            $(function () {
+                                $('#Bolum').select2({
+
+
+
+
+
+                                    width: '10rem'
+                                });
+                            });
+
+
+
+                        </script>
+
+                    </div>
+                }
+
+
+
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+       
+
+
+
+       
+
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+        {
+
+            <div class="col-md-12" style="margin-top: 1px;">
+
+                <div class="form-group">
+
+                    <div id="PanelIslemListeKart" class="col-12">
+                        @{
+                            Html.RenderAction("IslemListesiKart");
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+
+
+        <div class="col-md-3">
+
+            <button type="button" onclick="IslemKaydetAnasayfa(); IslemListeleKart();" class="btn btn-block btn-success">Ekle</button>
+        </div>
+
+
+
+
+    </div>
+        
+
+
+
+
+
+
+
+
+        }
+    </div>
+

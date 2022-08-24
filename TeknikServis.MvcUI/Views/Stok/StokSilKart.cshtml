@@ -1,0 +1,138 @@
+﻿
+@model TeknikServis.Entittes.Models.StokView
+
+@{
+    ViewBag.Title = "StokSilKart";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("StokSil", "Stok", FormMethod.Post, new { id = "FrmStokSilKarti" }))
+    {
+        @Html.HiddenFor(x => x.StokID)
+
+        <div class="row">
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+
+
+                    <label>Barkod No</label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+
+                        </div>
+
+                        @Html.TextBoxFor(x => x.BarkodNo, new { disabled = "disabled" })
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+
+
+                    <label>Firma</label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-suitcase"></i></span>
+
+                        </div>
+
+
+                        @Html.TextBoxFor(x => x.AitOlanFirmaAdi, new { disabled = "disabled" })
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+            @if (Session["Role"].ToString() == "Admin")
+            {
+                <div class="col-md-6" style="margin-top: 1px;">
+
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-list"></i></span>
+
+                            </div>
+
+
+                            @Html.TextBoxFor(x => x.Turu, new { disabled = "disabled" })
+
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Session["Role"].ToString() == "Admin")
+            {
+                <div class="col-md-12" style="margin-top: 1px;">
+
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        <div class="input-group mb-6">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-question"></i></span>
+
+                            </div>
+
+
+                            @Html.TextAreaFor(x => x.Aciklama, new { disabled = "disabled" })
+
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <br />
+
+
+
+
+        </div>
+
+        <div class="modal-footer">
+
+
+            <button type="button" onclick="StokSilMain(@Model.StokID)" class="btn btn-outline-danger"><span class="glyphicon glyphicon-trash" style="vertical-align:middle;margin-top: -5px"></span> Sil</button>
+            <button type="button" onclick="FormKapat('StokSilModal')" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+
+
+        </div>
+    }
+</div>
+
+
+
+

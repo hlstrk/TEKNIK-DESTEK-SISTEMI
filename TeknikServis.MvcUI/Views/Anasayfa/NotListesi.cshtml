@@ -1,0 +1,186 @@
+﻿@model List<TeknikServis.Entittes.Models.NotView>
+
+@{
+    Layout = null;
+    ViewBag.Title = "NotListesi";
+}
+
+
+
+
+
+
+            <div class="col-12">
+
+
+
+
+
+
+                <!-- /.card-header -->
+
+
+                @if (Model.Count == 0)
+                {
+
+
+                    <br />
+                    <div class="callout callout-info lead">
+                        <h4>Uyarı!</h4>
+                        <p>Henüz not eklemediniz.</p>
+                    </div>
+
+
+
+
+
+
+
+
+
+                }
+
+                else if (Model.Count != 0)
+                {
+
+
+                    <table style="font-size: 0.9em;" data-order='[[ 0, "desc" ]]' id="mainnotlist" class="table table-bordered table-striped">
+
+                        <thead>
+
+
+
+                            <tr style="text-align: center">
+                                <th style="text-align: center">
+                                    Not/Duyuru
+                                </th>
+                                <th style="text-align: center">
+                                    Türü
+                                </th>
+
+                                <th style="text-align: center">
+                                    Oluşturan
+                                </th>
+
+                                <th style="text-align: center">
+
+                                </th>
+
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderByDescending(file => file.NotID).ToList())
+
+                            {
+
+
+                                <tr style="text-align: center">
+
+
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NotIcerigi)
+                                    </td>
+
+                                    <td>
+                                        @if (item.DuyuruMu == true)
+                                        {
+                                            <div class="badge badge-danger ">
+
+                                                <label>Duyuru</label>
+
+                                            </div>
+                                        }
+
+                                        else
+                                        {
+                                            <div class="badge badge-primary">
+                                                <label>Kişisel</label>
+                                            </div>
+                                        }
+
+
+
+
+
+                                    </td>
+
+
+                                    <td>
+                                        @if (item.KullaniciID == Convert.ToInt32(Session["KullaniciID"]))
+                                        {
+
+
+                                            <span class="badge badge-warning">Siz</span>
+
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayFor(modelItem => item.KullaniciAdi)
+                                        }
+
+                                    </td>
+
+
+
+
+
+
+
+                                    <td>
+
+
+
+
+
+                                        <a onclick="NotSilK(@item.NotID);NotListele();" class="btn btn-m btn-outline-danger fa fa-trash btn-m pull-right"></a>
+                             
+
+
+
+                                        @*@Url.Action("Düzenle", "Edit",null, new { /* id=item.PrimaryKey */ @class= "fa fa-edit" }) |
+        @Html.ActionLink("Detay", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Sil", "Delete", new { /* id=item.PrimaryKey */ })*@
+                                    </td>
+
+
+
+
+
+
+                                </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            }
+                        </tbody>
+                    </table>
+                }
+                <br />
+
+
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+  
+
+
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->

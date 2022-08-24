@@ -1,0 +1,101 @@
+﻿
+@model TeknikServis.Entittes.Models.Tanim
+
+@{
+    ViewBag.Title = "TanimKarti";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("TanimKarti", "Teknik", FormMethod.Post, new { id = "FrmTanimKarti" }))
+    {
+        @Html.HiddenFor(x => x.TanimID)
+  
+    <div class="row">
+        <div class="col-md-6" style="margin-top: 1px;">
+
+            <div class="form-group">
+                <label>Kategori</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <span class="input-group-text"><i class="fa fa-object-group"></i></span>
+
+                    </div>
+
+                    @Html.DropDownListFor(x => x.TanimGrupID, new SelectList(ViewBag.KategoriGrup, "TanimGrupID", "TanimGrupAdi"), new { @class = "form-control", id = "dropDownGrup" })
+
+                    <script>
+                        $(function () {
+                            $('#dropDownGrup').select2({
+
+
+                                placeholder: "Kategori Grubu...",
+
+
+                                width: '180px'
+                            });
+                        });
+                    </script>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Eklenecek Öğe</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                    </div>
+                    @Html.TextBoxFor(x => x.TanimAdi, new { @class = "form-control" })
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="col-md-8">
+            <div class="form-group">
+
+                <label>Durumu: </label>
+                <br />
+
+
+                <div class="form-check form-check-inline">
+                    @Html.RadioButtonFor(model => model.Aktif, "true", new { @checked = "checked", @class = "form-check-label" })  Aktif
+
+                    &nbsp; &nbsp;&nbsp; &nbsp;
+                    @Html.RadioButtonFor(model => model.Aktif, "false", new { @class = "form-check-input" })  Pasif
+
+                    &nbsp;
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+        <div class="modal-footer">
+            <div class="col-md-12">
+                @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+                <button type="button" onclick="TanimKaydet()" class="btn btn-block btn-primary">Kaydet</button>
+            </div>
+        </div>
+    }
+</div>
+

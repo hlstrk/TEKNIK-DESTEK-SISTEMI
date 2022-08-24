@@ -1,0 +1,413 @@
+﻿@model List<TeknikServis.Entittes.Models.TeknikView>
+
+@{
+
+    ViewBag.Title = "TeknikTamamlanan";
+}
+
+
+
+
+
+
+
+
+<div id="IslemModalTeknik" class="modal">
+    <div class="modal-dialog-scrollable modal-xl" style="margin: 0.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Yapılan İşlemler</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('IslemModalTeknik')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="IslemModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+
+                <div class="card">
+
+
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        @if (Model.Count == 0)
+                        {
+
+                            if (Session["Role"].ToString() == "Personel")
+                            {
+                                <br />
+                                <div class="callout callout-info lead">
+                                    <h4>Uyarı!</h4>
+                                    <p>Şu anda size atanan hiçbir teknik servis/arıza kaydı bulunmamaktadır.</p>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <br />
+                                <br />
+                                <div class="callout callout-info lead">
+                                    <h4>Uyarı!</h4>
+                                    <p>Henüz tamamlanan hiçbir destek talebi yok.</p>
+                                </div>
+
+                            }
+
+
+
+
+
+                            <hr />
+
+
+
+                        }
+
+                        else if (Model.Count != 0)
+                        {
+
+                            <br />
+                            <table id="example1" data-order='[[ 0, "desc" ]]' class="table table-bordered table-striped">
+
+                                <thead>
+
+
+
+                                    <tr style="text-align: center">
+                                        <th style="text-align: center">
+                                            Ticket ID
+                                        </th>
+                                        <th style="text-align: center">
+                                            Arıza  Türü
+                                        </th>
+
+                                        <th style="text-align: center">
+                                            Firma/Şahıs
+                                        </th>
+                                        <th style="text-align: center">
+                                            Oluşturan Kullanıcı
+                                        </th>
+                                        <th style="text-align: center">
+                                            İlk Kayıt Tarihi
+                                        </th>
+                                        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                                        {
+                                            <th style="text-align: center">
+                                                Son İşlem Tarihi
+                                            </th>
+                                        }
+
+
+                                        <th style="text-align: center">
+                                            İşlem Bitiş Tarihi
+                                        </th>
+                                        <th style="text-align: center">
+                                            İlgilenen Personel
+                                        </th>
+                                        <th style="text-align: center">
+                                            Ödenecek Tutar
+                                        </th>
+                                        <th style="text-align: center">
+                                            Durumu
+                                        </th>
+
+                                        @if (Session["Role"].ToString() == "Admin")
+
+                                        {
+                                            <th style="text-align: center">
+                                                İşlemler
+                                            </th>
+                                        }
+
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.OrderByDescending(file => file.TeknikServisID).ToList())
+
+                                    {
+
+
+                                        <tr style="text-align: center" ondblclick="FormGoster('../Teknik/TeknikKarti/?TeknikServisID=@item.TeknikServisID','TeknikModal')">
+
+
+                                            <td>
+                                                <a href="#" onclick="FormGoster('../Teknik/TeknikKarti/?TeknikServisID=@item.TeknikServisID','TeknikModal')"> @Html.DisplayFor(modelItem => item.TicketString)</a>
+
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ArizaTuru)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AitOlduguFirma)
+                                            </td>
+                                            <td>
+                                                @if (item.AitOlduguKullaniciID == Convert.ToInt32(Session["KullaniciID"]))
+                                                {
+
+
+                                                    <span class="badge badge-dark">Siz</span>
+
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.OlusturanKullaniciAdi)
+                                                }
+
+                                            </td>
+
+                                            @{
+                                                var DurumClass = "";
+                                                if (item.Durumu == "Onay Bekliyor" || item.Durumu == "Hazırlanıyor")
+                                                {
+                                                    DurumClass = "badge bg-warning";
+                                                }
+                                                else if (item.Durumu == "Reddedildi")
+                                                {
+                                                    DurumClass = " badge bg-danger";
+                                                }
+                                                else if (item.Durumu == "Kargoda")
+                                                {
+                                                    DurumClass = "badge bg-success";
+                                                }
+                                                else if (item.Durumu == "İşlemde")
+                                                {
+                                                    DurumClass = "badge bg-info";
+                                                }
+                                                else if (item.Durumu == "Tamamlandı")
+                                                {
+                                                    DurumClass = "badge bg-success";
+
+                                                }
+
+
+                                            }
+
+
+
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.KayitZamani)
+
+                                            </td>
+                                            @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                                            {
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SonIslemZamani)
+
+                                                </td>
+                                            }
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.KapanisTarihi)
+
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AtanmisPersonelAdi)
+
+                                            </td>
+                                            <td>
+                                                @if (item.Garanti == true)
+                                                {
+                                                    <div class="label label-success">
+
+                                                        <label>   Garantili   </label>
+
+                                                    </div>
+                                                }
+                                                else if (item.Anlasmali == true)
+                                                {
+                                                    <div class="label label-success">
+                                                        <label>   Anlaşmalı   </label>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.Fiyat)
+
+                                                    if (item.ParaBirimi == "?")
+                                                    {
+                                                        <label>   ₺   </label>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(modelItem => item.ParaBirimi)
+                                                    }
+                                                }
+
+
+
+
+                                            </td>
+                                            <td style="text-align: center">
+                                                <div class="@DurumClass">
+                                                    @Html.DisplayFor(modelItem => item.Durumu, new { @class = "@DurumClass" })
+                                                </div>
+                                            </td>
+
+
+                                            @if (Session["Role"].ToString() == "Admin")
+
+                                            {
+
+
+                                                <td>
+                                                    <span class="pull-right-container">
+
+
+
+
+
+                                                        <button class="btn btn-primary btn-rounded btn-sm" onclick="FormOlustur(@item.TeknikServisID)"
+                                                                data-toggle="tooltip" data-placement="bottom" title="PDF olarak kaydet">
+                                                            <span class="fa fa-file"></span>
+                                                        </button>
+
+                                                        <script>
+                                                            function FormOlustur(textid) {
+
+
+
+                                                                window.open("/Teknik/ServisFormuOlustur/" + textid, "_blank")
+                                                            }
+
+                                                        </script>
+
+
+
+                                                        |
+
+
+                                                        <button class="btn btn-secondary btn-rounded btn-sm" onclick="FaturaOlustur(@item.TeknikServisID)"
+                                                                data-toggle="tooltip" data-placement="bottom" title="Fatura Oluştur">
+                                                            <span class="fa fa-file-invoice"></span>
+                                                        </button>
+
+                                                        <script>
+                                                            function FaturaOlustur(textid) {
+
+
+
+                                                                window.open("/Teknik/FaturaFormuOlustur/" + textid, "_blank")
+                                                            }
+
+                                                        </script>
+
+
+
+                                                  
+
+
+
+                                                    </span>
+                                                    @*@Url.Action("Düzenle", "Edit",null, new { /* id=item.PrimaryKey */ @class= "fa fa-edit" }) |
+                                    @Html.ActionLink("Detay", "Details", new { /* id=item.PrimaryKey */ }) |
+                                    @Html.ActionLink("Sil", "Delete", new { /* id=item.PrimaryKey */ })*@
+                                                </td>
+                                            }
+
+
+
+
+
+                                        </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        <br />
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+
+
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->
+
+
+
+
+
+
+<div id="TeknikModal" class="modal">
+    <div class="modal-dialog-scrollable" style="max-width: 520px; margin: 1.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tamamlanan Talepleri Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('TeknikModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="TeknikModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

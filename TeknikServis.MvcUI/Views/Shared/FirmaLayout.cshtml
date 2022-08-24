@@ -1,0 +1,437 @@
+﻿@using System.Web.Optimization;
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MTX - Destek Portalı</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    @*<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">*@
+    <!-- Font Awesome -->
+    <!-- Ionicons -->
+    <link rel="icon" type="image/png" href="~/Content/Images/mtx-logo-micro.png" />
+    <!-- Tempusdominus Bootstrap 4 -->
+    <!-- iCheck -->
+    <!-- JQVMap -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!-- Google Font -->
+    <!-- jQuery 3 -->
+
+
+
+
+    @Styles.Render("~/bundles/Css")
+    @Scripts.Render("~/bundles/Js")
+</head>
+
+@{
+    string val = "";
+    if (Request.Cookies["darkmode"] != null)
+    {
+        val = Request.Cookies["darkmode"].Value;
+    }
+}
+
+
+<body style="padding-right: 0 !important" class="sidebar-mini  layout-fixed sidebar-collapse @val">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+
+            <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Navbar Search -->
+
+
+                <li class="nav-item dropdown" style="height:auto;">
+                    <a class="nav-link user-panel  d-flex" data-toggle="dropdown" href="#">
+                        <div class="image">
+
+
+
+
+
+
+                            <img src="@Url.Action("ProcessImage", routeValues: new { controller = "Anasayfa" })" class="img-circle" style="width: 1.8rem;" alt="User Image" onclick="FormGoster('../Anasayfa/SifreDegiskarti/?KullaniciID=@Session["KullaniciID"].ToString()', 'SifreDegis')">
+
+
+
+
+                        </div>
+
+                    </a>
+
+
+                </li>
+
+                <!-- Messages Dropdown Menu -->
+
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="https://mtxsoft.net" class="brand-link elevation-4">
+                <img src="~/Content/Images/22.png" alt="AdminLTE Logo" class="brand-image  " style="opacity: .8; margin-top: 1px">
+                <span class="brand-text font-weight-light">MTX-KURUMSAL</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
+                    <div class="image">
+
+
+
+
+
+
+                        <img src="@Url.Action("ProcessImage", routeValues: new { controller = "Anasayfa" })" class="img-circle" style="width: 1.8rem;" alt="User Image" onclick="FormGoster('../Anasayfa/SifreDegiskarti/?KullaniciID=@Session["KullaniciID"].ToString()', 'SifreDegis')">
+
+
+
+
+                    </div>
+                    <div class="info">
+                        @if (HttpContext.Current.Session["KullaniciAdi"] != null &&
+                                 HttpContext.Current.Session["KullaniciAdi"].ToString() != "")
+                        {
+                            <a href="#" class="d-block">@Session["KullaniciAdi"]</a>
+                        }
+
+
+                    </div>
+                </div>
+
+                <!-- SidebarSearch Form -->
+                <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                        with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Anasayfa")" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Anasayfa
+
+
+                                </p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-wrench"></i>
+                                <p>
+                                    Servis Kayıtları
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Teknik")" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Devam Eden Kayıtlar</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("TeknikTamamlanan","Teknik")" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Tamamlanan Kayıtlar</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Kullanici")" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Personel Ekle
+
+                                </p>
+                            </a>
+
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-shopping-bag"></i>
+                                <p>
+                                    Teklifler
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("VerilenTeklifListesi","Teklif")" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Verilen Teklifler</p>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <ul class="nav nav-treeview">
+
+
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Teklif")" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Alınan Teklifler</p>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("SSS","Anasayfa")" class="nav-link">
+                                <i class="nav-icon fas fa-question-circle"></i>
+                                <p>
+                                    S.S.S
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Cikis","Kullanici")" class="nav-link">
+                                <i class="nav-icon fas fa-reply"></i>
+                                <p>
+                                    Çıkış
+
+                                </p>
+                            </a>
+
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Header (Page header) -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+
+            @RenderBody()
+
+
+        </div>
+
+
+        <!-- /.content-wrapper -->
+        <!-- Add the sidebar's background. This div must be placed
+        immediately after the control sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+
+    </div>
+
+    <div class="modal modal-warning" style="z-index: 99999999999; padding-left: 1px !important;" id="MdlBilgilendirme">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="MdlBaslik"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="MdlAciklama"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn  btn-outline-primary" data-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+    <div id="tumduyurular" class="modal " style="z-index: 99999999; margin: 0.75rem auto; ">
+        <div style="margin:auto" class="modal-dialog-scrollable  modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tüm Duyurular </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('tumduyurular')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+                <div id="tumduyurularBody" class="modal-body">
+
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+    <div class="modal fade" id="MdlUyari" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-xl" style="border-radius:1rem">
+                <div class="modal-header " style="background-color: cornflowerblue; border-top-left-radius: 1rem; border-top-right-radius: 1rem">
+                    <h5 class="modal-title" style="font-weight:bold; color:black" id="MdlBaslikUyari">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="MdlAciklamaUyari" class="modal-body" style="height: 100%;">
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button style="margin:auto" data-dismiss="modal" type="button" class="btn btn-outline-primary">Kapat</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $(function () {
+            $('#example1').DataTable()
+            $('#example2').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            })
+        });
+
+        $(function () {
+            $('#example3').DataTable()
+            $('#example4').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true,
+                "pageLength": 3
+            })
+        });
+
+        $('#mainnotlist').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+
+            'autoWidth': true,
+            "pageLength": 3
+        })
+
+
+
+
+        $("input[data-bootstrap-switch]").each(function () {
+            $(this).bootstrapSwitch('state', $(this).prop('checked'));
+        });
+    </script>
+
+    <div id="SifreDegis" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+
+
+                <div id="SifreDegisModalBody" style="padding: 0rem;" class="modal-body">
+
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div id="gorevlerimmodal" class="modal " style="z-index: 99999999; margin: 0.75rem auto;">
+        <div style="margin:auto" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Görevlerim </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('gorevlerimmodal')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+                <div id="gorevlerimmodalBody" class="modal-body">
+
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div id="gorevkarti" class="modal " style="z-index: 99999999; margin: 0.75rem auto;">
+        <div style="margin:auto" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Görev Ata/Düzenle </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('gorevkarti')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+                <div id="gorevkartiBody" class="modal-body">
+
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <script src="~/Content/AdminLTE/dist/js/demo.js"></script>
+</body>
+</html>

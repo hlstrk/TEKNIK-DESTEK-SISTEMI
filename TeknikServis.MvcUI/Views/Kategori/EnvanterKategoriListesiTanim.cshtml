@@ -1,0 +1,141 @@
+﻿
+
+@model List<TeknikServis.Entittes.Models.EnvanterTurleri>
+
+@{
+    ViewBag.Title = "EnvanterKategoriListesi";
+    Layout = null;
+}
+
+
+<!-- /.row -->
+
+
+
+
+
+
+
+
+
+<div style=" margin:auto; padding-top:30px">
+
+    <h1>
+
+        &ensp;<small>Envanter Tür Kategorisi</small>
+    </h1>
+    <div class="card">
+      
+   
+        <!-- /.card-header -->
+        <div class="card-body">
+
+            &nbsp;
+            &nbsp;
+            <a style="margin-bottom:20px;" onclick="FormGoster('../Kategori/EnvanterKategoriEkleKarti/?EnvanterTurID=0','ETurEkleModal')" title="Ekle" class="btn btn-outline-info fa fa-plus btn-circle btn-lg"></a>
+            &nbsp;
+            <br />
+
+            @if (Model.Count != 0)
+            {
+
+
+                <table id="example33" class="table table-bordered table-striped">
+
+
+                    <thead>
+                        <tr style="text-align: center">
+                            <th style="text-align: center">
+                                Barkod No
+                            </th>
+
+                            <th style="text-align: center">
+                                Tür Adı
+                            </th>
+                            <th style="text-align: center">
+                                Sil
+                            </th>
+
+
+
+
+
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.OrderByDescending(file => file.EnvanterTurID).ToList())
+
+                        {
+
+
+                        <tr style="text-align: center;cursor:pointer" ondblclick="FormGoster('../Kategori/EnvanterKategoriEkleKarti/?EnvanterTurID=@item.EnvanterTurID', 'ETurEkleModal')">
+
+
+                            <td >
+                                <a href="#" onclick="FormGoster('../Kategori/EnvanterKategoriEkleKarti/?EnvanterTurID=@item.EnvanterTurID', 'ETurEkleModal')"> @Html.DisplayFor(modelItem => item.BarkodNo)</a>
+                            </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EnvanterTuru)
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-danger btn-rounded btn-sm" onclick="EnvanterKategoriSil(@item.EnvanterTurID)"
+                                            data-toggle="tooltip" data-placement="bottom" title="Sil">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+
+
+                        }
+
+
+
+                    </tbody>
+
+
+                </table>
+            }
+            else
+            {
+
+
+
+                <br />
+                <div class="callout callout-info lead">
+                    <h4>Uyarı!</h4>
+                    <p>Henüz hiçbir tür eklemediniz.</p>
+                </div>
+
+
+
+
+
+
+
+
+
+
+            }
+        </div>
+        <!-- /.card-body -->
+  
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.col -->
+<!-- /.row -->
+<!-- /.container-fluid -->
+
+
+
+
+
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->

@@ -1,0 +1,183 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="content-header">
+    <h1>
+
+        &ensp;   <small>Devam Eden Destek Talepleri</small>
+
+    </h1>
+    <div class="col-3">
+        <hr />
+    </div>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> </a></li>
+
+    </ol>
+</section>
+
+
+
+
+
+
+
+<div class="box box-default">
+
+
+
+
+
+    <div id="PanelTeknikListe" class="col-sm-12">
+
+        @{
+            Html.RenderAction("TeknikListesi");
+
+
+        }
+    </div>
+</div>
+
+
+<div id="KullaniciModal2" class="modal">
+    <div class="modal-dialog-scrollable modal-xl" style="margin: 0.75rem auto;">
+        <div class="modal-content">
+            
+
+            <div id="KullaniciModal2Body" style="padding: 0rem;" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+<div id="TeknikModal" class="modal">
+    <div class="modal-dialog-scrollable" style="max-width: 520px; margin: 1.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Destek Kaydı Ekle Ve Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('TeknikModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="TeknikModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div id="StokSecKart" class="modal" style="z-index:3000">
+    <div class="modal-dialog-scrollable" style="max-width: 800px; margin: 1.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Stoktan Hizmet/Ürün Seç</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('StokSecKart')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="StokSecKartModalBody" style="padding:0" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+<div id="TeknikSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Destek Kaydını Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('TeknikSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="TeknikSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="IslemModal" class="modal">
+    <div class="modal-dialog-scrollable modal-xl" style="margin: 0.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Yapılan İşlemler</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('IslemModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="IslemModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+<div id="IslemModalTeknik" class="modal">
+    <div class="modal-dialog-scrollable modal-xl" style="margin: 0.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Yapılan İşlemler</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('IslemModalTeknik')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="IslemModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

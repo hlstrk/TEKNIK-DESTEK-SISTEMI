@@ -1,0 +1,66 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "_istatistikler";
+}
+
+
+<div class="row" style="padding-left: 250px">
+    <div class="col-md-3 col-sm-12 col-xs-12" >
+        <div class="info-box" ondblclick="@Url.Action("Index","Teknik")" >
+            <span class="info-box-icon bg-blue"><i class="fa fa-cogs"></i></span>
+
+            <div class="info-box-content" ondblclick="@Url.Action("Index","Firma")">
+                <span class="info-box-text">İşlemde</span>
+                <span class="info-box-number">@Session["islemadedi"]<small></small></span>
+                
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="info-box" ondblclick="@Url.Action("Index","Firma")">
+            <span class="info-box-icon bg-red"><i class="fa fa-suitcase"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Firmalar</span>
+                <span class="info-box-number">6@*@Session["KacKullanici"]*@</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <!-- fix for small devices only -->
+    <div class="clearfix visible-sm-block"></div>
+    
+
+
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="info-box" ondblclick="@Url.Action("Listele","Kullanici")">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-user-cog"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Personeller</span>
+
+                @if (Session["Personeller"] != null)
+                {
+                    <span class="info-box-number">@Session["Personeller"].ToString()<small></small></span>
+                }
+                else
+                {
+
+                    <span class="info-box-number">0<small></small></span>
+                }
+
+
+
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+</div>

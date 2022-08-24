@@ -1,0 +1,428 @@
+﻿@model TeknikServis.Entittes.Models.TeknikView
+
+@{
+    ViewBag.Title = "TeknikKarti";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("TeknikKarti", "Anasayfa", FormMethod.Post, new { id = "FrmTeknikKarti", enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(x => x.TeknikServisID)
+
+        @Html.HiddenFor(x => x.TeknikServisID)
+        @Html.HiddenFor(x => x.AitOlduguFirmaID)
+        @Html.HiddenFor(x => x.AitOlduguKullaniciID)
+        @Html.HiddenFor(x => x.OlusturanKullaniciAdi)
+
+
+        <div class="row">
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Arıza Türü</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-question"></i></span>
+
+                        </div>
+
+                        @Html.DropDownListFor(x => x.ArizaTuru, new SelectList(ViewBag.ArizaTurleri, "ArizaTuruID", "ArizaTuru"), new { @class = "form-control", id = "dropDownAriza" })
+
+                        <script>
+                            $(function () {
+                                $('#dropDownAriza').select2({
+
+
+                                    placeholder: "Seçim Yapın..",
+
+
+                                    width: '180px'
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+
+            @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+            {
+
+
+
+                <div class="col-md-6" style="margin-top: 1px;">
+
+                    <div class="form-group">
+                        <label>Durumu</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-cog"></i></span>
+
+                            </div>
+
+                            @Html.DropDownListFor(x => x.Durumu, new SelectList(ViewBag.TeknikDurum, "DurumID", "DurumAdi"), new { @class = "form-control", id = "dropDownDurum" })
+
+                            <script>
+                                $(function () {
+                                    $('#dropDownDurum').select2({
+
+
+                                        placeholder: "Seçim Yapın..",
+
+
+                                        width: '180px'
+                                    });
+                                });
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+
+
+
+
+
+            @if (Session["Role"].ToString() == "Admin")
+            {
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Tarih</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+
+                            </div>
+                            @Html.TextBoxFor(x => x.KayitZamani, new { autocomplete = "off", @class = "form-control", id = "zamansec" })
+                            <script>
+
+                                $(document).ready(function () {
+                                    $('#zamansec').flatpickr({
+                                        enableTime: true,
+                                        dateFormat: "d-M-Y H:i",
+                                        locale: "tr"
+
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    @if (Session["Role"].ToString() == "Firma" || Session["Role"].ToString() == "FirmaPersonel")
+                    {
+                        <label>Not</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-comment"></i></span>
+
+                            </div>
+                            @Html.TextAreaFor(x => x.MusteriBeyani, new { @class = "form-control", @placeholder = "Sorunun nedenini daha iyi anlamamız için notunuzu buraya bırakabilirsiniz..." })
+
+                        </div>
+                    }
+                    else
+                    {
+                        <label>Müşteri Notu/Beyanı</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-comment"></i></span>
+
+                            </div>
+                            @Html.TextAreaFor(x => x.MusteriBeyani, new { @class = "form-control", @placeholder = "Sorunun nedenini daha iyi anlamamız için notunuzu buraya bırakabilirsiniz..." })
+
+                        </div>
+                    }
+
+
+
+                    <!-- /.input group -->
+                </div>
+            </div>
+
+            @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel" || Session["Role"].ToString() == "Firma")
+            {
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @if (Session["Role"].ToString() == "Personel")
+                        {
+                            <label>Not/Arıza Tespiti</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+
+                                    <span class="input-group-text"><i class="fa fa-comment"></i></span>
+
+                                </div>
+                                @Html.TextAreaFor(x => x.CalisanYorumu, new { @class = "form-control", @placeholder = "Sorunun çözümü ilgili notlarınızı buraya bırakabilirsiniz..." })
+
+                            </div>
+                        }
+                        else if (Session["YeniKayitMi"] != null)
+                        {
+                            if (Session["Role"].ToString() == "Firma" || Session["Role"].ToString() == "FirmaPersonel" && Session["YeniKayitMi"].ToString() != "Evet")
+                            {
+                                {
+                                    <label>Personel Yorumu</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+
+                                            <span class="input-group-text"><i class="fa fa-comment"></i></span>
+
+                                        </div>
+                                        @Html.TextAreaFor(x => x.CalisanYorumu, new { @class = "form-control", @placeholder = "Personel herhangi bir not eklediğinde bu alanda gözükecektir...", @readonly = "readonly" })
+
+                                    </div>
+                                }
+                            }
+                        }
+
+
+
+                        <!-- /.input group -->
+                    </div>
+                </div>
+
+
+
+            }
+            @if (Session["YeniKayitMi"] != null)
+            {
+                if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel" && Session["YeniKayitMi"].ToString() != "Evet")
+                {
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Yapılan İşlemler</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <button class="btn btn-danger btn-rounded btn-lg" onclick="FormKapat('TeknikEkleModal');FormGoster('../Anasayfa/IslemKartiAnasayfa/?TeknikServisID=@Session["IslemAktarim"]', 'IslemModalAnasayfa');"
+                                            data-toggle="tooltip" data-placement="bottom" title="İşlemler">
+                                        <span class="fa fa-cogs"></span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            }
+
+
+
+
+            @if (Session["YeniKayitMi"] != null)
+            {
+                if (Session["Role"].ToString() == "Firma" || Session["Role"].ToString() == "FirmaPersonel" && Session["YeniKayitMi"].ToString() != "Evet")
+                {
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Yapılan İşlemler</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <button class="btn btn-danger btn-rounded btn-lg" onclick="FormKapat('TeknikEkleModal');FormGoster('../Anasayfa/IslemListesiKart/?TeknikServisID=@Session["IslemAktarim"]', 'IslemModalAnasayfa');"
+                                            data-toggle="tooltip" data-placement="bottom" title="Yapılan işlemleri görüntüle">
+                                        <span class="fa fa-cogs"></span>
+                                    </button>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            }
+
+
+
+
+
+
+
+            @if (Session["Role"].ToString() == "Admin")
+            {
+
+
+
+                <div class="col-md-6" style="margin-top: 1px;">
+
+                    <div class="form-group">
+                        <label>İlgilenen Personel</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+
+                            </div>
+
+                            @Html.DropDownListFor(x => x.AtanmisPersonelID, new SelectList(ViewBag.Personeller, "KullaniciID", "AdSoyad"), new { @class = "form-control", id = "dropDownKullanici" })
+
+                            <script>
+                                $(function () {
+                                    $('#dropDownKullanici').select2({
+
+
+                                        placeholder: "Seçim Yapın..",
+
+
+                                        width: '180px'
+                                    });
+                                });
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            }
+            @if (Session["Role"].ToString() == "Admin")
+            {
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Ödenecek Tutar</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i></i>₺</span>
+
+                            </div>
+                            @Html.TextBoxFor(x => x.OdenecekTutar, new { @class = "form-control" })
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            }
+
+            @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+            {
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label> Garanti: </label>
+                        &nbsp;
+
+
+
+                        <div class="custom-control custom-radio mt-3">
+
+
+                            @Html.CheckBoxFor(model => model.Garanti, "true")
+
+
+
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+            }
+            @if (Session["Role"].ToString() == "Admin")
+            {
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label> Anlaşmalı: </label>
+
+
+
+
+                        <div class="custom-control custom-radio mt-3">
+
+
+                            @Html.CheckBoxFor(model => model.Anlasmali, "true")
+
+
+
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+            }
+
+
+
+
+
+
+
+            <div class="col-md-8">
+                <div class="form-group">
+
+                    <label>Arıza/Destek Durumu: </label>
+                    <br />
+
+
+                    <div class="form-check form-check-inline">
+                        @Html.RadioButtonFor(model => model.Aktif, "true", new { @checked = "checked", @class = "form-check-label" })  Aktif
+
+                        &nbsp; &nbsp;&nbsp; &nbsp;
+                        @Html.RadioButtonFor(model => model.Aktif, "false", new { @class = "form-check-input" })  Pasif
+
+                        &nbsp;
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="modal-footer">
+            <div class="col-md-12">
+                @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+                <button type="button" value="Upload" onclick="TeknikKaydet() " class="btn btn-block btn-primary">Kaydet</button>
+            </div>
+        </div>
+    }
+</div>
+

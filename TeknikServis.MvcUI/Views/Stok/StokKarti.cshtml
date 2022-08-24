@@ -1,0 +1,595 @@
+﻿
+@model TeknikServis.Entittes.Models.Stok
+
+
+@{
+    ViewBag.Title = "StokKartiAnasayfa";
+    Layout = null;
+}
+
+
+
+
+   <div class="box box-danger">
+       <script>
+         
+       </script>
+    @using (Html.BeginForm("StokKarti", "Stok", FormMethod.Post, new { id = "FrmStokKarti" }))
+        {
+        @Html.HiddenFor(x => x.StokID)
+     
+   <div class="row">
+
+
+
+
+       <div id="dropDownMarka" class="col-md-12">
+           <div class="form-group" style="width:90%">
+               <label>Ait Olan Firma</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                   </div>
+
+                   @Html.DropDownListFor(x => x.FirmaID, new SelectList(ViewBag.EFirmaBAG, "FirmaID", "FirmaAdi"), new { @class = "form-control" })
+
+
+               </div>
+           </div>
+       </div>
+
+       <div class="col-md-6">
+           <div class="form-group" style="width:80%">
+               <label>Kategori</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+
+
+
+
+
+
+                   </div>
+
+                   @Html.DropDownListFor(x => x.StokKategoriID, new SelectList(ViewBag.EKategoriBAG, "StokKategoriID", "StokKategoriAdi"), new { @class = "form-control", id = "dropDownGrup", onclick = "StokCheck();" })
+                   <script>
+
+                       $('#dropDownGrup').change(function () {
+        // Kategori seçildiğinde bu fonksiyonumuz çalışmaya başlayacaktır.
+                                $('#Bolum').empty();
+
+
+                // Seçilen Kategorinin ID sini alıyoruz.
+                           var AltDepartmanID = $('#dropDownGrup').val();
+        /*Seçilen KategoriID sini kullanarak
+        Kategori(Controller) sınıfı içerisindeki AltKategorileriGetir
+        Action metodunu çağırıyoruz.
+        Bu metoddan dönen liste sayesinde .each fonksiyonu ile
+        AltKategori isimli DropDownList nesnesini dolduruyoruz.*/
+                                if (AltDepartmanID != null && AltDepartmanID != '') {
+        $.ajax({
+        type: "post",
+        url: '@Url.Action("StokTuruGetir", "Kategori")',
+            data: { StokKategoriID: AltDepartmanID },
+            success: function (bolum) {
+
+                $('#StokTuruDD').empty();
+                $.each(bolum, function (index, StokTuruAdi) {
+
+
+
+                    $('#StokTuruDD').append($('<option />', {
+                        value: bolum[index].StokTuruID,
+                        text: bolum[index].StokTuruAdi
+        }));
+        });
+        },
+        error: function () {
+
+        alert("Hata");
+        },
+        beforeSend: function () {
+
+        },
+        complete: function () {
+
+        }
+        });
+        }
+                       });
+                       function StokCheck() {
+
+
+
+
+                           var dop = $('#dropDownGrup :selected').text();
+                           console.log(dop);
+                               if (dop == "Hizmet") {
+
+                                   document.getElementById("dropDownMarka").style.display = "none";
+
+                                   document.getElementById("StokMarkaDD").style.display = "none";
+                                   document.getElementById("ip1").style.display = "none";
+                                   document.getElementById("mac1").style.display = "none";
+                                   document.getElementById("anydesk1").style.display = "none";
+                                   document.getElementById("tw1").style.display = "none";
+                                   document.getElementById("aw1").style.display = "none";
+                                   document.getElementById("os1").style.display = "none";
+                                   document.getElementById("af1").style.display = "none";
+                                   document.getElementById("brm1").style.display = "none";
+                                   document.getElementById("hiz1").style.display = "block";
+
+
+
+
+                               }
+
+                               else {
+
+
+
+                                   document.getElementById("dropDownMarka").style.display = "block";
+                                   document.getElementById("StokMarkaDD").style.display = "block";
+                                   document.getElementById("os1").style.display = "block";
+                                   document.getElementById("ip1").style.display = "block";
+                                   document.getElementById("mac1").style.display = "block";
+                                   document.getElementById("anydesk1").style.display = "block";
+                                   document.getElementById("tw1").style.display = "block";
+                                   document.getElementById("aw1").style.display = "block";
+                                   document.getElementById("hiz1").style.display = "none";
+                                   document.getElementById("af1").style.display = "block";
+                                   document.getElementById("brm1").style.display = "block";
+
+
+                               }
+
+
+                           }
+
+
+
+
+
+
+                   </script>
+                   <script>
+                       $(document).ready(function () {
+                           StokCheck();
+                       });
+
+                   </script>
+               </div>
+           </div>
+       </div>
+
+
+
+       <div id="dropDownMarka" class="col-md-6">
+           <div class="form-group" style="width:80%">
+               <label>Türü</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                   </div>
+
+                   @Html.DropDownListFor(model => model.StokTuruID, new SelectList(ViewBag.ETurBAG, "StokTuruID", "StokTuruAdi"), new { @class = "form-control", id = "StokTuruDD" })
+
+
+               </div>
+           </div>
+       </div>
+
+
+
+       <div id="StokMarkaDD" "" class="col-md-6">
+           <div class="form-group" style="width:80%">
+               <label>Marka</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                   </div>
+
+                   @Html.DropDownListFor(x => x.StokMarkaID, new SelectList(ViewBag.EMarkalarBAG, "StokMarkaID", "StokMarkaAdi"), new { @class = "form-control" })
+
+
+               </div>
+           </div>
+       </div>
+
+
+
+       <div class="col-md-6">
+
+
+           <div class="form-group">
+               <label>Miktar</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i class="fa fa-sort"></i></span>
+
+                   </div>
+                   <div style="width: 25%; border-radius: 0; ">
+                       @Html.DropDownListFor(m => m.KacTane, Enumerable.Range(1, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new
+                  {
+
+                      @id = "MiktarTB",
+                      @class = "form-control chosen",
+                      data_show_subtext = "true",
+                      data_live_search = "true",
+                      @style = " border-radius: 0;"
+
+                  })
+                   </div>
+                   <div style="width: 40%; border-radius: 0;">
+
+                       @Html.DropDownList("Birim",
+        new List<SelectListItem> {
+
+        new SelectListItem {
+        Text="Adet",
+        Value="Adet",
+        Selected = true
+
+
+        },
+        new SelectListItem {
+        Text="Kutu",
+        Value="Kutu",
+
+
+        },
+        new SelectListItem {
+        Text="Koli",
+        Value="Koli",
+        },
+        }, new { @class = "form-control", @style = " border-radius: 0;" })
+                   </div>
+
+
+
+               </div>
+
+           </div>
+
+
+
+
+
+       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       <div id="ip1" class="col-md-6">
+           <div class="form-group" style="width:80%">
+               <label>Birincil IP</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i></i>₺</span>
+
+                   </div>
+                   @Html.TextBoxFor(x => x.IP, new { @class = "form-control" })
+
+
+
+               </div>
+           </div>
+       </div>
+
+       <div id="mac1" class="col-md-6">
+           <div class="form-group" style="width:80%">
+               <label>Birincil MAC</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+
+
+                       <span class="input-group-text"><i></i>₺</span>
+
+                   </div>
+                   @Html.TextBoxFor(x => x.MAC, new { @class = "form-control" })
+
+
+
+               </div>
+           </div>
+       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+       <div id="anydesk1" class="col-md-6">
+           <div class="form-group" style="width:80%">
+               <label>AnyDesk ID</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i></i>₺</span>
+
+                   </div>
+                   @Html.TextBoxFor(x => x.AnyDesk, new { @class = "form-control" })
+
+
+
+               </div>
+           </div>
+       </div>
+
+       <div id="tw1" class="col-md-6">
+           <div class="form-group" style="width:80%">
+               <label>TeamViewer ID</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i></i>₺</span>
+
+                   </div>
+                   @Html.TextBoxFor(x => x.TeamViewer, new { @class = "form-control" })
+
+
+
+               </div>
+           </div>
+       </div>
+
+
+
+       <div id="os1" class="col-md-6">
+           <div class="form-group" style="width:80%">
+               <label>İşletim Sistemi</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i></i></span>
+
+                   </div>
+                   @Html.TextBoxFor(x => x.OS, new { @class = "form-control" })
+
+
+
+               </div>
+           </div>
+       </div>
+
+
+       <div id="aw1" class="col-md-6">
+           <div class="form-group" style="width:80%">
+               <label>Anti Virüs</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i></i></span>
+
+                   </div>
+                   @Html.TextBoxFor(x => x.AntiVirüs, new { @class = "form-control" })
+
+
+
+               </div>
+           </div>
+       </div>
+       <div id="kdv1" class="col-md-6">
+           <div class="form-group" style="width:80%">
+               <label>KDV Oranı</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i></i></span>
+
+                   </div>
+                   @Html.TextBoxFor(x => x.KDVOrani, new { @class = "form-control" })
+
+
+
+               </div>
+           </div>
+       </div>
+
+       <div id="af1" class="col-md-6">
+           <div class="form-group" style="width:80%">
+               <label>Alış Fiyatı</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i></i></span>
+
+                   </div>
+                   @Html.TextBoxFor(x => x.AlisFiyati, new { @class = "form-control" })
+
+
+
+               </div>
+           </div>
+       </div>
+       <div id="sf1" class="col-md-6">
+
+
+           <div class="form-group">
+               <label>Satış Fiyatı</label>
+               <div class="input-group mb-3">
+
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i class="fa fa-money-bill-alt"></i></span>
+
+                   </div>
+                   <div style="width: 35%; border-radius: 0; ">
+                       @Html.TextBoxFor(x => x.Fiyat, new { @class = "form-control", @style = "border-radius: 0;" })
+                   </div>
+                   <div style="width: 45%; border-radius: 0;">
+                       @Html.DropDownList("ParaBirimi",
+    new List<SelectListItem> {
+
+    new SelectListItem {
+    Text="₺",
+    Value="₺",
+    Selected = true
+
+
+    },
+    new SelectListItem {
+    Text="$",
+    Value="$",
+
+
+    },
+    new SelectListItem {
+    Text="€",
+    Value="€",
+    },
+    }, new { @class = "form-control", @style = "width:60%;border-radius: 0;" })
+
+                   </div>
+
+
+
+               </div>
+
+           </div>
+
+
+
+
+
+
+
+
+
+       </div>
+
+       <div id="hiz1" class="col-md-6">
+           <div class="form-group" style="width:80%">
+               <label>Hzimet Türü</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i></i></span>
+
+                   </div>
+                   @Html.TextBoxFor(x => x.hizmetturu, new { @class = "form-control" })
+
+
+
+               </div>
+           </div>
+       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       <div class="col-md-12">
+           <div class="form-group">
+
+               <label>Açıklama</label>
+               <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+
+                       <span class="input-group-text"><i class="fa fa-comment"></i></span>
+
+                   </div>
+                   @Html.TextAreaFor(x => x.Aciklama, new { @class = "form-control", @placeholder = "İşlemler ekranında görünecek bilgi..." })
+
+               </div>
+           </div>
+       </div>
+
+
+
+       <div class="col-md-4" style="margin:auto">
+
+           <button type="button" onclick="StokKaydet()" class="btn btn-block btn-outline-dark">Ekle/Düzenle</button>
+       </div>
+
+
+
+
+
+
+
+
+
+
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+           }
+        </div>
+    
+        <div id="StokSilModal" class="modal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Stok Kaydını Sil</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('StokSilModal')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+
+                    <div id="StokSilModalBody" class="modal-body">
+
+                    </div>
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+

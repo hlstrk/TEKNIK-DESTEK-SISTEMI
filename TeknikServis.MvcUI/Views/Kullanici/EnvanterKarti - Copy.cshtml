@@ -1,0 +1,376 @@
+﻿
+@model TeknikServis.Entittes.Models.Envanter
+
+
+@{
+    ViewBag.Title = "EnvanterKartiAnasayfa";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+<div class="modal-header">
+    <h5 class="modal-title" style="color:lightslategrey">@Session["EnvanterAktarim"]</h5>  <h5 class="modal-title">  &nbsp;  Envanter</h5>     
+    <button  type="button"  class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('EnvanterModal')">
+             <span aria-hidden="true">&times;</span>
+          <h5  class="modal-title" style="float:left;margin-right:3rem;color:cornflowerblue">    @Model.Departman</h5>
+   
+    </button>
+</div>
+
+<div class="box box-danger" style="padding:1rem">
+    @using (Html.BeginForm("EnvanterKarti", "Kullanici", FormMethod.Post, new { id = "FrmEnvanterKarti" }))
+    {
+        @Html.HiddenFor(x => x.EnvanterID)
+        @Html.HiddenFor(x => x.KullaniciID)
+        @Html.HiddenFor(x => x.Firma)
+        @Html.HiddenFor(x=>x.Departman)
+        <div class="row">
+
+
+            @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+            {
+
+                <div class="col-md-12" style="margin-top: 1px;">
+
+                    <div class="form-group">
+
+                        <div id="PanelEnvanterListeKart" class="col-12">
+                            @{
+                                Html.RenderAction("EnvanterListesiKart");
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>Kategori</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                        </div>
+
+                        @Html.DropDownListFor(x => x.Turu, new SelectList(ViewBag.EKategoriBAG, "TanimAdi", "TanimAdi"), new { @class = "form-control", id = "dropDownGrup" })
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>Marka</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                        </div>
+
+                        @Html.DropDownListFor(x => x.Marka, new SelectList(ViewBag.EMarkalarBAG, "TanimAdi", "TanimAdi"), new { @class = "form-control", id = "dropDownGrup" })
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>Birincil IP</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.IP, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>Birincil MAC</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.MAC, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>İkincil IP</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.IP2, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>İkincil MAC</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.MAC2, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>WLAN IP</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.WLANIP, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>WLAN MAC</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.WLANMAC, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>AnyDesk ID</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.AnyDesk, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>TeamViewer ID</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.TeamViewer, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>İşletim Sistemi</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.OS, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>Anti Virüs</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.AntiVirüs, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Kapsam</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.DropDownList("Kapsamici",
+                     new List<SelectListItem> {
+                         new SelectListItem {
+                            Text="Dahil",
+                            Value="true",
+                            // Selected = true, seçili olarak gelsin
+                            // Disabled = true  disable olarak gelsin istersek kullanıyoruz
+                         },
+                         new SelectListItem {
+                            Text="Hariç",
+                            Value="false",
+                         },
+                     }, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" style="margin:auto">
+
+                <button type="button" onclick="EnvanterKaydetKullanici(); EnvanterListeleKart();" class="btn btn-block btn-success">Ekle</button>
+            </div>
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+    }
+</div>
+
+<div id="EnvanterSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Envanter Kaydını Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('EnvanterSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="EnvanterSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+

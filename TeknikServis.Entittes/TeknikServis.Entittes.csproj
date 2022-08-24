@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{355125E1-708E-4308-8935-C84ED5DB5CCA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TeknikServis.Entittes</RootNamespace>
+    <AssemblyName>TeknikServis.Entittes</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Appointments.cs" />
+    <Compile Include="Models\Ayarlar.cs" />
+    <Compile Include="Models\Bolumler.cs" />
+    <Compile Include="Models\AltDepartmanlar.cs" />
+    <Compile Include="Models\Departmanlar.cs" />
+    <Compile Include="Models\Durumlar.cs" />
+    <Compile Include="Models\DosyaYukle.cs" />
+    <Compile Include="Models\EnvanterMarkalari.cs" />
+    <Compile Include="Models\EnvanterTurleri.cs" />
+    <Compile Include="Models\Envanter.cs" />
+    <Compile Include="Models\Bildirim.cs" />
+    <Compile Include="Models\ArizaTurleri.cs" />
+    <Compile Include="Models\ilce.cs" />
+    <Compile Include="Models\il.cs" />
+    <Compile Include="Models\Gorev.cs" />
+    <Compile Include="Models\StokTurleri.cs" />
+    <Compile Include="Models\StokKategorileri.cs" />
+    <Compile Include="Models\StokMarkalari.cs" />
+    <Compile Include="Models\Not.cs" />
+    <Compile Include="Models\ServisRaporu.cs" />
+    <Compile Include="Models\Marka.cs" />
+    <Compile Include="Models\Stok.cs" />
+    <Compile Include="Models\Teklif.cs" />
+    <Compile Include="Models\TeklifDetay.cs" />
+    <Compile Include="Models\ServisFormu.cs" />
+    <Compile Include="Models\TeklifFormu.cs" />
+    <Compile Include="Models\TeknikDetay.cs" />
+    <Compile Include="Models\TeknikResim.cs" />
+    <Compile Include="Models\TeknikHareket.cs" />
+    <Compile Include="Models\Kullanici.cs" />
+    <Compile Include="Models\KullaniciYetki.cs" />
+    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Personel.cs" />
+    <Compile Include="Models\Resources.cs" />
+    <Compile Include="Models\Sabit.cs" />
+    <Compile Include="Models\Firma.cs" />
+    <Compile Include="Models\FirmaHareket.cs" />
+    <Compile Include="Models\FirmaLog.cs" />
+    <Compile Include="Models\FirmaResim.cs" />
+    <Compile Include="Models\FirmaSayim.cs" />
+    <Compile Include="Models\FirmaVaryant.cs" />
+    <Compile Include="Models\sysdiagrams.cs" />
+    <Compile Include="Models\Tanim.cs" />
+    <Compile Include="Models\TanimGrup.cs" />
+    <Compile Include="Models\Teknik.cs" />
+    <Compile Include="Models\Yetki.cs" />
+    <Compile Include="PocoModels\PocoIslemListesi.cs" />
+    <Compile Include="PocoModels\PocoEnvanterListesi.cs" />
+    <Compile Include="PocoModels\PocoKategoriListesi.cs" />
+    <Compile Include="PocoModels\PocoKullanici.cs" />
+    <Compile Include="PocoModels\PocoFirmaListesi.cs" />
+    <Compile Include="PocoModels\PocoNotListesi.cs" />
+    <Compile Include="PocoModels\PocoStokListesi.cs" />
+    <Compile Include="PocoModels\PocoTeklifDetayListesi.cs" />
+    <Compile Include="PocoModels\PocoBildirimListesi.cs" />
+    <Compile Include="PocoModels\PocoTeklifListesi.cs" />
+    <Compile Include="PocoModels\PocoTeknikListesi.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\EnvanterView.cs" />
+    <Compile Include="ViewModels\FirmaView.cs" />
+    <Compile Include="ViewModels\GorevView.cs" />
+    <Compile Include="ViewModels\NotView.cs" />
+    <Compile Include="ViewModels\StokTurleriView.cs" />
+    <Compile Include="ViewModels\StokView.cs" />
+    <Compile Include="ViewModels\TeknikDetayView.cs" />
+    <Compile Include="ViewModels\TeknikView.cs" />
+    <Compile Include="ViewModels\KullaniciView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ModelViews\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

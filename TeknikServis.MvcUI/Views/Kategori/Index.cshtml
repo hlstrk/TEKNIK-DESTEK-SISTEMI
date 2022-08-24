@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="content-header">
+    <h1>
+
+        <small>Servis Ana Tanımları</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> </a></li>
+
+    </ol>
+</section>
+<br />
+
+
+
+
+<div class="box box-default">
+
+
+    <div class="box box-default">
+
+
+
+        <div class="row" style="margin-right: 0px; margin-left:0px;"><div class="col-sm-12"></div><div class="col-sm-12"></div></div><div class="row" style="margin-right: 0px; margin-left:0px;">
+
+
+    
+    <div id="PanelTanimListe2" class="col-6">
+
+        @{
+
+            Html.RenderAction("DurumKategoriListesi");
+
+
+
+
+
+        }
+    </div>
+
+
+
+    <div id="PanelTanimListe3" class="col-6">
+
+        @{
+
+
+            Html.RenderAction("ArizaKategoriListesi");
+
+
+
+
+        }
+    </div>
+
+    <div id="PanelTanimListe4" class="col-6">
+
+        @{
+
+
+
+
+
+            Html.RenderAction("FirmaKategoriListesi");
+
+
+
+
+
+
+        }
+    </div>
+
+
+
+
+    
+</div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<div id="TanimModal" class="modal">
+    <div class="modal-dialog-scrollable" style="max-width: 520px; margin: 1.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tanim/Arıza Kaydı Ekle Ve Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('TanimModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="TanimModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div id="TanimSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Destek Kaydını Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('TanimSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="TanimSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="IslemModal" class="modal">
+    <div class="modal-dialog-scrollable modal-xl" style="margin: 0.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Yapılan İşlemler</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('IslemModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="IslemModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+<div id="IslemModalTanim" class="modal">
+    <div class="modal-dialog-scrollable modal-xl" style="margin: 0.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Yapılan İşlemler</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('IslemModalTanim')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="IslemModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

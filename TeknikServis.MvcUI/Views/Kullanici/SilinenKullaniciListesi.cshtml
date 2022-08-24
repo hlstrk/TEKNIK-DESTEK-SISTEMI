@@ -1,0 +1,321 @@
+﻿@model IEnumerable<TeknikServis.Entittes.Models.KullaniciView>
+
+@{
+
+    ViewBag.Title = "KullaniciListesi";
+    <section class="content-header">
+        <h1>
+            Kullanıcılar/ 
+            <small> Silinen Kullanıcı Listesi</small>
+        </h1>
+
+    </section>
+
+
+
+
+
+}
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+
+                <div class="card">
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.Count() != 0)
+                        {
+
+
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr style="text-align:center">
+                                        <th>
+                                            Kullanıcı Adı
+                                        </th>
+
+                                        <th>
+                                            Adı Soyadı
+                                        </th>
+                                        <th>
+                                            Kullanıcı Türü
+                                        </th>
+                                        <th>
+                                            Cep Tel No
+                                        </th>
+                                        @if (Session["Role"].ToString() == "Admin")
+                                        {
+                                            <th>
+                                                Çalıştığı Firma
+                                            </th>
+                                        }
+                                        <th>
+                                            Kayıt Tarihi Ve Saati
+                                        </th>
+                                        <th>
+                                            En Son Aktif
+                                        </th>
+                                        <th>
+                                            Durumu
+                                        </th>
+
+
+                                        <th>
+                                            İşlemler
+                                        </th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <tr ondblclick="FormGoster('../Kullanici/KullaniciKarti/?KullaniciID=@item.KullaniciID', 'KullaniciModalMain')">
+                                            <td style="text-align:center">
+                                                @Html.DisplayFor(modelItem => item.KullaniciAdi)
+                                            </td>
+                                            <td style="text-align:center">
+                                                @Html.DisplayFor(modelItem => item.AdSoyad)
+                                            </td>
+                                            <td style="text-align:center">
+                                                @if (item.Yetkiler == "Admin")
+                                                {
+                                                    <div style="text-align: center;" class="badge bg-danger">
+                                                        <label style="color: white; text-align: center;padding-top:4px">Admin</label>
+                                                    </div>
+                                                }
+                                                else if (item.Yetkiler == "Firma")
+                                                {
+                                                    <div style="text-align: center;" class="badge bg-info">
+                                                        <label style="color: white; text-align: center;padding-top:4px">Firma</label>
+                                                    </div>
+                                                }
+                                                else if (item.Yetkiler == "Personel")
+                                                {
+                                                    <div style="text-align: center;" class="badge  bg-dark">
+                                                        <label style="color: white; text-align: center;padding-top:4px">Personel</label>
+                                                    </div>
+                                                }
+                                                else if (item.Yetkiler == "FirmaPersonel")
+                                                {
+                                                    if (Session["Role"].ToString() == "Firma")
+                                                    {
+                                                        <div style="text-align: center;" class="badge bg-secondary">
+                                                            <label style="color: white; text-align: center;padding-top:4px">Personel</label>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div style="text-align: center;" class="badge bg-secondary">
+                                                            <label style="color: white; text-align: center;padding-top:4px">Firma Personeli</label>
+                                                        </div>
+                                                    }
+                                                }
+
+                                            </td>
+                                            <td style="text-align:center">
+                                                @Html.DisplayFor(modelItem => item.CepTelNo)
+                                            </td>
+                                            @if (Session["Role"].ToString() == "Admin")
+                                            {
+                                                <td style="text-align:center">
+                                                    @Html.DisplayFor(modelItem => item.CalistigiFirma)
+                                                </td>
+                                            }
+                                            <td style="text-align:center">
+                                                @Html.DisplayFor(modelItem => item.KayitZamani)
+                                            </td>
+                                            <td style="text-align:center">
+                                                @Html.DisplayFor(modelItem => item.EnSonGirisZamani)
+                                            </td>
+
+                                            <td style="text-align: center">
+
+                                                @if (item.Aktif == true)
+                                                {
+                                                    <div style="text-align: center">
+                                                        <label style="color: green">Aktif</label>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="text-align:center">
+                                                        <label style="color:grey">Pasif</label>
+                                                    </div>
+                                                }
+
+                                            </td>
+
+                                            <td style="text-align:center">
+
+
+                                                <button class="btn btn-warning btn-rounded btn-sm" onclick="FormGoster('../Kullanici/KullaniciKarti/?KullaniciID=@item.KullaniciID','KullaniciModalMain')"
+                                                        data-toggle="tooltip" data-placement="bottom" title="Düzenle">
+                                                    <span class="fa fa-edit"></span>
+                                                </button> |
+
+
+
+
+                                                <button class="btn btn-primary btn-rounded btn-sm" onclick="KullaniciGeriAl(@item.KullaniciID)"
+                                                        data-toggle="tooltip" data-placement="bottom" title="Geri Al">
+                                                    <span class="fa fa-reply"></span>
+                                                </button>
+                                                @*@Url.Action("Düzenle", "Edit",null, new { /* id=item.PrimaryKey */ @class= "fa fa-edit" }) |
+                                @Html.ActionLink("Detay", "Details", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Sil", "Delete", new { /* id=item.PrimaryKey */ }) *@
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+
+                            </table>
+                        }
+
+                        else
+                        {
+
+                            <br />
+                            <div class="callout callout-info lead">
+                                <h4>Uyarı!</h4>
+                                <p>Şu anda silinen hiçbir kullanıcı yok.</p>
+                            </div>
+
+                        }
+                        <br />
+
+
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+
+    <!-- /.container-fluid -->
+</section>
+
+
+<div id="KullaniciModalMain" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kullanıcı Ekle Ve Düzenle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('KullaniciModalMain')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="KullaniciModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div id="EnvanterModal" class="modal">
+    <div class="modal-dialog-scrollable modal-lg" style=" margin: 1.75rem auto;">
+        <div class="modal-content">
+
+
+
+            <div id="EnvanterModalBody" class="modal-body" style="padding:0">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div id="EnvanterSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Envanter Kaydını Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('EnvanterSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="EnvanterSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div id="KullaniciSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kullanıcıyı Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('KullaniciSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="KullaniciSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

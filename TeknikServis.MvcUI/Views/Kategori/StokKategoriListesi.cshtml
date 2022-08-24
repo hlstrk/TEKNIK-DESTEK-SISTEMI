@@ -1,0 +1,112 @@
+﻿
+
+@model List<TeknikServis.Entittes.Models.StokKategorileri>
+
+@{
+    ViewBag.Title = "StokKategoriListesi";
+    Layout = null;
+}
+
+
+<!-- /.row -->
+<!-- /.row -->
+
+
+
+<div style=" margin:auto; padding-top:30px">
+
+
+    <div class="card">
+
+        <!-- /.card-header -->
+        <div class="card-body">
+            <p> Stok Kategorisi</p>
+            <br />
+
+
+
+           
+            &nbsp;
+            <a style="margin-bottom:20px;"  onclick="FormGoster('../Kategori/StokKategoriEkleKarti/?StokKategoriID=0','TanimEkleModal')" title="Ekle" class="btn btn-outline-danger fa fa-plus btn-circle btn-lg"></a>
+         
+
+            @if (Model.Count == 0)
+            {
+
+
+                <div class="callout callout-danger lead">
+                    <h4>Uyarı!</h4>
+                    <p>Burada Henüz Hiç Stok Kategorisi Yok!.</p>
+                </div>
+
+            }
+
+            else
+            {
+
+                <table id="example22" class="table table-bordered table-striped">
+                    <thead>
+                        <tr style="text-align: center">
+                            <th style="text-align: center">
+                                ID
+                            </th>
+                            <th style="text-align: center">
+                                Barkod No
+                            </th>
+
+                            <th style="text-align: center">
+                                Stok Kategorisi
+                            </th>
+                            <th style="text-align: center">
+                                Sil
+                            </th>
+
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.OrderByDescending(item => item.StokKategoriID).ToList())
+
+                        {
+
+
+                            <tr style="text-align: center;cursor:pointer" ondblclick="FormGoster('../Teknik/TanimKarti/?TanimID=@item.StokKategoriID', 'TanimEkleModal')">
+
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StokKategoriID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BarkodNo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StokKategoriAdi)
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-danger btn-rounded btn-sm" onclick="StokKategoriSil(@item.StokKategoriID)"
+                                            data-toggle="tooltip" data-placement="bottom" title="Sil">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+
+
+                        }
+
+
+
+                    </tbody>
+
+
+                </table>
+            }
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.col -->
+
+

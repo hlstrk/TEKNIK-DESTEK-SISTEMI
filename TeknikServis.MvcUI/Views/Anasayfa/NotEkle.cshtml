@@ -1,0 +1,90 @@
+﻿
+@model TeknikServis.Entittes.Models.Not
+@{
+    ViewBag.Title = "NotEkle";
+    Layout = null;
+}
+
+
+
+
+
+@using (Html.BeginForm("NotEkle", "Anasayfa", FormMethod.Post, new { id = "FrmNotEkleKartiDB" }))
+{
+    @Html.HiddenFor(x => x.NotID)
+    <div class="row">
+
+        <div class="form-group col-md-12">
+
+            <div class="col-md-12" style="margin-top: 1px;">
+
+
+                <br />
+                <div class="col-md-12" style="margin-top: 1px;">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-sticky-note"></i></span>
+
+                        </div>
+                        @Html.TextAreaFor(x => x.NotIcerigi, new { @class = "form-control", maxlength = "150", @placeholder = "Eklemek istediğiniz notu buraya giriniz...", @id = "NotDB2" })
+                       
+
+                            <script>
+                                $(function () {
+                                    $('#NotDB2').keyup(function (e) {
+                                        var max = 150;
+                                        var len = $(this).val().length;
+                                        var char = max - len;
+                                        $('#text-counter').html(char);
+                                        if (char < 21) {
+                                            $('#text-counter').css({ 'color': 'red' });
+                                        }
+                                        else
+                                        {
+                                            $('#text-counter').css({ 'color': 'black' });
+                                        }
+                                    });
+                                });
+                            </script>
+
+                        </div>
+                        <div id="text-counter-parent" class="col-md-offset-2 col-md-10"><span id="text-counter">150</span> karakter kaldı.</div>
+                        <br />  
+                    </div>
+                @if (Session["Role"].ToString() != "FirmaPersonel")
+                {
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Not Türü</label>
+                            <br />
+
+                            @Html.CheckBoxFor(x => x.DuyuruMu, new
+                       {
+
+                           data_toggle = "toggle",
+                           data_onstyle = "danger",
+                           data_offstyle = "primary",
+                           data_on = "Duyuru",
+                           data_off = "Kişisel",
+                           data_size = "sm"
+                       })
+
+
+
+
+
+                        </div>
+                    </div>
+                }
+
+                <a onclick="NotKaydetDB()" class="btn btn-m btn-success btn-m pull-right">Kaydet</a>
+
+            </div>
+        </div>
+    </div>
+
+
+
+}

@@ -1,0 +1,56 @@
+﻿
+@model TeknikServis.Entittes.Models.Durumlar
+
+@{
+    ViewBag.Title = "DurumEkleKarti";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("DurumKategoriEkleFK", "Kategori", FormMethod.Post, new { id = "FrmDurumEkleKarti" }))
+    {
+        @Html.HiddenFor(x => x.DurumID)
+
+        <div class="row">
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Eklenecek Destek Talebi Durumu</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.DurumAdi, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+
+
+
+        </div>
+
+        <div class="modal-footer">
+            <div class="col-md-12">
+                @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+                <button type="button" onclick="DurumTuruKaydet()" class="btn btn-block btn-primary">Kaydet</button>
+            </div>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,427 @@
+﻿
+@model TeknikServis.Entittes.Models.Departmanlar
+
+
+@{
+    ViewBag.Title = "DepartmanKarti";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+<div class="box box-danger">
+    @using (Html.BeginForm("DepartmanKarti", "Kategori", FormMethod.Post, new { id = "FrmDepartmanKarti" }))
+    {
+        @Html.HiddenFor(x => x.FirmaID)
+
+    <div class="row">
+
+
+        <div class="col-md-12">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>Seçiniz...</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-tasks"></i></span>
+
+                        </div>
+
+
+
+                        <script type="text/javascript">
+        $(document).ready(function () {
+        // Kategori seçildiğinde bu fonksiyonumuz çalışmaya başlayacaktır.
+
+
+                console.log("Deneme1");
+                // Seçilen Kategorinin ID sini alıyoruz.
+            var FirmaID =   @Model.FirmaID;
+        /*Seçilen KategoriID sini kullanarak
+        Kategori(Controller) sınıfı içerisindeki AltKategorileriGetir
+        Action metodunu çağırıyoruz.
+        Bu metoddan dönen liste sayesinde .each fonksiyonu ile
+        AltKategori isimli DropDownList nesnesini dolduruyoruz.*/
+                if (FirmaID != null && FirmaID != '') {
+        $.ajax({
+        type: "post",
+        url: '@Url.Action("DepartmanGetir", "Kategori")',
+            data: { FirmaID: FirmaID },
+            success: function (departman) {
+                console.log(departman);
+                $.each(departman, function (index, DepartmanAdi) {
+
+
+                    var departmanlar = '<option value="' + departman[index].DepartmanID + '">' + departman[index].DepartmanAdi + '</option>';
+                    $('#Departman').append(departmanlar);
+
+
+        });
+        },
+        error: function () {
+
+        alert("Hata");
+        },
+        beforeSend: function () {
+
+        },
+        complete: function () {
+
+        }
+        });
+        }
+        });
+
+                            $('#Departman').on("select2:select", function(e) {
+        // Kategori seçildiğinde bu fonksiyonumuz çalışmaya başlayacaktır.
+
+
+                console.log("Deneme2");
+                // Seçilen Kategorinin ID sini alıyoruz.
+                                   var DepartmanID = $('#Departman').val();
+        /*Seçilen KategoriID sini kullanarak
+        Kategori(Controller) sınıfı içerisindeki AltKategorileriGetir
+        Action metodunu çağırıyoruz.
+        Bu metoddan dönen liste sayesinde .each fonksiyonu ile
+        AltKategori isimli DropDownList nesnesini dolduruyoruz.*/
+                                   if (DepartmanID != null && DepartmanID != '') {
+        $.ajax({
+        type: "post",
+        url: '@Url.Action("AltDepartmanGetir", "Kullanici")',
+            data: { DepartmanID: DepartmanID },
+            success: function (altdepartman) {
+                console.log(altdepartman);
+                $('#AltDepartman').val(null).trigger('change');
+                $('#Bolum').val(null).trigger('change');
+                $.each(altdepartman, function (index, AltDepartmanAdi) {
+
+                    $('#AltDepartman').append($('<option />', {
+                        value: altdepartman[index].AltDepartmanID,
+                        text: altdepartman[index].AltDepartmanAdi
+                    }));
+
+
+
+
+                });
+
+        },
+        error: function () {
+
+        alert("Hata");
+        },
+        beforeSend: function () {
+
+        },
+        complete: function () {
+
+        }
+        });
+
+                                       $.ajax({
+                                           method: 'GET',
+                                           url: '../Kategori/AltDepartmanListesi/' + DepartmanID,
+                                           content: "application/html;",
+                                           dataType: 'html',
+                                           data: { FirmaID: DepartmanID }
+                                       }).done(function (data) {
+                                           $("#PanelAltDepartmanListeKart").html(data);
+                                           document.getElementById("AnaBolumBody").style.display = "none";
+                                           document.getElementById("AnaDepartmanBody").style.display = "none";
+                                            document.getElementById("AnaAltDepartmanBody").style.display = "block";
+
+                                       }).fail(function () {
+                                           console.log("Hata oluştu.");
+                                           ModalBilgilendirme("Hata", "Hata Oluştu.");
+                                       });
+        }
+        });
+
+
+                            $('#AltDepartman').change(function () {
+        // Kategori seçildiğinde bu fonksiyonumuz çalışmaya başlayacaktır.
+
+
+                console.log("Deneme3");
+                // Seçilen Kategorinin ID sini alıyoruz.
+                                var AltDepartmanID = $('#AltDepartman').val();
+        /*Seçilen KategoriID sini kullanarak
+        Kategori(Controller) sınıfı içerisindeki AltKategorileriGetir
+        Action metodunu çağırıyoruz.
+        Bu metoddan dönen liste sayesinde .each fonksiyonu ile
+        AltKategori isimli DropDownList nesnesini dolduruyoruz.*/
+                                if (AltDepartmanID != null && AltDepartmanID != '') {
+        $.ajax({
+        type: "post",
+        url: '@Url.Action("BolumGetir", "Kategori")',
+            data: { AltDepartmanID: AltDepartmanID },
+            success: function (bolum) {
+                console.log(bolum);
+                $('#Bolum').val(null).trigger('change');
+                $.each(bolum, function (index, BolumAdi) {
+
+
+
+                    $('#Bolum').append($('<option />', {
+                        value: bolum[index].BolumID,
+                        text: bolum[index].BolumAdi
+        }));
+        });
+        },
+        error: function () {
+
+        alert("Hata");
+        },
+        beforeSend: function () {
+
+        },
+        complete: function () {
+
+        }
+        });
+
+                                    $.ajax({
+                                        method: 'GET',
+                                        url: '../Kategori/BolumListesi/' + AltDepartmanID,
+                                        content: "application/html;",
+                                        dataType: 'html',
+                                        data: { FirmaID: AltDepartmanID }
+                                    }).done(function (data) {
+                                        $("#PanelBolumListeKart").html(data);
+                                        document.getElementById("AnaBolumBody").style.display = "block";
+                                        document.getElementById("AnaDepartmanBody").style.display = "none";
+                                        document.getElementById("AnaAltDepartmanBody").style.display = "none";
+                                    }).fail(function () {
+                                        console.log("Hata oluştu.");
+                                        ModalBilgilendirme("Hata", "Hata Oluştu.");
+                                    });
+        }
+        });
+
+
+
+                        </script>
+
+
+
+                        @Html.DropDownList("Departman", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", id = "Departman" }) &nbsp;/ &nbsp;
+                        @Html.DropDownList("AltDepartman", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", id = "AltDepartman" }) &nbsp;/ &nbsp;
+                        @Html.DropDownList("Bolum", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", id = "Bolum" })
+
+
+
+
+
+
+
+                        <script>
+                            $(function () {
+                                $('#Departman').select2({
+
+
+                                    tags: true,
+
+
+                                    width: '10rem'
+                                });
+                            });
+                            $(function () {
+                                $('#AltDepartman').select2({
+
+
+                                    tags: true,
+
+
+                                    width: '10rem'
+                                });
+                            });
+
+                            $(function () {
+                                $('#Bolum').select2({
+
+
+                                    tags: true,
+
+
+                                    width: '10rem'
+                                });
+                            });
+
+
+
+                        </script>
+
+                    </div>
+                    <label>
+                        &nbsp;
+                        &nbsp;
+                        <a style="margin-bottom:20px;" onclick="DepEkle(@Model.FirmaID)" class="btn btn-m btn-outline-secondary btn-m pull-right">Ekle</a>
+                       
+                    </label>
+                            
+                            }
+
+
+
+
+
+                            <!-- /.input group -->
+</div>
+        </div>
+
+
+
+        <script>
+
+
+
+
+
+            function DepEkle() {
+
+
+                var AltDepartmanID = $('#AltDepartman').val();
+                var BolumID = $('#Bolum').val();
+                var DepartmanID = $('#Departman').val();
+               
+                var DepTuru = (typeof DepartmanID);
+                var AltDepTuru = (typeof AltDepartmanID);
+                var BolumTuru = (typeof BolumID);
+
+                var DepartmanAdi = "";
+                var AltDepartmanAdi = "";
+                var BolumAdi = "";
+
+                if (DepTuru="string") {
+
+                    DepartmanAdi = DepartmanID
+                }
+
+                if (AltDepTuru = "string") {
+
+                    AltDepartmanAdi = AltDepartmanID
+                }
+
+                if (BolumTuru = "string") {
+
+                    BolumAdi = BolumID
+                }
+
+
+
+
+            
+
+
+
+
+
+
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../Kategori/DepEkle/',
+                    content: "application/html;",
+                    dataType: 'html',
+                    data: { FirmaID: @Model.FirmaID, DepartmanID: DepartmanID, AltDepartmanID: AltDepartmanID, BolumID: BolumID, DepartmanAdi: DepartmanAdi, AltDepartmanAdi: AltDepartmanAdi,BolumAdi: BolumAdi }
+                }).done(function (data) {
+                
+                    ModalBilgilendirme("Bilgilendirme", "Başarıyla Eklendi");
+
+               
+
+
+                    //alert("Id:" + data.Data);
+                }).fail(function () {
+                    console.log("Hata oluştu.");
+                   
+                }); 
+            }
+
+
+
+
+
+        </script>
+
+
+
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+        {
+
+            <div id="AnaDepartmanBody"  class="col-md-12" style="margin-top: 1px;display:block">
+
+                <div class="form-group">
+
+                    <div id="PanelDepartmanListeKart" class="col-12">
+                        @{
+                            Html.RenderAction("DepartmanListesi");
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+        {
+
+            <div  id="AnaAltDepartmanBody" class="col-md-12" style="margin-top: 1px; display: none">
+
+                <div class="form-group">
+
+                    <div id="PanelAltDepartmanListeKart" class="col-12">
+                        @{
+                            Html.RenderAction("AltDepartmanListesi");
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+        {
+
+            <div  id="AnaBolumBody" class="col-md-12" style="margin-top: 1px; display: none">
+
+                <div class="form-group">
+
+                    <div id="PanelBolumListeKart" class="col-12">
+                        @{
+                            Html.RenderAction("BolumListesi");
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+
+        
+
+
+
+
+    </div>
+        
+
+
+
+
+
+
+
+
+        }
+    </div>
+

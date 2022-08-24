@@ -1,0 +1,137 @@
+﻿
+@model List<TeknikServis.Entittes.Models.GorevView>
+
+@{
+    Layout = null;
+    ViewBag.Title = "AitGorevListesi";
+}
+<!-- /.row -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="card direct-chat direct-chat-primary">
+
+
+
+    <div class="direct-chat-messages">
+
+
+        @if (Model.Count == 0)
+        {
+            <div class="direct-chat-msg right">
+                <div class="direct-chat-infos clearfix">
+                    <span class="direct-chat-name float-right">MTX</span>
+                    <span class="direct-chat-timestamp float-left">29 Ekim 00:00</span>
+                </div>
+
+                <img class="direct-chat-img" src="~/Content/Images/mtx-logo-micro.png"  alt="message user image">
+
+                <div class="direct-chat-text">
+                   Henüz size atanan bir görev yok.
+                </div>
+
+            </div>
+        }
+
+        @if (Model.Count != 0)
+        {
+
+            foreach (var item in Model.OrderByDescending(file => file.GorevID).ToList())
+
+            {
+
+    <div class="direct-chat-msg">
+        <div class="direct-chat-infos clearfix">
+            <span class="direct-chat-name float-left">@Html.DisplayFor(modelItem => item.OlusturanKullaniciAdi)</span>
+            <span class="direct-chat-timestamp float-right"> @Html.DisplayFor(modelItem => item.AtamaTarihi)</span>
+        </div>
+
+        @if (item.KullaniciResim != null)
+        {
+
+            <img class="direct-chat-img" src="data:image/*;base64,@(Convert.ToBase64String(item.KullaniciResim))" alt="message user image">
+
+
+
+        }
+        else
+        {
+            <img class="direct-chat-img" src="~/Content/Images/mtx-logo-micro.png" alt="message user image">
+        }
+        
+        <!-- checkbox -->
+        
+
+    <div class="direct-chat-text right" style="background-color:dodgerblue; border-color:darkgray;color:blanchedalmond;border-radius:0.3rem">
+
+        @if (item.tamamlandimi == true)
+        {
+
+            <div onclick="GorevDegistir(@item.GorevID)" style="border-radius:2rem" class="icheck-white-dark  d-inline ml-2">
+                <input style="color:azure" type="checkbox" checked value="checked" name="@item.GorevID" id="@item.GorevID">
+                <label for="@item.GorevID"></label>
+            </div>
+            <!-- todo text -->
+            <span style="text-decoration:line-through" class="text">  @Html.DisplayFor(modelItem => item.Konu)<a href="#"></a></span>
+        }
+
+        else
+        {
+            <div style="border-radius:2rem" class="icheck-white-dark  d-inline ml-2">
+                <input  onclick="GorevDegistir(@item.GorevID)" style="color:azure" type="checkbox" value="" name="@item.GorevID" id="@item.GorevID">
+
+                <label for="@item.GorevID"></label>
+            </div>
+            <!-- todo text -->
+            <span  class="text">@Html.DisplayFor(modelItem => item.Konu)<a href="#"></a></span>
+
+        }
+
+        <!-- Emphasis label -->
+
+        <span onclick="FormGoster('../Anasayfa/GoreviGoruntule/?GorevID=@item.GorevID', 'SifreDegis')" style="color:whitesmoke;cursor:pointer" class="button float-right"><i class="fa fa-eye"></i> </span>
+
+
+
+
+    </div>
+
+    </div>
+
+          
+
+
+            }
+        }
+
+
+
+
+
+
+       
+
+    </div>
+
+
+
+
+
+</div>
+
+
+
+
+
+

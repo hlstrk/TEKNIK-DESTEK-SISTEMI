@@ -1,0 +1,145 @@
+﻿
+
+@model List<TeknikServis.Entittes.Models.StokMarkalari>
+
+@{
+    ViewBag.Title = "StokMarkaListesi";
+    Layout = null;
+}
+
+
+<!-- /.row -->
+<!-- /.row -->
+
+
+
+<div style=" margin:auto; padding-top:30px">
+
+    <div class="card">
+
+        <!-- /.card-header -->
+        <div class="card-body">
+            <p> Stok Markaları</p>
+
+
+            <a style="margin-bottom:20px;" onclick="FormGoster('../Kategori/StokMarkaEkleKarti/?StokMarkaID=0','TanimEkleModal')" title="Ekle" class="btn btn-outline-success fa fa-plus btn-circle btn-lg"></a>
+            @if (Model.Count == 0)
+            {
+
+
+                <br />
+
+
+
+
+
+                <br />
+
+                <div class="callout callout-success lead">
+                    <h4>Uyarı!</h4>
+                    <p>Burada Henüz Hiç Stok Markası Yok!.</p>
+                </div>
+
+
+
+            }
+
+            else
+
+
+            {
+
+                <table id="example44" class="table table-bordered table-striped">
+
+
+
+                    &nbsp;
+
+
+
+                    <thead>
+
+                        <tr style="text-align: center">
+                            <th style="text-align: center">
+                                ID
+                            </th>
+                            <th style="text-align: center">
+                                Barkod No
+                            </th>
+
+                            <th style="text-align: center">
+                                Marka Adı
+                            </th>
+                            <th style="text-align: center">
+                                Sil
+                            </th>
+
+
+
+
+
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.OrderByDescending(file => file.StokMarkaID).ToList())
+
+                        {
+
+
+                            <tr style="text-align: center;cursor:pointer" ondblclick="FormGoster('../Teknik/TanimKarti/?TanimID=@item.StokMarkaID', 'TanimEkleModal')">
+
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StokMarkaID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BarkodNo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StokMarkaAdi)
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-success btn-rounded btn-sm" onclick="StokMarkaSil(@item.StokMarkaID)"
+                                            data-toggle="tooltip" data-placement="bottom" title="Sil">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+
+
+                        }
+
+
+
+                    </tbody>
+
+
+                </table>
+            }
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.col -->
+
+
+
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->
+
+
+
+
+
+
+
+
+
+

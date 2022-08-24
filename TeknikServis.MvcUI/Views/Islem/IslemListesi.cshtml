@@ -1,0 +1,208 @@
+﻿
+@model List<TeknikServis.Entittes.Models.TeknikDetayView>
+
+@{
+    Layout = null;
+    ViewBag.Title = "IslemListesi";
+}
+<!-- /.row -->
+
+
+
+
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+
+            <div class="col-12">
+
+
+                <div class="card">
+                    <h3 style="padding-top:10px; padding-left: 30px">
+
+
+                        <small>Oluşturulan İşlemler</small>
+                    </h3>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="box-header with-border" style="padding-left:35px">
+                            <button type="button" onclick="FormGoster('../Islem/IslemKarti', 'IslemModal')" class="btn btn-success">Yeni Ekle</button>
+                            <button type="button" onclick="" class="btn btn-warning">Exel'e Aktar</button>
+                        </div>
+                        <br />
+
+                        @if (Model.Count == 0)
+                        {
+
+                            if (Session["Role"].ToString() == "Firma" || Session["Role"].ToString() == "Personel")
+                            {
+                                <br />
+                                <div class="callout callout-info lead">
+                                    <h4>Uyarı!</h4>
+                                    <p>Henüz hiçbir işlem oluşturulmadı!.</p>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <br />
+                                <div class="callout callout-info lead">
+                                    <h4>Uyarı!</h4>
+                                    <p>Henüz hiçbir işlem oluşturmadınız.</p>
+                                </div>
+
+                            }
+
+
+
+
+
+
+
+                        }
+
+                        @if (Model.Count != 0)
+                        {
+                            <table data-order='[[ 0, "desc" ]]' id="example1" class="table table-bordered table-striped">
+
+                                <thead>
+                                    <tr style="text-align: center">
+                                        <th>
+                                            Barkod No
+                                        </th>
+                                        <th>
+                                            Yapılan İşlem
+                                        </th>
+
+                                        <th>
+                                            Ekleyen
+                                        </th>
+
+                                        <th>
+                                            Birim Fiyat
+                                        </th>
+                                        <th>
+                                            Miktar
+                                        </th>
+                                        <th>
+                                            Genel Toplam
+                                        </th>
+
+                                        <th>
+                                            Firma
+                                        </th>
+                                        <th>
+                                            Kayıt Tarihi
+                                        </th>
+
+                                        <th>
+                                            KDV Oranı
+                                        </th>
+                                        <th>
+                                            KDV
+                                        </th>
+                                        <th>
+                                            KDV Dahil
+                                        </th>
+                                        <th>
+                                            Sil
+                                        </th>
+
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.OrderByDescending(file => file.IslemServisID).ToList())
+
+                                    {
+
+
+                                        <tr style="text-align: center">
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IslemServisID)
+
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.YapilanIslem)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EkleyenKisi)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BirimFiyat)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Miktar)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.GenelToplam)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AitOlduguFirma)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.KayitZamani)
+
+
+                                            </td>
+
+                                            <td>
+                                                %@Html.DisplayFor(modelItem => item.KdvOrani)
+
+
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.KDVFiyat)
+
+
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.KDVDahilFiyat)  
+                                                
+                                                @if(item.ParaBirimi=="?")
+                                                {
+                                                    item.ParaBirimi = "₺";
+                                                }
+                                                @Html.DisplayFor(modelItem => item.ParaBirimi)
+
+
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-danger btn-rounded btn-sm" title="Sil" type="button" onclick="IslemSil(@item.IslemServisID)">  <span class="fa fa-trash"></span></button>
+
+                                            </td>
+
+                                        </tr>
+
+
+                                    }
+
+
+
+                                </tbody>
+
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+

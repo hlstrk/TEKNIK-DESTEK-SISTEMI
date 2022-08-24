@@ -1,0 +1,175 @@
+﻿
+@model TeknikServis.Entittes.Models.Envanter
+
+@{
+    ViewBag.Title = "EnvanterSilKart";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("EnvanterSil", "Kullanici", FormMethod.Post, new { id = "FrmEnvanterSilKarti" }))
+    {
+        @Html.HiddenFor(x => x.EnvanterID)
+
+        <div class="row">
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+
+
+                    <label>Barkod No</label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+
+                        </div>
+
+                        @Html.TextBoxFor(x => x.EnvanterID, new { disabled = "disabled" })
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+
+
+                    <label>Firma</label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-suitcase"></i></span>
+
+                        </div>
+
+
+                        @Html.TextBoxFor(x => x.Firma, new { disabled = "disabled" })
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+            @if (Session["Role"].ToString() == "Admin")
+            {
+                <div class="col-md-6" style="margin-top: 1px;">
+
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-list"></i></span>
+
+                            </div>
+
+
+                            @Html.TextBoxFor(x => x.Turu, new { disabled = "disabled" })
+
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Session["Role"].ToString() == "Admin")
+            {
+                <div class="col-md-12" style="margin-top: 1px;">
+
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        <div class="input-group mb-6">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-question"></i></span>
+
+                            </div>
+
+
+                            @Html.TextAreaFor(x => x.Aciklama, new { disabled = "disabled" })
+
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <br />
+
+
+
+
+        </div>
+
+        <div class="modal-footer">
+
+
+            <button type="button" onclick="EnvanterSilKullanici(@Model.EnvanterID)" class="btn btn-danger"><span class="glyphicon glyphicon-trash" style="vertical-align:middle;margin-top: -5px"></span> Sil</button>
+            <button type="button" onclick="FormKapat('EnvanterSilModal')" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+
+
+        </div>
+    }
+</div>
+
+<script>
+
+    function EnvanterSilKullanici(id) {
+
+
+
+        $.ajax({
+            method: 'GET',
+            url: '../Kullanici/EnvanterSil/' + id,
+            content: "application/html;",
+            dataType: 'html'
+
+        }).done(function (data) {
+
+            $("#EnvanterSilModal").hide();
+
+            ModalBilgilendirme("Bilgilendirme", "Envanter kaydı başarıyla silindi!");
+
+            setTimeout(function () {
+                location.reload(true);
+            }, 2000);
+
+
+            //alert("Id:" + data.Data);
+        }).fail(function () {
+            ModalBilgilendirme("Bilgilendirme", "Envanter kaydı başarıyla silindi!");
+            setTimeout(function () {
+                location.reload(true);
+            }, 2000);
+        }
+
+
+        )
+
+            ;
+    }
+</script>
+
+
+

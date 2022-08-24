@@ -1,0 +1,281 @@
+﻿
+
+@model List<TeknikServis.Entittes.Models.StokView>
+
+@{
+    ViewBag.Title = "StokListesi";
+    Layout = null;
+
+}
+
+
+<!-- /.row -->
+
+
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-8" style="margin:auto; padding-top:30px">
+
+
+
+                <div class="card">
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        &nbsp;
+                        &nbsp;
+                        <a style="margin-bottom:20px;" onclick="FormGoster('../../Stok/StokKarti/?StokID=0','StokEkleModal')" class="btn btn-m btn-success fa fa-plus btn-m pull-right"></a>
+                        &nbsp;
+                        <br />
+
+
+
+                        @if (Model.Count == 0)
+                        {
+
+                            if (Session["Role"].ToString() == "Personel")
+                            {
+                                <br />
+                                <div class="callout callout-info lead">
+                                    <h4>Uyarı!</h4>
+                                    <p>Şu anda size atanan hiçbir teknik servis/arıza kaydı bulunmamaktadır.</p>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <br />
+                                <div class="callout callout-warning lead">
+                                    <h4>Uyarı!</h4>
+                                    <p>Henüz hiçbir stok kaydı yok.</p>
+                                </div>
+
+                            }
+
+
+
+
+
+
+
+                        }
+
+                        else
+                        {
+                            <table data-order='[[ 0, "desc" ]]' id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr style="text-align: center">
+                                        <th style="text-align: center">
+                                            Stok No
+                                        </th>
+
+                                        <th style="text-align: center">
+                                            Barkod No
+                                        </th>
+
+
+                                        <th style="text-align: center">
+                                            Ait Olduğu Firma
+                                        </th>
+
+                                        <th style="text-align: center">
+                                            Kategorisi
+                                        </th>
+
+                                        <th style="text-align: center">
+                                            Türü
+                                        </th>
+
+                                        <th style="text-align: center">
+                                            Marka
+                                        </th>
+
+                                        <th style="text-align: center">
+                                            Açıklama
+                                        </th>
+
+
+                                        <th style="text-align: center">
+
+                                        </th>
+
+
+
+                                        <th style="text-align: center">
+                                            Ekleyen
+                                        </th>
+
+
+                                        <th style="text-align: center">
+
+                                        </th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model.OrderByDescending(modelItem => modelItem.StokID).ToList())
+
+                                    {
+
+
+                                    <tr style="text-align: center;cursor:pointer;" ondblclick="FormGoster('../../Stok/StokKarti/?StokID=@item.StokID','StokEkleModal')">
+
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.StokID)
+                                        </td>
+
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BarkodNo)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AitOlanFirmaAdi)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Kategorisi)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Turu)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Markasi)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Aciklama)
+                                        </td>
+                                        <td>
+                                            @if (item.DonanimMi = true)
+                                            {
+                                                <div style="text-align: center;" class="badge bg-secondary">
+                                                    <label style="color: white; text-align: center;padding-top:4px">Donanım</label>
+                                                </div>
+                                            }
+
+
+
+
+                                            else
+                                            {
+                                                <div style="text-align: center;" class="badge bg-info">
+                                                    <label style="color: white; text-align: center;padding-top:4px">Donanım</label>
+                                                </div>
+                                            }
+
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EkleyenKullaniciAdi)
+                                        </td>
+
+
+
+                                        <td>
+
+                                            <button class="btn btn-outline-danger btn-rounded btn-sm" onclick="FormGoster('../../Stok/StokSilKart/?StokID=@item.StokID','StokSilModal')"
+                                                    data-toggle="tooltip" data-placement="bottom" title="Sil">
+                                                <span class="fa fa-trash"></span>
+                                            </button>
+
+
+
+                                        </td>
+                                    </tr>
+
+
+                                    }
+
+
+
+                                </tbody>
+
+
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+
+
+
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+
+
+<div id="StokEkleModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Stok Ekle/Düzenle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('StokEkleModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="StokEkleModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div id="StokSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Stok Kaydını Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('StokSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="StokkSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->
+
+
+
+
+
+
+
+
+
+
+
+

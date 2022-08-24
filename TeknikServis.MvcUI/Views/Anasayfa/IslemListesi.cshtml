@@ -1,0 +1,257 @@
+﻿
+@model List<TeknikServis.Entittes.Models.Islem>
+
+@{
+    Layout = null;
+    ViewBag.Title = "IslemListesi";
+}
+<!-- /.row -->
+
+
+
+
+
+
+
+<section class="content" >
+    <div class="container-fluid" >
+        <div class="row">
+            
+
+            <div class="col-12">
+
+
+                <div class="card">
+                    <h3 style="padding-top:10px; padding-left: 30px">
+
+
+                        <small>İşlmem Hareketleri</small>
+                    </h3>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        @if (Model.Count == 0)
+                        {
+
+                            if (Session["Role"].ToString() == "Firma"|| Session["Role"].ToString() == "Personel")
+                            {
+                                <br />
+                                <div class="callout callout-info lead">
+                                    <h4>Uyarı!</h4>
+                                    <p>Henüz hiçbir işlem oluşturulmadı!.</p>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <br />
+                                <div class="callout callout-info lead">
+                                    <h4>Uyarı!</h4>
+                                    <p>Henüz hiçbir işlem oluşturmadınız.</p>
+                                </div>
+
+                            }
+
+
+
+
+
+
+
+                        }
+                        <div class="box-header with-border" style="padding-left:35px">
+                            <button type="button" onclick="FormGoster('../Anasayfa/IslemKarti', 'IslemModalAnasayfa')" class="btn btn-success">Yeni Ekle</button>
+                            <button type="button" onclick="" class="btn btn-warning">Exel'e Aktar</button>
+                        </div>
+                        <br />
+
+                        @if (Model.Count != 0)
+                        {
+                            <table id="example1" class="table table-bordered table-striped">
+
+                                <thead>
+                                    <tr style="text-align: center">
+                                        <th>
+                                            Barkod No
+                                        </th>
+                                        <th>
+                                            Yapılan İşlem
+                                        </th>
+
+                                        <th>
+                                            Birim Fiyat
+                                        </th>
+                                        <th>
+                                            Miktar
+                                        </th>
+                                        <th>
+                                            Firma
+                                        </th>
+                                        <th>
+                                            Kayıt Tarihi
+                                        </th>
+
+                                        <th>
+                                            KDV Oranı
+                                        </th>
+
+                                        
+
+                                        <th>
+                                            Sil
+                                        </th>
+
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.OrderByDescending(file => file.IslemServisID).ToList())
+
+                                    {
+                                                 
+
+                                                      
+                                        <tr style="text-align: center">
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IslemServisID)
+
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.YapilanIslem)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BirimFiyat)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Miktar)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AitOlduguFirma)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.KayitZamani)
+
+
+                                            </td>
+
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.KdvOrani)
+
+
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-danger btn-rounded btn-sm" title="Sil" type="button" onclick="IslemSil(@item.IslemServisID)">  <span class="fa fa-trash"></span></button>
+
+                                            </td>
+
+                                        </tr>
+
+
+                                    }
+
+
+
+                                </tbody>
+
+                            </table>
+                        }
+                        </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->
+
+
+
+
+
+
+
+@*<script>
+
+    $(function () {
+        //alert('merhaba');
+
+        //$.get("/Anasayfa/KategoriYukle", function (data)
+        //{
+        //    console.log(data);
+        //    $("#liste").html(data);
+        //});
+
+        $("#btnListele").click(function () {
+            $("#btnListele").attr("disabled", "disabled");
+            $("#loading").show(300);
+            $.get("/Anasayfa/KategoriYukle", function (data) {
+                console.log(data);
+                $("#liste").html(data);
+
+                $("#loading").hide(300);
+                $("#btnListele").removeAttr("disabled");
+            });
+        });
+
+
+
+
+        $("#btnKaydet").click(function () {
+            $("#btnKaydet").attr("disabled", "disabled");
+            $("#loading").show(300);
+
+            var kategoriAdi = $("#txtKategori").val();
+
+            $.get("/Anasayfa/KategoriKaydet", { kadi: kategoriAdi }, function (data) {
+                console.log(data);
+                $("#liste").html(data);
+
+                $("#loading").hide(300);
+                $("#btnKaydet").removeAttr("disabled");
+            });
+        });
+
+
+    });
+
+    function Kaydet() {
+
+        var adi = $("#txtKategori").val();
+        var id = $("#txtId").val();
+
+        $.ajax({
+            url: "/Anasayfa/KategoriKaydet2",
+            method: 'POST',
+            data: { kadi: adi, kid: id },
+            beforeSend: function () { $("#loading").show(300); }
+        })
+            .done(function (d) {
+                console.log(d);
+                $("#liste").html(d);
+            })
+            .fail(function () {
+                console.log("Hata oluştu.");
+                alert("Hata oluştu.");
+            })
+            .always(function () {
+                $("#loading").hide(300);
+
+            });
+    }
+
+</script>*@
+

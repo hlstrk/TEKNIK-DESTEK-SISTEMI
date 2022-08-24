@@ -1,0 +1,464 @@
+﻿
+@model TeknikServis.Entittes.Models.TeklifDetay
+
+
+@{
+    ViewBag.Title = "TeklifDetayKarti";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("TeklifDetayKarti", "Teklif", FormMethod.Post, new { id = "FrmTeklifDetayKarti" }))
+    {
+        @Html.HiddenFor(x => x.TeklifDetayID)
+        @Html.HiddenFor(x => x.TeklifID)
+    <div class="row">
+
+
+        <div class="col-md-3">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>Ürün Açıklaması</label>
+                    <div class="input-group mb-5">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-tasks"></i></span>
+
+                        </div>
+                        @Html.TextAreaFor(x => x.UrunAciklama, new { @class = "form-control", @placeholder = "Açıklama..." , rows = "1", cols = "10" })
+
+                    </div>
+                }
+
+
+
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+        {
+
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label>Miktar</label>
+                    <div class="input-group mb-3">
+                        
+                        @Html.DropDownListFor(m => m.Miktar, Enumerable.Range(1, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new
+                   {
+                       @onChange = "toplamgetir()",
+                       @id = "MiktarTB",
+                       @class = "form-control chosen",
+                       data_show_subtext = "true",
+                       data_live_search = "true"
+
+                   })
+
+
+
+
+                        <script>
+
+                            function toplamgetir() {
+                                var birimfiyat = $('#BirimTB').val();
+                                var miktar = $('#MiktarTB').val();
+                                var genel = birimfiyat * miktar;
+                                $('#GenelToplamTB').val(genel);
+                                var geneltoplam = $('#GenelToplamTB').val()
+                                var kdvoran = $('#KDVOranTB').val()
+
+
+                                var kdv = geneltoplam * (kdvoran * 0.01);
+                                kdv = kdv.toFixed(2);
+                                kdv = kdv.toString().replace(".", ",");
+
+                                $('#KDVFiyatTB').val(kdv);
+
+                                var trim = $('#KDVFiyatTB').val();
+                                trim = trim.replace(",", ".")
+                                trim = parseFloat(trim);
+                                trim = trim.toFixed(2);
+
+                                console.log(trim);
+                                console.log(typeof trim);
+                                var kdvdt = Number(geneltoplam) + Number(trim);
+
+
+                                kdvdr = kdvdt.toString().replace(".", ",");
+
+
+                                kdvdt = parseFloat(kdvdt);
+
+
+                                kdvdt = kdvdt.toString().replace(".", ",");
+                                console.log(typeof kdvdt);
+
+                                console.log(kdvdt);
+
+
+
+
+                                $('#KDVDahilTB').val(kdvdt);
+
+                            }
+
+
+
+
+
+                        </script>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+        }
+
+
+
+        <div class="col-md-2">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>Birim</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-quastionmark"> </i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.Birim, new { @class = "form-control", @placeholder = "Ürün birimi...", id = "BirimTB2", @onkeyup = "toplamgetir()" })
+
+                    </div>
+                }
+
+
+
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+
+        <div class="col-md-2">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>Birim Fiyat</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.BirimFiyat, new { @class = "form-control", @placeholder = "BirimFiyat..", id = "BirimTB", @onkeyup = "toplamgetir()" })
+
+                    </div>
+                }
+
+
+
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+
+        <div class="col-md-2">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>KDV Oranı</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-percent"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.KdvOrani, new { @class = "form-control", @placeholder = "KDV Oranı", id = "KDVOranTB" })
+
+                    </div>
+
+
+
+
+
+
+                    <script>
+
+                        document.getElementById('KDVOranTB').onkeyup = function () {
+
+                            var birimfiyat = $('#BirimTB').val();
+                            var miktar = $('#MiktarTB').val();
+                            var genel = birimfiyat * miktar;
+                            $('#GenelToplamTB').val(genel);
+                            var geneltoplam = $('#GenelToplamTB').val()
+                            var kdvoran = $('#KDVOranTB').val()
+
+
+                            var kdv = geneltoplam * (kdvoran * 0.01);
+                            kdv = kdv.toFixed(2);
+                            kdv = kdv.toString().replace(".", ",");
+
+                            $('#KDVFiyatTB').val(kdv);
+
+                            var trim = $('#KDVFiyatTB').val();
+                            trim = trim.replace(",", ".")
+                            trim = parseFloat(trim);
+                            trim = trim.toFixed(2);
+
+                            console.log(trim);
+                            console.log(typeof trim);
+                            var kdvdt = Number(geneltoplam) + Number(trim);
+
+
+                            kdvdr = kdvdt.toString().replace(".", ",");
+
+
+                            kdvdt = parseFloat(kdvdt);
+
+
+                            kdvdt = kdvdt.toString().replace(".", ",");
+                            console.log(typeof kdvdt);
+
+                            console.log(kdvdt);
+
+                            $('#KDVDahilTB').val(kdvdt);
+
+                        };
+                    </script>
+                }
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>KDV Dahil</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.KDVDahilFiyat, new { @class = "form-control", @placeholder = "KDV Dahil", id = "KDVDahilTB" })
+                        <script>
+
+
+
+                            document.getElementById("KDVDahilTB").style.color = "#807e7c";
+
+
+                        </script>
+                    </div>
+
+                }
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>Genel Toplam</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.GenelToplam, new { @class = "form-control", @placeholder = "Genel Toplam", id = "GenelToplamTB" })
+
+                        <script>
+
+                            document.getElementById("GenelToplamTB").style.color = "#807e7c";
+                        </script>
+                    </div>
+
+                }
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>KDV</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.KDVFiyat, new { @class = "form-control", @placeholder = "KDV", id = "KDVFiyatTB" })
+                        <script>
+
+
+
+                            document.getElementById("KDVFiyatTB").style.color = "#807e7c";
+
+
+                        </script>
+                    </div>
+
+                }
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+
+
+
+
+        <!-- /.input group -->
+
+
+
+
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+        {
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Ait Olduğu Firma</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-suitcase"></i></span>
+
+                        </div>
+
+                        @Html.DropDownListFor(model => model.AitOlduguFirma, new SelectList(ViewBag.FirmalarBAG, "FirmaAdi", "FirmaAdi"), new { @class = "form-control", id = "dropDown" })
+
+                        <script>
+                            $(function () {
+                                $('#dropDown').select2({
+
+
+                                    placeholder: "Seçim Yapın..",
+
+
+                                    width: '180px'
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+
+
+
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+        {
+
+            <div class="col-md-12" style="margin-top: 1px;">
+
+                <div class="form-group">
+
+                    <div id="PanelTeklifDetayListesi" class="col-12">
+                        @{
+                            Html.RenderAction("TeklifDetayListesi");
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+
+
+
+
+
+        <div class="col-md-3">
+
+            <button type="button" onclick="TeklifDetayKaydetTeknik(); TeklifDetayListele();" class="btn btn-block btn-secondary">Ekle</button>
+        </div>
+        <script>
+
+
+            function TeklifDetayKaydetTeknik() {
+
+
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../Teklif/TeklifDetayKarti',
+                    content: 'application/json; charset=UTF-8;',
+                    dataType: 'json',
+                    data: JSON.stringify($("#FrmTeklifDetayKarti").serialize())
+
+                });
+
+            }
+
+        </script>
+
+
+
+    </div>
+
+
+
+
+
+
+
+    }
+</div>
+
+
+
+

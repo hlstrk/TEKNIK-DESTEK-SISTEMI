@@ -1,0 +1,180 @@
+﻿
+
+@model List<TeknikServis.Entittes.Models.Bolumler>
+
+@{
+    ViewBag.Title = "BolumListesi";
+    Layout = null;
+}
+
+
+<!-- /.row -->
+<!-- /.row -->
+
+
+
+<div style=" margin:auto; padding-top:30px">
+    
+
+    <div class="card">
+
+        <!-- /.card-header -->
+        <div class="card-body">
+           
+            <br />
+
+
+            @if (Model.Count == 0)
+            {
+
+
+
+
+                <div class="callout callout-secondary lead">
+                    <h4>Uyarı!</h4>
+                    <p>Bu Alt Departmana Ait Henüz Hiçbir Bölüm Yok!.</p>
+                </div>
+
+
+
+
+
+
+
+
+
+            }
+
+            else
+            {
+
+                <table id="example44" class="table table-bordered table-striped">
+                    <thead>
+                        <tr style="text-align: center">
+                            <th style="text-align: center">
+                                Barkod No
+                            </th>
+                            <th style="text-align: center">
+                                Bölüm Adı
+                            </th>
+
+                            <th style="text-align: center">
+                                Alt Departman ID
+                            </th>
+                            <th style="text-align: center">
+                                Sil
+                            </th>
+
+
+
+
+
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.OrderByDescending(file => file.BolumID).ToList())
+
+                        {
+
+
+                            <tr style="text-align: center;cursor:pointer" ondblclick="FormGoster('../Teknik/TanimKarti/?TanimID=@item.BolumID', 'TanimEkleModal')">
+
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BolumID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BolumAdi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AltDepartmanID)
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger btn-rounded btn-sm" onclick="FormGoster('../Teknik/TanimSil/?TanimID=@item.BolumID','TanimSilModal')"
+                                            data-toggle="tooltip" data-placement="bottom" title="Sil">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+
+
+                        }
+
+
+
+                    </tbody>
+
+
+                </table>
+            }
+            </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.col -->
+
+
+<div id="TanimEkleModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kategori Ekle/Düzenle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('TanimEkleModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="TanimEkleModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div id="TanimSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kategoriyi Ve Tanımı Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('TanimSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="TanimkSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->
+
+
+
+
+
+
+
+
+
+
+

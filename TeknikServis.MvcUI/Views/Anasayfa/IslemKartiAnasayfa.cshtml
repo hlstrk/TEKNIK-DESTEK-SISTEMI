@@ -1,0 +1,550 @@
+﻿
+@model TeknikServis.Entittes.Models.Islem
+
+
+@{
+    ViewBag.Title = "IslemKartiAnasayfa";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("IslemKarti", "Anasayfa", FormMethod.Post, new { id = "FrmIslemKarti" }))
+    {
+        @Html.HiddenFor(x => x.IslemServisID)
+        @Html.HiddenFor(x => x.TeknikServisID)
+    <div class="row">
+
+
+        <div class="col-md-10">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>Yapılan İşlem</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-tasks"></i></span>
+
+                        </div>
+                        @Html.TextAreaFor(x => x.YapilanIslem, new { @class = "form-control", @placeholder = "Yapılan İşlemi Belirtin" })
+
+                    </div>
+                }
+
+
+
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>Birim Fiyat</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.BirimFiyat, new { @class = "form-control", @placeholder = "Yapılan İşlemin ücreti...", id = "BirimTB", @onkeyup = "toplamgetir()" })
+
+                    </div>
+                }
+
+
+
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+
+
+        @if (Session["Role"].ToString() == "Admin")
+        {
+
+
+
+
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Ücretlendirme Türü</label>
+                    <br />
+                    @Html.DropDownList("ParaBirimi",
+                 new List<SelectListItem> {
+                     new SelectListItem {
+                        Text="TL",
+                        Value="₺",
+                        Selected = true
+
+                     },
+                     new SelectListItem {
+                        Text="Dolar",
+                        Value="$",
+
+
+                     },
+                     new SelectListItem {
+                        Text="Euro",
+                        Value="€",
+                     },
+                 }, new { @class = "form-control" })
+
+
+
+
+
+                </div>
+            </div>
+
+        }
+
+        <script>
+
+            function KurGoster() {
+                var x = document.getElementById("Kur");
+
+                x.style.display = "block";
+
+
+            }
+
+            function KurGizle() {
+                var x = document.getElementById("Kur");
+
+                x.style.display = "none";
+
+            }
+        </script>
+
+
+        @if (Session["Role"].ToString() == "Admin")
+        {
+            <div class="col-md-4">
+                <div id="Kur" style="display:none">
+                    <div class="form-group">
+                        <label>Kur</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-money-bill-alt"></i></span>
+
+                            </div>
+                            @Html.TextBoxFor(x => x.DolarKuru, new { autocomplete = "off", @class = "form-control" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+        {
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Miktar</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-sort"></i></span>
+
+                        </div>
+                        @Html.DropDownListFor(m => m.Miktar, Enumerable.Range(1, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new
+                   {
+                       @onChange = "toplamgetir()",
+                       @id = "MiktarTB",
+                       @class = "form-control chosen",
+                       data_show_subtext = "true",
+                       data_live_search = "true"
+
+                   })
+
+
+                        <script>
+
+                            function toplamgetir() {
+                                var birimfiyat = $('#BirimTB').val();
+                                var miktar = $('#MiktarTB').val();
+                                var genel = birimfiyat * miktar;
+                                $('#GenelToplamTB').val(genel);
+                                var geneltoplam = $('#GenelToplamTB').val()
+                                var kdvoran = $('#KDVOranTB').val()
+
+
+                                var kdv = geneltoplam * (kdvoran * 0.01);
+                                kdv = kdv.toFixed(2);
+                                kdv = kdv.toString().replace(".", ",");
+
+                                $('#KDVFiyatTB').val(kdv);
+
+                                var trim = $('#KDVFiyatTB').val();
+                                trim = trim.replace(",", ".")
+                                trim = parseFloat(trim);
+                                trim = trim.toFixed(2);
+
+                                console.log(trim);
+                                console.log(typeof trim);
+                                var kdvdt = Number(geneltoplam) + Number(trim);
+
+
+                                kdvdr = kdvdt.toString().replace(".", ",");
+
+
+                                kdvdt = parseFloat(kdvdt);
+
+
+                                kdvdt = kdvdt.toString().replace(".", ",");
+                                console.log(typeof kdvdt);
+
+                                console.log(kdvdt);
+
+
+
+
+                                $('#KDVDahilTB').val(kdvdt);
+
+                            }
+
+
+
+
+
+                        </script>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+        }
+
+
+        @if (Session["Role"].ToString() == "Admin")
+        {
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Miktar</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-sort"></i></span>
+
+                        </div>
+                        @Html.EditorFor(x => x.KayitZamani, new { @class = "form-control", @placeholder = "Seçiniz...", id = "datepicker" })
+
+
+                        <script>
+
+                            $(document).ready(function () {
+                                $(".datepicker").datepicker({
+                                    dateFormat: "dd-mm-yy",
+                                    changemonth: true,
+                                    changeyear: true
+                                });
+                            });
+
+
+
+
+
+
+
+                        </script>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+        }
+
+        <div class="col-md-4">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>KDV Oranı</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-percent"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.KdvOrani, new { @class = "form-control", @placeholder = "KDV Oranı", id = "KDVOranTB" })
+
+                    </div>
+
+                    <script>
+
+                        document.getElementById('KDVOranTB').onkeyup = function () {
+
+                            var birimfiyat = $('#BirimTB').val();
+                            var miktar = $('#MiktarTB').val();
+                            var genel = birimfiyat * miktar;
+                            $('#GenelToplamTB').val(genel);
+                            var geneltoplam = $('#GenelToplamTB').val()
+                            var kdvoran = $('#KDVOranTB').val()
+
+
+                            var kdv = geneltoplam * (kdvoran * 0.01);
+                            kdv = kdv.toFixed(2);
+                            kdv = kdv.toString().replace(".", ",");
+
+                            $('#KDVFiyatTB').val(kdv);
+
+                            var trim = $('#KDVFiyatTB').val();
+                            trim = trim.replace(",", ".")
+                            trim = parseFloat(trim);
+                            trim = trim.toFixed(2);
+
+                            console.log(trim);
+                            console.log(typeof trim);
+                            var kdvdt = Number(geneltoplam) + Number(trim);
+
+
+                            kdvdr = kdvdt.toString().replace(".", ",");
+
+
+                            kdvdt = parseFloat(kdvdt);
+
+
+                            kdvdt = kdvdt.toString().replace(".", ",");
+                            console.log(typeof kdvdt);
+
+                            console.log(kdvdt);
+
+
+
+
+                            $('#KDVDahilTB').val(kdvdt);
+
+                        };
+                    </script>
+                }
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>Genel Toplam</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.GenelToplam, new { @class = "form-control", @placeholder = "Genel Toplam", id = "GenelToplamTB", @readonly = "readonly" })
+
+                        <script>
+
+                            document.getElementById("GenelToplamTB").style.color = "#807e7c";
+                        </script>
+                    </div>
+
+                }
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>KDV</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.KDVFiyat, new { @class = "form-control", @placeholder = "KDV", id = "KDVFiyatTB", @readonly = "readonly" })
+                        <script>
+
+
+
+                            document.getElementById("KDVFiyatTB").style.color = "#807e7c";
+
+
+                        </script>
+                    </div>
+
+                }
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+        @if (Session["Role"].ToString() == "Admin")
+        {
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Tarih</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.KayitZamani, new { autocomplete = "off", @class = "form-control", id = "zamansec" })
+                        <script>
+
+                            $(document).ready(function () {
+                                $('#zamansec').flatpickr({
+                                    enableTime: true,
+                                    dateFormat: "d-M-Y H:i",
+                                    locale: "tr"
+
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+                {
+                    <label>KDV Dahil</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.KDVDahilFiyat, new { @class = "form-control", @placeholder = "KDV Dahil", id = "KDVDahilTB", @readonly = "readonly" })
+                        <script>
+
+
+
+                            document.getElementById("KDVDahilTB").style.color = "#807e7c";
+
+
+                        </script>
+                    </div>
+
+                }
+
+
+                <!-- /.input group -->
+            </div>
+        </div>
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+        {
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Ait Olduğu Firma</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-suitcase"></i></span>
+
+                        </div>
+
+                        @Html.DropDownListFor(model => model.AitOlduguFirma, new SelectList(ViewBag.FirmalarBAG, "FirmaAdi", "FirmaAdi"), new { @class = "form-control", id = "dropDown" })
+
+                        <script>
+                            $(function () {
+                                $('#dropDown').select2({
+
+
+                                    placeholder: "Seçim Yapın..",
+
+
+                                    width: '180px'
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+        {
+
+            <div class="col-md-12" style="margin-top: 1px;">
+
+                <div class="form-group">
+
+                    <div id="PanelIslemListeKart" class="col-12">
+                        @{
+                            Html.RenderAction("IslemListesiKart");
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+
+
+        <div class="col-md-3">
+
+            <button type="button" onclick="IslemKaydetAnasayfa(); IslemListeleKart();" class="btn btn-block btn-success">Ekle</button>
+        </div>
+
+
+
+
+    </div>
+        
+
+
+
+
+
+
+
+
+        }
+    </div>
+

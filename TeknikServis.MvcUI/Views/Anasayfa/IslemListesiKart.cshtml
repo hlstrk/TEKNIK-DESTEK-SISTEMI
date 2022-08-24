@@ -1,0 +1,244 @@
+﻿
+@model List<TeknikServis.Entittes.Models.TeknikDetayView>
+
+@{
+    Layout = null;
+    ViewBag.Title = "IslemListesiKart";
+}
+<!-- /.row -->
+
+
+
+
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            @if (Model.Count == 0)
+            {
+
+                if (Session["Role"].ToString() == "Admin")
+                {
+                    <br />
+                    <div class="callout callout-info lead">
+                        <h4>Uyarı!</h4>
+                        <p>Henüz hiçbir işlem oluşturmadınız.</p>
+                    </div>
+                }
+
+                else
+                {
+
+                    <br />
+                    <div class="callout callout-info lead">
+                        <h4>Uyarı!</h4>
+                        <p>Henüz hiçbir işlem oluşturulmadı!</p>
+                    </div>
+
+
+                }
+
+
+
+
+
+
+
+            }
+
+            @if (Model.Count != 0)
+            {
+                <table id="example2" class="table table-bordered table-striped">
+
+                    <thead>
+                        <tr style="text-align: center">
+                            <th>
+                                Barkod No
+                            </th>
+                            <th>
+                                Yapılan İşlem
+                            </th>
+                            <th>
+                                Ekleyen
+                            </th>
+                            <th>
+                                Birim Fiyat
+                            </th>
+                            <th>
+                                Miktar
+                            </th>
+                            <th>
+                                Genel Toplam
+                            </th>
+
+                            @if (Session["Role"].ToString() == "Admin")
+                            {
+                                <th>
+                                    Kayıt Tarihi
+                                </th>
+                            }
+                            <th>
+                                KDV Oranı
+                            </th>
+                            <th>
+                                KDV
+                            </th>
+
+                            <th>
+                                KDV Dahil
+                            </th>
+                            @if (Session["Role"].ToString() == "Admin")
+                            {
+                                <th>
+                                    İşlem
+                                </th>
+                            }
+
+
+
+
+
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderByDescending(file => file.IslemServisID).ToList())
+
+                        {
+
+                            if (item.ParaBirimi == "?")
+                            {
+                                item.ParaBirimi = "₺";
+                            }
+
+
+                            <tr style="text-align: center">
+
+                                <td>
+                                    <a href="#" onclick=""> @Html.DisplayFor(modelItem => item.IslemServisID)</a>
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.YapilanIslem)
+                                </td>
+                                <td>
+                                    @if (item.KullaniciID == Convert.ToInt32(Session["KullaniciID"]))
+                                    {
+
+
+                                        <span class="badge badge-dark">Siz</span>
+
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(modelItem => item.EkleyenKisi)
+                                    }
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BirimFiyat)
+                                    @Html.DisplayFor(modelItem => item.ParaBirimi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Miktar)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.GenelToplam)
+                                    @Html.DisplayFor(modelItem => item.ParaBirimi)
+                                </td>
+                                @if (Session["Role"].ToString() == "Admin")
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.KayitZamani)
+
+
+                                    </td>
+                                }
+
+                                <td>
+                                    %@Html.DisplayFor(modelItem => item.KdvOrani)
+
+
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.KDVFiyat)
+                                    @Html.DisplayFor(modelItem => item.ParaBirimi)
+
+
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.KDVDahilFiyat)
+                                    @Html.DisplayFor(modelItem => item.ParaBirimi)
+
+
+                                </td>
+
+                                @if (Session["Role"].ToString() == "Admin")
+                                {
+                                    <td>
+
+
+
+
+                                        <a class="btn btn-danger btn-rounded btn-sm" onclick="IslemSilK(@item.IslemServisID);IslemListeleKartTeknik();"
+                                           data-toggle="tooltip" data-placement="bottom" title="Sil">
+                                            <span class="fa fa-trash"></span>
+                                        </a>
+
+
+                                    </td>
+                                }
+
+
+
+
+
+                            </tr>
+
+
+                        }
+
+
+
+                    </tbody>
+
+                </table>
+            }
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+    <!-- /.row -->
+    <!-- /.container-fluid -->
+</section>
+
+
+
+<script>
+    $(function () {
+        $('#example1').DataTable()
+        $('#example2').DataTable({
+   
+            'lengthChange': false,
+
+            'ordering': true,
+
+            'autoWidth': false
+        })
+    });
+
+
+
+
+</script>
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->

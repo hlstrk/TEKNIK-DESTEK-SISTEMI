@@ -1,0 +1,470 @@
+﻿
+@model TeknikServis.Entittes.Models.Envanter
+
+
+@{
+    ViewBag.Title = "EnvanterKartiAnasayfa";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("EnvanterKarti", "Kullanici", FormMethod.Post, new { id = "FrmEnvanterKarti" }))
+    {
+        @Html.HiddenFor(x => x.EnvanterID)
+
+
+    <div class="row">
+
+        @if (Model.FirmaEnvanterimi != true)
+        {
+            <div id="dropDownKullanici" class="col-md-12">
+                <div class="form-group" style="width:100%">
+                    <label>Ait Olan Kullanıcı</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                        </div>
+
+                        @Html.DropDownListFor(x => x.KullaniciID, new SelectList(ViewBag.EKullaniciBAG, "KullaniciID", "AdSoyad"), new { @class = "form-control", id = "drpdwnkul" })
+
+
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+            <script>
+                $(function () {
+                    $('#drpdwnkul').select2({
+
+
+                        placeholder: "Seçim Yapın..",
+
+
+                        width: '16rem'
+                    });
+                });
+            </script>
+
+
+            @if (Model.FirmaEnvanterimi == true)
+            {
+
+
+
+                <div id="dropDownFirma" class="col-md-12">
+                    <div class="form-group" style="width:100%">
+                        <label>Firma</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                            </div>
+
+                            @Html.DropDownListFor(x => x.FirmaID, new SelectList(ViewBag.EFirmaBAG, "FirmaID", "FirmaAdi"), new { @class = "form-control", id = "drpdwnfirma" })
+
+
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+
+            <script>
+                $(function () {
+                    $('#drpdwnfirma').select2({
+
+
+                        placeholder: "Seçim Yapın..",
+
+
+                        width: '16rem'
+                    });
+                });
+            </script>
+
+
+
+
+
+
+
+            <div class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>Kategori</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                        </div>
+
+                        @Html.DropDownListFor(x => x.EnvanterTuruID, new SelectList(ViewBag.EKategoriBAG, "EnvanterTurID", "EnvanterTuru"), new { @class = "form-control", id = "dropDownGrup", onclick = "StokCheck();" })
+                        <script>
+
+                            function StokCheck() {
+
+
+
+                                var dop = document.getElementById("dropDownGrup").value;
+
+                                if (dop == "Hizmet") {
+
+                                    document.getElementById("dropDownMarka").style.display = "none";
+
+                                    document.getElementById("ip1").style.display = "none";
+                                    document.getElementById("mac1").style.display = "none";
+                                    document.getElementById("anydesk1").style.display = "none";
+                                    document.getElementById("tw1").style.display = "none";
+                                    document.getElementById("aw1").style.display = "none";
+                                    document.getElementById("os1").style.display = "none";
+                                    document.getElementById("ip2").style.display = "none";
+                                    document.getElementById("mac2").style.display = "none";
+                                    document.getElementById("wlanip").style.display = "none";
+                                    document.getElementById("wlanmac").style.display = "none";
+
+
+
+                                }
+
+                                else {
+
+                                    document.getElementById("dropDownMarka").style.display = "block";
+                                    document.getElementById("os1").style.display = "block";
+                                    document.getElementById("ip1").style.display = "block";
+                                    document.getElementById("mac1").style.display = "block";
+                                    document.getElementById("anydesk1").style.display = "block";
+                                    document.getElementById("tw1").style.display = "block";
+                                    document.getElementById("aw1").style.display = "block";
+                                    document.getElementById("ip2").style.display = "block";
+                                    document.getElementById("mac2").style.display = "block";
+                                    document.getElementById("wlanip").style.display = "block";
+                                    document.getElementById("wlanmac").style.display = "block";
+
+
+
+
+                                }
+
+
+                            }
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div id="dropDownMarka" class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>Marka</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                        </div>
+
+                        @Html.DropDownListFor(x => x.MarkaID, new SelectList(ViewBag.EMarkalarBAG, "EnvanterMarkaID", "EnvanterMarkaAdi"), new { @class = "form-control" })
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div id="ip1" class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>Birincil IP</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.IP, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            @*<div id="mac1" class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>Birincil MAC</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.MAC, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>*@
+
+            <div id="ip2" class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>İkincil IP</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.IP2, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            @*<div id="mac2" class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>İkincil MAC</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.MAC2, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>*@
+
+
+
+            <div id="wlanip" class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>WLAN IP</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.WLANIP, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            @*<div id="wlanmac" class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>WLAN MAC</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.WLANMAC, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div id="anydesk1" class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>AnyDesk ID</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.AnyDesk, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="tw1" class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>TeamViewer ID</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.TeamViewer, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="os1" class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>İşletim Sistemi</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.OS, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="aw1" class="col-md-6">
+                <div class="form-group" style="width:80%">
+                    <label>Anti Virüs</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.AntiVirüs, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-md-12">
+                <div class="form-group">
+
+                    <label>Açıklama</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-comment"></i></span>
+
+                        </div>
+                        @Html.TextAreaFor(x => x.Aciklama, new { @class = "form-control", @placeholder = "Envanter'a açıklama ekleyebilirsiniz..." })
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+                    <button type="button" onclick="EnvanterKaydetMain()" class="btn btn-block btn-outline-warning">Ekle/Güncelle</button>
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+    }
+</div>
+
+<div id="EnvanterSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Envanter Kaydını Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('EnvanterSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="EnvanterSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+

@@ -1,0 +1,523 @@
+﻿
+@model TeknikServis.Entittes.Models.Kullanici
+
+@{
+    ViewBag.Title = "KullaniciKarti";
+    Layout = null;
+
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("KullaniciKarti", "Kullanici", FormMethod.Post, new { id = "FrmKullaniciKarti", autocomplete = "off" }))
+
+
+    {
+        @Html.HiddenFor(x => x.KullaniciID)
+
+        <div class="row">
+
+
+
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Kullanıcı Adı</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.KullaniciAdi, new { @class = "form-control", @placeholder = "Kullanıcı Adı...", @autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Ad Soyad</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.AdSoyad, new { @class = "form-control", @placeholder = "Ad Soyad....", @autocomplete = "off" })
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Cep Telefonu</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-phone"></i></span>
+
+                        </div>
+
+                        @Html.TextBoxFor(x => x.CepTelNo, new { @class = "form-control", @placeholder = "Cep/İş Telefonu Giriniz...", @id = "cepno", @autocomplete = "off" })
+                        <script>
+
+                            document.getElementById('cepno').addEventListener('input', function (e) {
+                                var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+                                e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+                            });
+
+
+
+
+                        </script>
+
+                    </div>
+
+                    <!-- /.input group -->
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>E-Posta</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-at"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.EMail, new { @class = "form-control", @placeholder = "E-Posta Giriniz....", @autocomplete = "off" })
+
+                    </div>
+
+                    <!-- /.input group -->
+                </div>
+            </div>
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Şifre</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-key"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.KullaniciParola, new { @class = "form-control", @placeholder = "Değişmedi...", @type = "password", @autocomplete = "off" })
+
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+
+            @if (Session["Role"].ToString() == "Admin")
+            {
+
+                <div class="col-md-6" style="margin-top: 1px;">
+
+                    <div class="form-group">
+                        <label>Çalıştığı Firma</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-suitcase"></i></span>
+
+                            </div>
+
+                            @Html.DropDownListFor(model => model.FirmaID, new SelectList(ViewBag.FirmalarBAG, "FirmaID", "FirmaAdi"), new { @class = "form-control", id = "dropDownfirma" })
+
+                            <script>
+                                $(function () {
+                                    $('#dropDownfirma').select2({
+
+
+                                        placeholder: "Seçim Yapın..",
+
+
+                                        width: '180px'
+                                    });
+                                });
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+            else
+            {
+
+                @Html.HiddenFor(x => x.FirmaID, new { @Value = Convert.ToInt32(Session["KfirmaID"]) })
+
+            }
+
+            @if (Session["Role"].ToString() == "Admin")
+            {
+
+
+
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Kullanıcı Türü</label>
+                        <br />
+                        @Html.RadioButtonFor(x => x.Yetkiler, "Admin", new { @onclick = "" }) @Html.Label("Yönetici")
+                        &nbsp; &nbsp;&nbsp; &nbsp;
+                        @Html.RadioButtonFor(x => x.Yetkiler, "Personel", new { @onclick = " " }) @Html.Label("Personel")
+
+                        &nbsp; &nbsp;&nbsp; &nbsp;
+                        @Html.RadioButtonFor(x => x.Yetkiler, "Firma", new { @onclick = " " }) @Html.Label("Firma Yöneticisi")
+                        &nbsp; &nbsp;&nbsp; &nbsp;
+                        @Html.RadioButtonFor(x => x.Yetkiler, "FirmaPersonel", new { @onclick = " " }) @Html.Label("Firma Personeli")
+
+
+
+                    </div>
+                </div>
+
+            }
+
+
+            @if (Session["Role"].ToString() == "Firma")
+            {
+
+
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Kullanıcı Türü</label>
+                        <br />
+
+                        @Html.RadioButtonFor(x => x.Yetkiler, "FirmaPersonel", new { @checked = "checked", @onclick = " " }) @Html.Label("Personel")
+
+                        &nbsp; &nbsp;&nbsp; &nbsp;
+
+                        @Html.RadioButtonFor(x => x.Yetkiler, "Firma", new { @onclick = "" }) @Html.Label("Yönetici")
+
+
+
+
+                    </div>
+                </div>
+
+            }
+
+
+        </div>
+
+
+
+        if (Session["Role"].ToString() == "Admin")
+        {
+
+            <div class="col-md-12" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Departman, Alt Departman ve Bölüm</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+
+                        </div>
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                // Kategori seçildiğinde bu fonksiyonumuz çalışmaya başlayacaktır.
+
+                                $('#dropDownfirma').change(function () {
+                                    $('#Departman').empty();
+                                    $('#AltDepartman').empty();
+                                    $('#Bolum').empty();
+
+                                    // Seçilen Kategorinin ID sini alıyoruz.
+                                    var FirmaID = null;
+                                    if (@Convert.ToInt32(Model.FirmaID) != 1) {
+                                        FirmaID =@Convert.ToInt32(Model.FirmaID);
+                                    }
+                                    else {
+                                        FirmaID = $('#dropDownfirma').val();
+                                        console.log(FirmaID);
+
+                                    }
+
+                                    /*Seçilen KategoriID sini kullanarak
+                                    Kategori(Controller) sınıfı içerisindeki AltKategorileriGetir
+                                    Action metodunu çağırıyoruz.
+                                    Bu metoddan dönen liste sayesinde .each fonksiyonu ile
+                                    AltKategori isimli DropDownList nesnesini dolduruyoruz.*/
+                                    if (FirmaID != null && FirmaID != '') {
+                                        $.ajax({
+                                            type: "post",
+                                            url: '@Url.Action("DepartmanGetir", "Kullanici")',
+                                            data: { FirmaID: FirmaID },
+                                            success: function (departman) {
+                                                console.log(departman);
+                                                $.each(departman, function (index, DepartmanAdi) {
+
+
+                                                    var departmanlar = '<option value="' + departman[index].DepartmanID + '">' + departman[index].DepartmanAdi + '</option>';
+                                                    $('#Departman').append(departmanlar);
+
+
+                                                });
+                                            },
+                                            error: function () {
+
+                                                alert("Hata");
+                                            },
+                                            beforeSend: function () {
+
+                                            },
+                                            complete: function () {
+
+                                            }
+                                        });
+                                    }
+                                });
+                            });
+
+
+                            $('#Departman').change(function () {
+        // Kategori seçildiğinde bu fonksiyonumuz çalışmaya başlayacaktır.
+                                $('#AltDepartman').empty();
+                                $('#Bolum').empty();
+
+                console.log("Deneme2");
+                // Seçilen Kategorinin ID sini alıyoruz.
+                                   var DepartmanID = $('#Departman').val();
+        /*Seçilen KategoriID sini kullanarak
+        Kategori(Controller) sınıfı içerisindeki AltKategorileriGetir
+        Action metodunu çağırıyoruz.
+        Bu metoddan dönen liste sayesinde .each fonksiyonu ile
+        AltKategori isimli DropDownList nesnesini dolduruyoruz.*/
+                                   if (DepartmanID != null && DepartmanID != '') {
+        $.ajax({
+        type: "post",
+        url: '@Url.Action("AltDepartmanGetir", "Kullanici")',
+            data: { DepartmanID: DepartmanID },
+            success: function (altdepartman) {
+                console.log(altdepartman);
+
+                $.each(altdepartman, function (index, AltDepartmanAdi) {
+
+                    $('#AltDepartman').append($('<option />', {
+                        value: altdepartman[index].AltDepartmanID,
+                        text: altdepartman[index].AltDepartmanAdi
+                    }));
+
+
+
+
+                });
+
+        },
+        error: function () {
+
+        alert("Hata");
+        },
+        beforeSend: function () {
+
+        },
+        complete: function () {
+
+        }
+        });
+        }
+        });
+
+
+                            $('#AltDepartman').change(function () {
+        // Kategori seçildiğinde bu fonksiyonumuz çalışmaya başlayacaktır.
+                                $('#Bolum').empty();
+
+                console.log("Deneme3");
+                // Seçilen Kategorinin ID sini alıyoruz.
+                                var AltDepartmanID = $('#AltDepartman').val();
+        /*Seçilen KategoriID sini kullanarak
+        Kategori(Controller) sınıfı içerisindeki AltKategorileriGetir
+        Action metodunu çağırıyoruz.
+        Bu metoddan dönen liste sayesinde .each fonksiyonu ile
+        AltKategori isimli DropDownList nesnesini dolduruyoruz.*/
+                                if (AltDepartmanID != null && AltDepartmanID != '') {
+        $.ajax({
+        type: "post",
+        url: '@Url.Action("BolumGetir", "Kullanici")',
+            data: { AltDepartmanID: AltDepartmanID },
+            success: function (bolum) {
+                console.log(bolum);
+
+                $.each(bolum, function (index, BolumAdi) {
+
+
+
+                    $('#Bolum').append($('<option />', {
+                        value: bolum[index].BolumID,
+                        text: bolum[index].BolumAdi
+        }));
+        });
+        },
+        error: function () {
+
+        alert("Hata");
+        },
+        beforeSend: function () {
+
+        },
+        complete: function () {
+
+        }
+        });
+        }
+        });
+
+
+
+                        </script>
+
+
+
+
+
+                        @Html.DropDownListFor(model => model.DepartmanID, new SelectList(ViewBag.Departmanlar, "DepartmanID", "DepartmanAdi"), new { @class = "form-control", id = "Departman" }) <a>&nbsp;/ &nbsp; </a>
+                        @Html.DropDownListFor(model => model.AltDepartmanID, new SelectList(ViewBag.AltDepartman, "AltDepartmanID", "AltDepartmanAdi"), new { @class = "form-control", id = "AltDepartman" }) <a>&nbsp;/ &nbsp; </a>
+                        @Html.DropDownListFor(model => model.BolumID, new SelectList(ViewBag.Bolum, "BolumID", "BolumAdi"), new { @class = "form-control", id = "Bolum" })
+
+
+
+
+                        <script>
+                            $(function () {
+                                $('#Departman').select2({
+
+
+
+
+
+                                    width: '10rem'
+                                });
+                            });
+                            $(function () {
+                                $('#AltDepartman').select2({
+
+
+
+
+
+                                    width: '10rem'
+                                });
+                            });
+
+                            $(function () {
+                                $('#Bolum').select2({
+
+
+
+
+
+                                    width: '10rem'
+                                });
+                            });
+
+
+
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+
+        if (Session["Role"].ToString() == "Admin")
+        {
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Kullanici Envanteri</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <button class="btn btn-warning btn-rounded btn-lg" onclick="FormKapat('KullaniciModalMain');FormGoster('../Kullanici/EnvanterKarti/', 'EnvanterModal');"
+                                    data-toggle="tooltip" data-placement="bottom" title="Envanter">
+                                <span class="fa fa-boxes"></span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+
+
+
+<div class="col-md-8">
+    <div class="form-group">
+
+        <label>Durumu: </label>
+        <br />
+
+
+        <div class="input-group mb-3">
+
+            @Html.CheckBoxFor(x => x.Aktif, new
+       {
+
+           data_toggle = "toggle",
+           data_onstyle = "success",
+           data_offstyle = "dark",
+           data_on = "Aktif",
+           data_off = "Pasif",
+           data_size = "sm",
+           id = "sliderkaktif"
+       })
+
+            <script>
+                $(function () {
+                    $('#sliderkaktif').bootstrapToggle();
+                })
+            </script>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+        <div class="modal-footer">
+            <div class="col-md-12">
+                @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+                <button type="button" onclick="KullaniciKaydet()" class="btn btn-block btn-primary">Kaydet</button>
+            </div>
+        </div>
+    }
+
+
+
+</div>
+
+
+
+

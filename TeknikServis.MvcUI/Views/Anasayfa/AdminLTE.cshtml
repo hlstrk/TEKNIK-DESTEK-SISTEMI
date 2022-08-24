@@ -1,0 +1,575 @@
+﻿@model TeknikServis.Entittes.Models.TeknikView
+@{
+    ViewBag.Title = "AdminLTE";
+    Layout = null;
+
+}
+
+
+<div class="container-fluid">
+    <div>
+
+        <div class="row">
+            <div class="col-sm-12 col-lg-12 col-xl-8">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-xl-12">
+                        <div class="mt-lg-4">
+                            <div class="card custom-card custom-card-height card-box bg-white h-100" style="margin-top: 0px; cursor: pointer;" onclick="FormGoster('../Anasayfa/SifreDegiskarti/?KullaniciID=@Convert.ToInt32(Session["KullaniciID"])', 'SifreDegis')">
+                                @{
+                                    string val = "";
+                                    if (Request.Cookies["darkmode"] != null)
+                                    {
+                                        val = Request.Cookies["darkmode"].Value;
+                                    }
+                                }
+                                <div class="card-body @val">
+                                    <div class="row align-items-center">
+
+                                        <div class=" col-sm-6 ">
+                                            @*<img style="max-width:80%;max-height:60%;" src="~/Content/Images/mtxblue.png">*@
+                                            <img style="max-width:80%;max-height:60%;" src="~/Content/firma_logo_1.png">
+                                       
+
+
+                                        </div>
+                                        <div class=" col-sm-6 ">
+
+
+                                            <h4 class="d-flex  mb-3">
+                                                <span class="font-weight-bold text-black ">Merhaba @Session["KullaniciAdi"].ToString()</span>
+                                            </h4>
+                                            <p class="tx-black-7 mb-1">Libra  Kobit Destek Portalına Hoşgeldiniz.</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="KayitEkleMobil" class="card custom-card custom-card-height card-dashboard-calendar pb-0" style="margin-top: 0px;">
+                    <div class="card-body">
+                        <div class="border-bottom-0 pt-0 pl-0 pr-0 d-flex">
+                            <div class="label-custom">
+                                <label class="main-content-label mb-2 pt-1">Hızlı Talep Oluştur</label>
+                                <span class="d-block tx-12 my-3 text-muted">Bu bölümden hızlı talep oluşturabilirsiniz..</span>
+                            </div>
+                        </div>
+                        @using (Html.BeginForm("TeknikKarti", "Anasayfa", FormMethod.Post, new { id = "FrmTeknikKartiMobil" }))
+                        {
+
+                            <div class="row">
+
+                                <div class="form-group col-md-12">
+
+                                    <div class="col-md-12" style="margin-top: 1px;">
+
+
+                                        @if (Session["Role"].ToString() == "Admin")
+                                        {
+
+                                            <div class="col-md-6" style="margin-top: 1px;">
+
+                                                <div class="form-group">
+                                                    <label>Oluşturan Kullanıcı</label>
+                                                    <div class="input-group mb-3" style="width:18rem">
+                                                        <div class="input-group-prepend">
+
+                                                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+
+                                                        </div>
+
+
+
+
+
+                                                        @Html.DropDownListFor(model => model.AitOlduguKullaniciID, new SelectList(ViewBag.HizliKullaniciBAG, "KullaniciID", "AdSoyad"), new { @class = "form-control", id = "dropDownmobil" })
+
+                                                        <script>
+                                                            $("#dropDownmobil").selectize({
+                                                                create: false,
+                                                                sortField: "text",
+                                                            });
+                                                        </script>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <div class="col-md-8" style="margin-top: 1px;">
+                                            <div class="form-group">
+                                                <label>Kategori Seçiniz</label>
+                                                <div class="input-group mb-3" style="width:18rem">
+                                                    <div class="input-group-prepend">
+
+                                                        <span class="input-group-text"><i class="fa fa-question"></i></span>
+
+                                                    </div>
+
+                                                    @Html.DropDownListFor(x => x.ArizaTuruID, new SelectList(ViewBag.ArizaTurleri, "ArizaTuruID", "ArizaTuru"), new { @class = "form-control", id = "Kategorimobil" })
+
+                                                    <script>
+                                                        $(function () {
+                                                            $("#Kategorimobil").selectize({
+                                                                create: false,
+                                                                sortField: "text",
+                                                            });
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br />
+                                        <div class="col-md-12" style="margin-top: 1px;">
+                                            <label>Sorun Nedir?</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+
+                                                    <span class="input-group-text"><i class="fa fa-comment"></i></span>
+
+                                                </div>
+                                                @Html.TextAreaFor(x => x.MusteriBeyani, new { @class = "form-control", @placeholder = "Sorunun nedenini daha iyi anlamamız için notunuzu buraya bırakabilirsiniz...", @id = "Notmobil" })
+
+                                            </div>
+                                        </div>
+                                        @if (Session["Role"].ToString() == "Admin")
+                                        {
+
+                                            <div class="col-md-12" style="margin-top: 1px;">
+                                                <label>Firmaya Mail Gönderilsin : </label>
+                                                <div class="input-group mb-3">
+
+                                                    @Html.CheckBoxFor(x => x.mailgonderilsinmi)
+
+                                                </div>
+                                            </div>
+                                        }
+
+
+                                        <a onclick="TeknikKaydetMobil()" class="btn btn-m btn-primary btn-m pull-right">Yeni Kayıt Oluştur</a>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        }
+                    </div>
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="card custom-card custom-card-height" style="margin-top: 0px;" onclick="FormGoster('../Anasayfa/TeknikListesiDB/?islemno=1','TeknikModalDB')">
+                            <div class="card-body">
+                                <div class="d-flex no-block align-items-center" style="cursor: pointer;">
+                                    <div>
+                                        <span class="tx-13 mb-3" style="font-weight: bold;">ONAY BEKLEYEN İŞLEMLER</span>
+
+                                        <span class="d-block tx-12 mb-2 text-muted" style="font-size: 12px;">&nbsp;</span>
+                                        <span class="d-block tx-12 mb-2 text-muted" style="font-size: 12px;"></span>
+                                        @if (Session["Role"].ToString() == "Firma")
+                                        {
+                                            <h3 class="m-0 mt-2 font-weight-bold">@Session["FOIA"]</h3>
+                                        }
+
+                                        else if (Session["Role"].ToString() == "FirmaPersonel")
+                                        {
+                                            <h3 class="m-0 mt-2 font-weight-bold">@Session["KOBIA"]</h3>
+                                        }
+
+                                        else
+                                        {
+                                            <h3 class="m-0 mt-2 font-weight-bold">@Session["OnayBekleyenAdmin"]</h3>
+                                        }
+
+                                    </div>
+                                    <div class="ml-auto mt-auto">
+                                        <img src="~/Content/Images/dbf.png" class="wd-30 hd-30 mr-2" alt="Onay Bekleyen Taleplerim" height="40">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="card custom-card custom-card-height" style="margin-top: 0px;" onclick="FormGoster('../Anasayfa/TeknikListesiDB/?islemno=2','TeknikModalDBAll')">
+                            <div class="card-body">
+                                <div class="d-flex no-block align-items-center" style="cursor: pointer;">
+                                    <div>
+                                        <span class="tx-13 mb-3" style="font-weight: bold;">TÜM TALEPLERİM</span>
+                                        <span class="d-block tx-12 mb-2 text-muted" style="font-size: 12px;">Aktif Taleplerim / Süreci Tamamlanmış Taleplerim</span>
+
+
+                                        @if (Session["Role"].ToString() == "FirmaPersonel")
+                                        {
+                                            <h3 class="m-0 mt-2 font-weight-bold">@Session["KOIA"].ToString()/@Session["KOTIA"].ToString()</h3>
+
+                                        }
+                                        else if (Session["Role"].ToString() == "Firma")
+                                        {
+                                            <h3 class="m-0 mt-2 font-weight-bold">@Session["toplamislemadedi"].ToString()/@Session["FTIA"].ToString()</h3>
+                                        }
+                                        else
+                                        {
+                                            <h3 class="m-0 mt-2 font-weight-bold">@Session["toplamislemadediadmin"].ToString()/@Session["FTIAAdmin"].ToString()</h3>
+                                        }
+
+                                    </div>
+                                    <div class="ml-auto mt-auto">
+                                        <img src="~/Content/Images/ppaper.png" class="wd-30 hd-30 mr-2" alt="TALEPLERİM" height="40">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+
+                    <script>
+                        var aktiftab = 0;
+                        function StatuDegistir(id) {
+
+                            aktiftab = id;
+                         
+
+                            if (aktiftab == 1) {
+                                console.log("dongu not gizle gorev goster 1")
+                                document.getElementById("eklemenot").style.display = "none";
+                                document.getElementById("eklemegorev").style.display = "block";
+                            }
+
+                            if (aktiftab == 2) {
+                                console.log("dongu not gizle gorev goster 2")
+                                document.getElementById("eklemenot").style.display = "none";
+                                document.getElementById("eklemegorev").style.display = "block";
+                            }
+
+                            
+                            if (aktiftab == 3) {
+                                console.log("dongu gorev gizle not goster main")
+                                document.getElementById("eklemenot").style.display = "block";
+                                document.getElementById("eklemegorev").style.display = "none";
+                            }
+                          
+
+
+
+
+                        }
+
+                    </script>
+                    <div class="mb-3 pb-2 row">
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+
+
+                            <div class="table-task-div">
+
+                                <div class="card card-primary card-outline card-outline-tabs">
+
+                                    <div class="card-header p-0 border-bottom-0">
+                                        <button id="eklemegorev" style="text-align:right;margin-right:1rem;margin-top:1.4rem;border-block-color:grey" type="button" onclick="FormGoster('../Anasayfa/GorevKarti/?GorevID=0','gorevkarti')" class="btn btn-outline-dark float-right"><i class="fas fa-plus-circle"></i></button>
+
+                                        <button id="eklemenot" style="text-align:right;margin-right:1rem;margin-top:1.4rem;border-block-color:grey;display:none" type="button" onclick="FormGoster('../Anasayfa/NotEkleKarti/?NotID=0','NotEkleModal')" class="btn btn-outline-dark float-right"><i class="fas fa-plus-circle"></i></button>
+
+                                        <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link active dropdown-toggle" style="color:black" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Görevler</a>
+                                                <div class="dropdown-menu">
+                                                    <a onclick="StatuDegistir(1)" class="dropdown-item" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true">Bana Atanan</a>
+                                                    <a onclick="StatuDegistir(2)" class="dropdown-item" id="custom-tabs-four-profile-tab" data-toggle="pill" href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false">Benim Atadığım</a>
+
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="@Url.Action("GorevListesiMain","Gorev")" aria-selected="false">Tüm Görevler</a>
+                                                </div>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a onclick="StatuDegistir(3)" class="nav-link" style="color:black" id="custom-tabs-four-messages-tab" data-toggle="pill" href="#custom-tabs-four-messages" role="tab" aria-controls="custom-tabs-four-messages" aria-selected="false">Notlarım</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+
+                                    <div style="padding:0.75rem" class="card-body">
+                                        <div class="tab-content" id="custom-tabs-four-tabContent">
+
+                                            <div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+
+                                                @*@{
+
+                                                    Html.RenderAction("AitGorevlerKart");*@
+
+
+
+                                                <!--}-->
+
+
+                                            </div>
+                                            <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+                                                <script>
+
+                                                </script>
+                                                @*@{
+
+                                                    Html.RenderAction("OlusturulanGorevlerKart");
+
+
+
+                                                }*@
+                                            </div>
+                                            <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab">
+
+                                                @{
+
+                                                    Html.RenderAction("NotListesi");
+
+
+
+                                                }
+                                            </div>
+                                            <div class="tab-pane fade" id="custom-tabs-four-settings" role="tabpanel" aria-labelledby="custom-tabs-four-settings-tab">
+                                                Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a vestibulum pharetra. Donec interdum placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet urna. Nunc at consequat diam. Nunc et felis ut nisl commodo dignissim. In hac habitasse platea dictumst. Praesent imperdiet accumsan ex sit amet facilisis.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+                            </div>
+                         
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="card custom-card custom-card-height card-dashboard-calendar pb-0 h-100" style="margin-top: 0px;">
+                                <div class="card-body card-height">
+                                    <div class="border-bottom-0 pt-0 pl-0 pr-0 d-flex">
+                                        <div class="label-custom">
+                                            <label class="main-content-label mb-2 pt-1">PERİYODİK TALEPLER</label>
+                                            <span class="d-block tx-12 my-3 text-muted">Belirli zaman aralıkları ile açtığınız talepleri bir kere kaydedin, sürekli kullanın.</span>
+                                        </div>
+                                        <div class="ml-auto show">
+                                            <button class="btn btn-secondary custom-button"><i class="icon-plus"></i></button>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center" class="dashboard-info">
+                                        <svg style="margin:auto" enable-background="new 0 0 36 36" height="80" viewBox="0 0 36 36" width="80" xmlns="http://www.w3.org/2000/svg"><path d="m34.904 20.355c-3.782-5.791-3.38-11.727-5.203-14.518s-7.256-7.603-20.093.782-9.572 17.5-7.566 20.569c9.388 14.372 39.561 3.423 32.862-6.833z" fill="#efefef"></path><path d="m29.25 18.75v6.5c0 1.1-.9 2-2 2h-18.5c-1.1 0-2-.9-2-2v-6.5h3.76c.44 0 .83.29.95.71l1.08 3.58c.12.42.51.71.95.71h9.02c.44 0 .83-.29.95-.71l1.08-3.58c.12-.42.51-.71.95-.71z" fill="#"></path><path d="m29.25 18.75h-3.76c-.44 0-.83.29-.95.71l-1.08 3.58c-.12.42-.51.71-.95.71h-9.02c-.44 0-.83-.29-.95-.71l-1.08-3.58c-.12-.42-.51-.71-.95-.71h-3.76l4.5-10h13.5z" fill="#FF781F"></path><path d="m25.71 23.04 1.08-3.58c.12-.42.51-.71.95-.71h-2.25c-.44 0-.83.29-.95.71l-1.08 3.58c-.12.42-.51.71-.95.71h2.25c.44 0 .83-.29.95-.71z" fill="#d5dbe1"></path><path d="m9 25.25v-6.5h-2.25v6.5c0 1.1.9 2 2 2h2.25c-1.1 0-2-.9-2-2z" fill="#d5dbe1"></path><path d="m11.25 8.75-4.5 10h2.25l4.5-10z" fill="#F05237"></path><path d="m14.79 23.04-1.08-3.58c-.12-.42-.51-.71-.95-.71h-2.25c.44 0 .83.29.95.71l1.08 3.58c.12.42.51.71.95.71h2.25c-.44 0-.83-.29-.95-.71z" fill="#F05237"></path><g fill="#a4afc1"><path d="m27.744 6.5c-.827 0-1.5-.673-1.5-1.5s.673-1.5 1.5-1.5 1.5.673 1.5 1.5-.673 1.5-1.5 1.5zm0-2c-.276 0-.5.225-.5.5s.224.5.5.5.5-.225.5-.5-.224-.5-.5-.5z"></path><path d="m7.605 4.173h1v2h-1z" transform="matrix(.707 -.707 .707 .707 -1.284 7.246)"></path><path d="m6.927 8.739h2v1h-2z" transform="matrix(.707 -.707 .707 .707 -4.211 8.312)"></path><path d="m10.994 4.673h2v1h-2z" transform="matrix(.707 -.707 .707 .707 -.145 9.996)"></path></g><path d="m27.25 28h-18.5c-1.517 0-2.75-1.233-2.75-2.75v-6.5c0-.106.022-.211.066-.308l4.5-10c.121-.269.389-.442.684-.442h13.5c.295 0 .563.173.684.442l4.5 10c.044.097.066.202.066.308v6.5c0 1.517-1.233 2.75-2.75 2.75zm-19.75-9.089v6.339c0 .689.561 1.25 1.25 1.25h18.5c.689 0 1.25-.561 1.25-1.25v-6.339l-4.235-9.411h-12.53z"></path><path d="m22.506 24.5h-9.012c-.778 0-1.452-.501-1.676-1.247l-1.073-3.574c-.032-.105-.13-.179-.239-.179h-3.756v-1.5h3.756c.778 0 1.452.501 1.676 1.247l1.073 3.574c.032.106.13.179.239.179h9.012c.109 0 .208-.073.239-.179l1.073-3.574c.224-.746.897-1.247 1.676-1.247h3.756v1.5h-3.756c-.109 0-.208.073-.239.179l-1.073 3.574c-.224.746-.898 1.247-1.676 1.247z"></path><path d="m2 26.5h32v1.5h-32z"></path></svg>
+                                        <h6 style="margin:auto" class="dashboard-info-h5">Herhangi bir veri yok.</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+             
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-12">
+
+
+                        <!-- TO DO List -->
+
+
+
+
+                        <div id="PanelToDoListAnasayfa" class="col-sm-12">
+
+                            @{
+
+                                Html.RenderAction("ToDoList");
+
+
+
+                            }
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+                
+            </div>
+
+
+
+
+
+
+            <div class="col-sm-12 col-lg-12 col-xl-4 mt-xl-4">
+
+                @{
+
+                    Html.RenderAction("Duyurular");
+                }
+                <!-- /.card -->
+
+
+                <div id="KayitEkleMain" class="card custom-card custom-card-height card-dashboard-calendar pb-0" style="margin-top: 0px;">
+                    <div class="card-body">
+                        <div class="border-bottom-0 pt-0 pl-0 pr-0 d-flex">
+                            <div class="label-custom">
+                                <label class="main-content-label mb-2 pt-1">Hızlı Talep Oluştur</label>
+                                <span class="d-block tx-12 my-3 text-muted">Bu bölümden hızlı talep oluşturabilirsiniz..</span>
+                            </div>
+                        </div>
+                        @using (Html.BeginForm("TeknikKarti", "Anasayfa", FormMethod.Post, new { id = "FrmTeknikKartiDB" }))
+                        {
+
+                            <div class="row">
+
+                                <div class="form-group col-md-12">
+
+                                    <div class="col-md-12" style="margin-top: 1px;">
+
+
+                                        @if (Session["Role"].ToString() == "Admin")
+                                        {
+
+                                            <div class="col-md-6" style="margin-top: 1px;">
+
+                                                <div class="form-group">
+                                                    <label>Oluşturan Kullanıcı</label>
+                                                    <div class="input-group mb-3" style="width:18rem">
+                                                        <div class="input-group-prepend">
+
+                                                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+
+                                                        </div>
+
+                                                        @Html.DropDownListFor(model => model.AitOlduguKullaniciID, new SelectList(ViewBag.HizliKullaniciBAG, "KullaniciID", "AdSoyad"), new { @style = "width:1rem", @class = "form-control", id = "dropDownSlt" })
+
+                                                        <script>
+
+                                                            $("#dropDownSlt").selectize({
+                                                                create: false,
+                                                                sortField: "text",
+                                                                innerWidth: 1
+                                                            });
+
+
+
+                                                        </script>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <div class="col-md-8" style="margin-top: 1px;">
+                                            <div class="form-group">
+                                                <label>Kategori Seçiniz</label>
+                                                <div class="input-group mb-3" style="width:18rem">
+                                                    <div class="input-group-prepend">
+
+                                                        <span class="input-group-text"><i class="fa fa-question"></i></span>
+
+                                                    </div>
+
+                                                    @Html.DropDownListFor(x => x.ArizaTuruID, new SelectList(ViewBag.ArizaTurleri, "ArizaTuruID", "ArizaTuru"), new { @class = "form-control", id = "KategoriDB" })
+
+
+                                                    <script>
+
+                                                        $("#KategoriDB").selectize({
+                                                            create: false,
+                                                            sortField: "text",
+                                                        });
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br />
+                                        <div class="col-md-12" style="margin-top: 1px;">
+                                            <label>Sorun Nedir?</label>
+                                            <div class="input-group mb-3" style="height:5rem">
+                                                <div class="input-group-prepend">
+
+                                                    <span class="input-group-text"><i class="fa fa-comment"></i></span>
+
+                                                </div>
+                                                @Html.TextAreaFor(x => x.MusteriBeyani, new { @class = "form-control", @placeholder = "Sorunun nedenini daha iyi anlamamız için notunuzu buraya bırakabilirsiniz...", @id = "NotDB" })
+
+                                            </div>
+                                        </div>
+                                        @if (Session["Role"].ToString() == "Admin")
+                                        {
+
+                                            <div class="col-md-12" style="margin-top: 1px;">
+                                                <label>Firmaya Mail : </label>
+                                                <div class="input-group mb-3">
+
+                                                    @Html.CheckBoxFor(x => x.mailgonderilsinmi, new
+                                               {
+
+                                                   data_toggle = "toggle",
+                                                   data_onstyle = "success",
+                                                   data_offstyle = "dark",
+                                                   data_on = "Gönder",
+                                                   data_off = "Gönderme",
+                                                   data_size = "sm"
+                                               })
+
+
+
+                                                </div>
+                                            </div>
+                                        }
+
+
+                                        <a onclick="TeknikKaydetDB()" class="btn btn-m btn-primary btn-m pull-right">Yeni Kayıt Oluştur</a>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        }
+                    </div>
+                </div>
+                @*<div class="card custom-card custom-card-height" style="margin-top: 0px;">
+                        <div class="card-body">
+                            <div class="border-bottom-0 pt-0 pl-0 pr-0 d-flex">
+                                <div class="label-custom">
+                                    <label class="main-content-label mb-2 pt-1">NOT EKLE</label>
+                                    <span class="d-block tx-12 mb-2 text-muted">Günlük görevleriniz için kendinize notlar oluşturabilir, anımsatıcı kurabilirsiniz.</span>
+                                </div>
+                                <div class="ml-auto show">
+                                    <div class="d-flex align-items-center">
+
+                                    </div>
+                                </div>
+                            </div>
+                            @{
+
+                                Html.RenderAction("NotEkle");
+
+
+
+                            }
+
+                        </div>
+                    </div>*@
+                <div class="card custom-card custom-card-height" style="margin-top: 0px;">
+
+                    <div id="PanelNotListeAnasayfa" class="col-sm-12">
+
+                        
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

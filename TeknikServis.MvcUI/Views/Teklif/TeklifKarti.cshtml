@@ -1,0 +1,368 @@
+﻿@model TeknikServis.Entittes.Models.Teklif
+
+@{
+    ViewBag.Title = "TeklifKarti";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("TeklifKarti", "Teklif", FormMethod.Post, new { id = "FrmTeklifKarti" }))
+    {
+        @Html.HiddenFor(x => x.TeklifID)
+
+    <div class="row">
+
+        <div class="col-md-5">
+            <div class="form-group">
+                <label>Geçerlililk Süresi</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <span class="input-group-text"><i class="fa fa-times"></i></span>
+
+                    </div>
+                    @Html.TextBoxFor(x => x.GecerlilikSuresi, new { @class = "form-control" })
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+        @if (Session["Role"].ToString() == "Admin")
+        {
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Teklif Tarihi</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.TeklifTarihi, new { autocomplete = "off", @class = "form-control", id = "zamansec" })
+                        <script>
+
+                            $(document).ready(function () {
+                                $('#zamansec').flatpickr({
+                                    enableTime: true,
+                                    dateFormat: "d-M-Y H:i",
+                                    locale: "tr"
+
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        @if (Session["Role"].ToString() == "Admin")
+        {
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Dolar Kuru</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-question"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.DolarKuru, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+        }
+
+
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+        {
+
+
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Durumu</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-cog"></i></span>
+
+                        </div>
+
+                        @Html.DropDownListFor(x => x.Durumu, new SelectList(ViewBag.TeklifDurum, "DurumID", "DurumAdi"), new { @class = "form-control", id = "dropDownDurum" })
+
+                        <script>
+                            $(function () {
+                                $('#dropDownDurum').select2({
+
+
+                                    placeholder: "Seçim Yapın..",
+
+
+                                    width: '180px'
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel" || Session["Role"].ToString() == "Firma")
+        {
+            <div class="col-md-12">
+                <div class="form-group">
+                    @if (Session["Role"].ToString() == "Personel" || Session["Role"].ToString() == "Admin")
+                    {
+                        <label>Yönetici Notu</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-comment"></i></span>
+
+                            </div>
+                            @Html.TextAreaFor(x => x.YoneticiNotu, new { @class = "form-control", @placeholder = "Sorunun çözümü ilgili notlarınızı buraya bırakabilirsiniz..." })
+
+                        </div>
+                    }
+
+
+
+
+                    <!-- /.input group -->
+                </div>
+            </div>
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+        @if (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Personel")
+        {
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Teklif İçeriği</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <button class="btn btn-info btn-rounded btn-lg" onclick="FormKapat('TeklifModal');FormGoster('../Teklif/TeklifDetayKarti/?TeklifID=@Session["TeklifDetayID"]', 'IslemModalTeklif');"
+                                    data-toggle="tooltip" data-placement="bottom" title="Teklif İçeriğini Düzenle">
+                                <span class="fa fa-poll-h"></span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        @if (Session["Role"].ToString() == "Admin")
+        {
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Ödenecek Tutar</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i></i>₺</span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.Fiyat, new { @class = "form-control" })
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+        }
+
+        @if (Session["Role"].ToString() == "Admin")
+        {
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Tutar Cinsi</label>
+                    <div class="input-group mb-3">
+                        
+
+                        @Html.DropDownList("ParaBirimi",
+                         new List<SelectListItem> {
+
+                             new SelectListItem {
+                                Text="TL",
+                                Value="₺",
+                                Selected = true
+
+
+                             },
+                             new SelectListItem {
+                                Text="Dolar",
+                                Value="$",
+
+
+                             },
+                             new SelectListItem {
+                                Text="Euro",
+                                Value="€",
+                             },
+                         }, new { @class = "form-control", @onclick = "KurGoster()", @id = "DropDWN" })
+
+
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+            <script>
+                $(function () {
+                    $('#DropDWN').select2({
+
+
+                        placeholder: "Seçim Yapın..",
+
+
+                        width: '180px'
+                    });
+                });
+            </script>
+
+
+
+
+
+            @if (Session["Role"].ToString() == "Admin")
+            {
+
+                <div class="col-md-6" style="margin-top: 1px;">
+
+                    <div class="form-group">
+                        <label>Ait Olduğu Firma</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-suitcase"></i></span>
+
+                            </div>
+
+                            @Html.DropDownListFor(model => model.AitOlduguFirma, new SelectList(ViewBag.FirmalarBAG, "FirmaAdi", "FirmaAdi"), new { @class = "form-control", id = "dropDown" })
+
+                            <script>
+                                $(function () {
+                                    $('#dropDown').select2({
+
+
+                                        placeholder: "Seçim Yapın..",
+
+
+                                        width: '180px'
+                                    });
+                                });
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <div class="col-md-6" style="padding-top:1rem;">
+                <div class="form-group">
+
+                    <label>Arıza/Destek Durumu: </label>
+                    <br />
+
+
+                    <div class="form-check form-check-inline">
+                        @Html.RadioButtonFor(model => model.Aktif, true, new { @checked = "checked", @class = "form-check-label" })  Aktif
+
+                        &nbsp; &nbsp;&nbsp; &nbsp;
+                        @Html.RadioButtonFor(model => model.Aktif, false, new { @class = "form-check-input" })  Pasif
+
+                        &nbsp;
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+        <div class="modal-footer">
+            <div class="col-md-12">
+                @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+                <button type="button" onclick="TeklifKaydetMain()" class="btn btn-block btn-primary">Kaydet</button>
+            </div>
+        </div>
+        }
+    </div>
+

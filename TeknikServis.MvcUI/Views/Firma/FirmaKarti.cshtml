@@ -1,0 +1,415 @@
+﻿@model TeknikServis.Entittes.Models.Firma
+
+@{
+    ViewBag.Title = "FirmaKarti";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("FirmaKarti", "Firma", FormMethod.Post, new { id = "FrmFirmaKarti" }))
+    {
+        @Html.HiddenFor(x => x.FirmaID)
+        <div class="row">
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Firma Türü</label>
+                    <br />
+
+
+
+                    @Html.RadioButtonFor(model => model.TedarikciFirmaMi, false, new { @onclick = "" }) @Html.Label("Destek")
+                    &nbsp; &nbsp;&nbsp; &nbsp;
+                    @Html.RadioButtonFor(model => model.TedarikciFirmaMi, true, new { @onclick = " " }) @Html.Label("Ticari")
+
+
+
+
+                </div>
+            </div>
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Müşteri Türü</label>
+                    <br />
+
+
+
+                    @Html.RadioButtonFor(model => model.MusteriTuru, "Firma", new { @onclick = "", @selected = "false" }) @Html.Label("Firma")
+                    &nbsp; &nbsp;&nbsp; &nbsp;
+                    @Html.RadioButtonFor(model => model.MusteriTuru, "Şahıs", new { @onclick = "", @selected = "true" }) @Html.Label("Şahıs")
+
+
+
+
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Firma Adı</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-building"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.FirmaAdi, new { @class = "form-control", @placeholder = "Firma Giriniz..." })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Firma Grubu</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-suitcase"></i></span>
+
+                        </div>
+                        @Html.DropDownListFor(x => x.FirmaGrubuID, new SelectList(ViewBag.Kategoriler, "TanimID", "TanimAdi"), "Seçiniz..", new
+                        {
+                            @class = "form-control chosen",
+                       data_show_subtext = "true",
+                       data_live_search = "true"
+                   })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Cep Telefonu</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-phone"></i></span>
+
+                        </div>
+
+                        @Html.TextBoxFor(x => x.CepTelefonu, new { @class = "form-control", @placeholder = "Cep/İş Telefonu Giriniz...", @id = "cepno" })
+                        <script>
+
+                            document.getElementById('cepno').addEventListener('input', function (e) {
+                                var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+                                e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+                            });
+
+
+
+
+                        </script>
+
+
+                    </div>
+
+                    <!-- /.input group -->
+                </div>
+            </div>
+
+            @if (Session["Role"].ToString() == "Admin")
+            {
+
+                <div class="col-md-6" style="margin-top: 1px;">
+
+                    <div class="form-group">
+                        <label>İl ve İlçe</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+
+                            </div>
+                            <script type="text/javascript">
+        $(document).ready(function () {
+        // Kategori seçildiğinde bu fonksiyonumuz çalışmaya başlayacaktır.
+            $('#dropDownil').change(function () {
+                $('#dropdownilce').empty();
+        // Seçilen Kategorinin ID sini alıyoruz.
+                var KategoriID = $('#dropDownil').val();
+        /*Seçilen KategoriID sini kullanarak
+        Kategori(Controller) sınıfı içerisindeki AltKategorileriGetir
+        Action metodunu çağırıyoruz.
+        Bu metoddan dönen liste sayesinde .each fonksiyonu ile
+        AltKategori isimli DropDownList nesnesini dolduruyoruz.*/
+                console.log(KategoriID);
+        if (KategoriID != null && KategoriID != '') {
+        $.ajax({
+        type: "GET",
+        url: '@Url.Action("ilcegetir", "Firma")',
+            data: { ilID: KategoriID },
+            success: function (ilce) {
+                console.log(ilce);
+
+                $.each(ilce, function (index, IlAdi) {
+
+
+
+                    $('#dropdownilce').append($('<option />', {
+                        value: ilce[index].IlceID,
+                        text: ilce[index].IlceAdi
+        }));
+        });
+        },
+        error: function () {
+
+        alert("Hata");
+        },
+        beforeSend: function () {
+
+        },
+        complete: function () {
+
+        }
+        });
+        }
+        });
+        });
+                            </script>
+                            @Html.DropDownListFor(model => model.ilID, new SelectList(ViewBag.illerBAG, "IlID", "IlAdi"), new { @class = "form-control", id = "dropDownil" }) &nbsp;/&nbsp;
+
+
+                            @Html.DropDownListFor(model => model.ilceID, new SelectList(ViewBag.ilcelerBAG, "IlceID", "IlceAdi"), new { @class = "form-control", id = "dropdownilce" })
+                            <script>
+                                $(function () {
+                                    $('#dropDown1').select2({
+
+
+                                        placeholder: "İl",
+
+
+                                        width: '140px'
+                                    });
+                                });
+                                $(function () {
+                                    $('#dropDown2').select2({
+
+
+                                        placeholder: "İlçe",
+
+
+                                        width: '140px'
+                                    });
+                                });
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>E-Posta</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-at"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "E-posta Giriniz...", })
+
+
+                    </div>
+
+                    <!-- /.input group -->
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Adres</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+
+                        </div>
+                        @Html.TextAreaFor(x => x.Adres, new { @class = "form-control", @placeholder = "Firmanın Adresi..." })
+
+                    </div>
+
+                    <!-- /.input group -->
+                </div>
+            </div>
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Yetkili Ad Soyad</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.AdSoyad, new { @class = "form-control", @placeholder = "Ad Soyad Giriniz..." })
+
+                    </div>
+
+                    <!-- /.input group -->
+                </div>
+            </div>
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Vergi Kimlik Numarası</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-address-card"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.VergiKimlikNo, new { @class = "form-control", @placeholder = "Firma Vergi Kimlik No...", @id = "VergiKimlikNo", @maxlength = "10" })
+
+
+
+                    </div>
+
+                    <!-- /.input group -->
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Vergi Dairesi</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-address-card"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.vergidairesi, new { @class = "form-control", @placeholder = "Firma Vergi Dairesi...", @id = "VergiDairesi" })
+
+
+
+                    </div>
+
+                    <!-- /.input group -->
+                </div>
+            </div>
+
+
+
+
+
+            <div class="col-md-6" style="margin-top: 1px;">
+
+                <div class="form-group">
+                    <label>Not</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-comment"></i></span>
+
+                        </div>
+                        @Html.TextAreaFor(x => x.Notlar, new { @class = "form-control", @placeholder = "Belirtmek istediğiniz not varsa bu alana giriş yapabilirsiniz..." })
+
+                    </div>
+
+                    <!-- /.input group -->
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+        if (Session["Role"].ToString() == "Admin")
+        {
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Firma Envanteri</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <button class="btn btn-warning btn-rounded btn-lg" onclick="FormKapat('FirmaModal');FormGoster('../Firma/EnvanterKarti/', 'EnvanterModal');"
+                                    data-toggle="tooltip" data-placement="bottom" title="Envanter">
+                                <span class="fa fa-boxes"></span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        }
+        
+        <div class="col-md-8">
+            <div class="form-group">
+
+                <label>Durumu: </label>
+                <br />
+
+
+                <div class="input-group mb-3">
+
+                    @Html.CheckBoxFor(x => x.Aktif, new
+               {
+
+                   data_toggle = "toggle",
+                   data_onstyle = "success",
+                   data_offstyle = "dark",
+                   data_on = "Aktif",
+                   data_off = "Pasif",
+                   data_size = "sm",
+                   id = "sliderfaktif"
+               })
+
+                    <script>
+                        $(function () {
+                            $('#sliderfaktif').bootstrapToggle();
+                        })
+                    </script>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="col-md-12">
+                @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+                <button type="button" onclick="MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>
+            </div>
+        </div>
+    }
+</div>
+
+

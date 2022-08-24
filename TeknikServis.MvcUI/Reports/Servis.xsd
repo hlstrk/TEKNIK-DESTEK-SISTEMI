@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Servis" targetNamespace="http://tempuri.org/Servis.xsd" xmlns:mstns="http://tempuri.org/Servis.xsd" xmlns="http://tempuri.org/Servis.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Servis" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="Servis" msprop:Generator_DataSetName="Servis">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="servisdata" msprop:Generator_RowEvHandlerName="servisdataRowChangeEventHandler" msprop:Generator_RowDeletedName="servisdataRowDeleted" msprop:Generator_RowDeletingName="servisdataRowDeleting" msprop:Generator_RowEvArgName="servisdataRowChangeEvent" msprop:Generator_TablePropName="servisdata" msprop:Generator_RowChangedName="servisdataRowChanged" msprop:Generator_RowChangingName="servisdataRowChanging" msprop:Generator_TableClassName="servisdataDataTable" msprop:Generator_RowClassName="servisdataRow" msprop:Generator_TableVarName="tableservisdata" msprop:Generator_UserTableName="servisdata">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="belgetarihi" msprop:Generator_ColumnPropNameInRow="belgetarihi" msprop:Generator_ColumnPropNameInTable="belgetarihiColumn" msprop:Generator_ColumnVarNameInTable="columnbelgetarihi" msprop:Generator_UserColumnName="belgetarihi" type="xs:string" minOccurs="0" />
+              <xs:element name="servisbaslangic" msprop:Generator_ColumnPropNameInRow="servisbaslangic" msprop:Generator_ColumnPropNameInTable="servisbaslangicColumn" msprop:Generator_ColumnVarNameInTable="columnservisbaslangic" msprop:Generator_UserColumnName="servisbaslangic" type="xs:string" minOccurs="0" />
+              <xs:element name="servisbitis" msprop:Generator_ColumnPropNameInRow="servisbitis" msprop:Generator_ColumnPropNameInTable="servisbitisColumn" msprop:Generator_ColumnVarNameInTable="columnservisbitis" msprop:Generator_UserColumnName="servisbitis" type="xs:string" minOccurs="0" />
+              <xs:element name="kullanici" msprop:Generator_ColumnPropNameInRow="kullanici" msprop:Generator_ColumnPropNameInTable="kullaniciColumn" msprop:Generator_ColumnVarNameInTable="columnkullanici" msprop:Generator_UserColumnName="kullanici" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="firmadata" msprop:Generator_RowEvHandlerName="firmadataRowChangeEventHandler" msprop:Generator_RowDeletedName="firmadataRowDeleted" msprop:Generator_RowDeletingName="firmadataRowDeleting" msprop:Generator_RowEvArgName="firmadataRowChangeEvent" msprop:Generator_TablePropName="firmadata" msprop:Generator_RowChangedName="firmadataRowChanged" msprop:Generator_RowChangingName="firmadataRowChanging" msprop:Generator_TableClassName="firmadataDataTable" msprop:Generator_RowClassName="firmadataRow" msprop:Generator_TableVarName="tablefirmadata" msprop:Generator_UserTableName="firmadata">
+          <xs:complexType>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

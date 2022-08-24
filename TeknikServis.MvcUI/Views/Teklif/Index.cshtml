@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="content-header">
+    <h1>
+        Teklifler/
+        <small>Alınan Teklifler</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> </a></li>
+
+    </ol>
+</section>
+<br />
+
+
+
+
+
+<div class="box box-default">
+
+
+    <div class="box box-default">
+
+
+
+        <div class="row" style="margin-right: 0px; margin-left:0px;"><div class="col-sm-12"></div><div class="col-sm-12"></div></div><div class="row" style="margin-right: 0px; margin-left:0px;">
+
+
+            <div id="PanelTeklifListe" class="col-sm-12">
+
+                @{
+                    Html.RenderAction("AlinanTeklifListesi");
+
+
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<div id="TeklifModal" class="modal">
+    <div class="modal-dialog-scrollable" style="max-width: 520px; margin: 1.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Teklif Ekle/Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('TeklifModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="TeklifModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div id="TeklifSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Teklifi Kaldır</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('TeklifSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="TeklifSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="IslemModal" class="modal">
+    <div class="modal-dialog-scrollable modal-xl" style="margin: 0.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Yapılan İşlemler</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('IslemModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="IslemModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+<div id="IslemModalTeklif" class="modal">
+    <div class="modal-dialog-scrollable modal-xl" style="margin: 0.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Teklif İçeriği</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('IslemModalTeklif')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="IslemModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

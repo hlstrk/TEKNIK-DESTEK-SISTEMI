@@ -1,0 +1,103 @@
+﻿@model TeknikServis.Entittes.Models.Not
+
+@{
+    ViewBag.Title = "YapilacakEkleModal";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+
+
+<div class="box box-danger">
+    @using (Html.BeginForm("YapilacakEkleKarti", "Anasayfa", FormMethod.Post, new { id = "FrmYapilacakEkleKarti" }))
+    {
+        @Html.HiddenFor(x => x.NotID)
+
+            @Html.HiddenFor(x => x.KullaniciAdi)
+
+        @Html.HiddenFor(m => m.YapilacakMi, new { @Value = true })
+        @Html.HiddenFor(m => m.YapildiMi, new { @Value = false })
+
+
+
+
+
+        <div class="row">
+
+            <div class="form-group col-md-12">
+
+                <div class="col-md-12" style="margin-top: 1px;">
+
+
+                    <br />
+                    <div class="col-md-12" style="margin-top: 1px;">
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text"><i class="fa fa-sticky-note"></i></span>
+
+                            </div>
+                            @Html.TextAreaFor(x => x.NotIcerigi, new { @class = "form-control", maxlength = "150", @placeholder = "Notunuzu buraya bırakabilirsiniz...", @id = "NotDB3" })
+
+                            <script>
+                                $(function () {
+                                    $('#NotDB3').keyup(function (e) {
+                                        var max = 150;
+                                        var len = $(this).val().length;
+                                        var char = max - len;
+                                        $('#text-counter-td').html(char);
+                                        if (char < 21) {
+                                            $('#text-counter').css({ 'color': 'red' });
+                                        }
+                                        else
+                                        {
+                                            $('#text-counter').css({ 'color': 'black' });
+                                        }
+                                    });
+                                });
+                            </script>
+
+                        </div>
+                        <div id="text-counter-parent" class="col-md-offset-2 col-md-10"><span id="text-counter-td">150</span> karakter kaldı.</div>
+                        <br />  
+                    </div>
+            
+                    @if (Session["Role"].ToString() != "FirmaPersonel")
+                    {
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Yapılacak Türü</label>
+                                <br />
+                                @Html.RadioButtonFor(x => x.DuyuruMu, false, new { @onclick = "" }) @Html.Label("Kişisel")
+                                &nbsp; &nbsp;&nbsp; &nbsp;
+                                @Html.RadioButtonFor(x => x.DuyuruMu, true, new { @onclick = "" }) @Html.Label("Duyuru")
+
+
+
+
+
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="modal-footer">
+            <div class="col-md-12">
+                <a onclick="GorevKaydetDB()" class="btn btn-m btn-success btn-m pull-right">+</a>
+
+            </div>
+        </div>
+    }
+</div>
+

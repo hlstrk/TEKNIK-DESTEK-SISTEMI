@@ -1,0 +1,76 @@
+﻿
+@model TeknikServis.Entittes.Models.EnvanterTurleri
+
+@{
+    ViewBag.Title = "EnvanterKategoriEkleKarti";
+    Layout = null;
+}
+@*<div role="alert" id="DivSonuc" style="display:none;">
+        <a class="close" onclick="MesajKapat()"><span aria-hidden="true">&times;</span><span class="sr-only">Kapat</span></a>
+        <strong></strong>
+        <p></p>
+    </div>*@
+
+<div class="modal-header">
+    <h5 class="modal-title" style="color:lightslategrey">Envanter Kategorisi Ekle</h5>  <h5 class="modal-title">  &nbsp;  </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('ETurEkleModal')">
+        <span aria-hidden="true">&times;</span>
+
+
+    </button>
+</div>
+
+<div class="box box-danger">
+    @using (Html.BeginForm("EnvanterKategoriEkleKarti", "Kategori", FormMethod.Post, new { id = "FrmEnvanterKategoriEkleKarti" }))
+    {
+
+
+
+        @Html.HiddenFor(x => x.EnvanterTurID)
+
+        <div class="row">
+
+            <div style="padding-top:1rem !important;padding-left:1.5rem;" class="col-md-6">
+                <div class="form-group">
+                    <label>Eklenecek Ürün Kategorisi</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-list-alt"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.EnvanterTuru, new { @class = "form-control" })
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+        <br />
+        <div class="modal-footer">
+            <div class="col-md-4" style="margin:0">
+                @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+                <button style="margin:0" type="button" onclick="EnvanterKategoriKaydet()" class="btn btn-block btn-outline-primary">Kaydet</button>
+
+            </div>
+            <div class="col-md-3" style="margin:0">
+                @*<button type="submit" onclick="return MusteriKaydet()" class="btn btn-block btn-primary">Kaydet</button>*@
+                <button type="button" onclick="FormKapat('ETurEkleModal')" data-dismiss="modal" class="btn btn-block btn-outline-danger">Vazgeç</button>
+
+            </div>
+        </div>
+    }
+</div>
+

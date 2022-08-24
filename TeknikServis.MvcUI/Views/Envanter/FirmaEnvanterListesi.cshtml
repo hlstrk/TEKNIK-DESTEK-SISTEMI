@@ -1,0 +1,240 @@
+﻿
+
+@model List<TeknikServis.Entittes.Models.EnvanterView>
+
+@{
+    ViewBag.Title = "EnvanterListesi";
+    Layout = null;
+
+}
+
+
+<!-- /.row -->
+
+
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-8" style="margin:auto; padding-top:30px">
+
+
+
+                <div class="card">
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        &nbsp;
+                        &nbsp;
+                        <a style="margin-bottom:20px;" onclick="FormGoster('../Envanter/EnvanterKarti/?FirmaEnvanterimi=true','EnvanterEkleModal')" class="btn btn-m btn-success btn-m pull-right">Envanter Ekle</a>
+                        &nbsp;
+                        <br />
+
+
+
+                        @if (Model.Count == 0)
+                        {
+
+                            
+                           
+                                <br />
+                                <div class="callout callout-warning lead">
+                                    <h4>Uyarı!</h4>
+                                    <p>Henüz hiçbir envanter kaydı yok.</p>
+                                </div>
+
+                            
+
+                        }
+
+                        else
+                        {
+                            <table data-order='[[ 0, "desc" ]]' id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr style="text-align: center">
+                                        <th style="text-align: center">
+                                            Envanter No
+                                        </th>
+                                        <th style="text-align: center">
+                                            Kullanıcı
+                                        </th>
+
+                                        <th style="text-align: center">
+                                            Firma
+                                        </th>
+
+                                       
+
+                                        <th style="text-align: center">
+                                            Kategori
+                                        </th>
+
+                                        <th style="text-align: center">
+                                            Açıklama
+                                        </th>
+
+
+                                        <th style="text-align: center">
+                                            Türü
+                                        </th>
+
+
+
+
+                                        <th style="text-align: center">
+                                            Ekleyen
+                                        </th>
+
+
+                                        <th style="text-align: center">
+
+                                        </th>
+
+
+
+
+
+
+
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model.OrderByDescending(file => file.EnvanterID).ToList())
+
+                                    {
+
+
+                                        <tr style="text-align: center;cursor:pointer;" ondblclick="FormGoster('../Envanter/EnvanterKarti/?EnvanterID=@item.EnvanterID','EnvanterModal')">
+
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EnvanterID)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AitOlanKullaniciAdi)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AitOlduguFirmaAdi)
+                                            </td>
+                                            
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EnvanterTuru)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Aciklama)
+                                            </td>
+                                            <td>
+                                                @if (item.DonanimMi = true)
+                                                {
+                                                    <div style="text-align: center;" class="badge bg-secondary">
+                                                        <label style="color: white; text-align: center;padding-top:4px">Donanım</label>
+                                                    </div>
+                                                }
+
+                                                else
+                                                {
+                                                    <div style="text-align: center;" class="badge bg-info">
+                                                        <label style="color: white; text-align: center;padding-top:4px">Donanım</label>
+                                                    </div>
+                                                }
+
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.OlusturanKullaniciAdi)
+                                            </td>
+
+
+
+                                            <td>
+                                                <button class="btn btn-danger btn-rounded btn-sm" onclick="FormGoster('../Envanter/EnvanterSilKart/?EnvanterID=@item.EnvanterID','EnvanterSilModal')"
+                                                        data-toggle="tooltip" data-placement="bottom" title="Sil">
+                                                    <span class="fa fa-trash"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+
+                                    }
+
+
+
+                                </tbody>
+
+
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<div id="EnvanterEkleModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Envanter Ekle/Düzenle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="FormKapat('EnvanterEkleModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="EnvanterEkleModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+<div id="EnvanterSilModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Envanter Kaydını Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat" onclick="FormKapat('EnvanterSilModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div id="EnvanterkSilModalBody" class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+
+
+
+
+

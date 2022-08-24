@@ -1,0 +1,374 @@
+﻿@model List<TeknikServis.Entittes.Models.Teknik>
+
+@{
+    Layout = null;
+    ViewBag.Title = "AlinanTeklifler";
+}
+
+
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+
+                <div class="card">
+
+
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        @if (Model.Count == 0)
+                        {
+
+                            if (Session["Role"].ToString() == "Personel")
+                            {
+                                <br />
+                                <div class="callout callout-info lead">
+                                    <h4>Uyarı!</h4>
+                                    <p>Şu anda size atanan hiçbir teknik servis/arıza kaydı bulunmamaktadır.</p>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <br />
+                                <div class="callout callout-info lead">
+                                    <h4>Uyarı!</h4>
+                                    <p>Henüz hiçbir destek talebi oluşturmadınız.</p>
+                                </div>
+
+                            }
+
+
+
+
+
+                            <hr />
+
+                           
+
+                        }
+
+                        else if (Model.Count != 0)
+                        {
+
+                          <br/>
+                            <table id="example1" class="table table-bordered table-striped">
+
+                                <thead>
+
+
+
+                                    <tr style="text-align: center">
+                                        <th style="text-align: center">
+                                            Barkod No
+                                        </th>
+                                        <th style="text-align: center">
+                                            Arıza  Türü
+                                        </th>
+
+                                        <th style="text-align: center">
+                                            Firma/Şahıs
+                                        </th>
+                                        <th style="text-align: center">
+                                            Oluşturan Kullanıcı
+                                        </th>
+
+                                        <th style="text-align: center">
+                                            Son İşlem Tarihi
+                                        </th>
+                                        <th style="text-align: center">
+                                            İlk Kayıt Tarihi
+                                        </th>
+                                        <th style="text-align: center">
+                                            İlgilenen Personel
+                                        </th>
+                                        <th style="text-align: center">
+                                            Ödenecek Tutar
+                                        </th>
+                                        <th style="text-align: center">
+                                            Durumu
+                                        </th>
+                                        <th style="text-align: center">
+                                            İşlemler
+                                        </th>
+
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.OrderByDescending(file => file.TeknikServisID).ToList())
+
+                                    {
+
+
+                                        <tr style="text-align: center" ondblclick="FormGoster('../Teknik/TeknikKarti/?TeknikServisID=@item.TeknikServisID','TeknikModal')">
+
+
+                                            <td>
+                                                <a href="#" onclick="FormGoster('../Teknik/TeknikKarti/?TeknikServisID=@item.TeknikServisID','TeknikModal')"> @Html.DisplayFor(modelItem => item.TeknikServisID)</a>
+
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ArizaTuru)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AitOlduguFirma)
+                                            </td>
+                                            <td>
+                                                @if (item.OlusturanKullanici == (Session["KullaniciAdi"].ToString()))
+                                                {
+
+
+                                                    <span class="badge badge-dark">Siz</span>
+
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.OlusturanKullanici)
+                                                }
+
+                                            </td>
+
+                                            @{
+                                                var DurumClass = "";
+                                                if (item.Durumu == "Onay Bekliyor" || item.Durumu == "Hazırlanıyor")
+                                                {
+                                                    DurumClass = "badge bg-warning";
+                                                }
+                                                else if (item.Durumu == "Reddedildi")
+                                                {
+                                                    DurumClass = " badge bg-danger";
+                                                }
+                                                else if (item.Durumu == "Kargoda")
+                                                {
+                                                    DurumClass = "badge bg-success";
+                                                }
+                                                else if (item.Durumu == "İşlemde")
+                                                {
+                                                    DurumClass = "badge bg-info";
+                                                }
+                                                else if (item.Durumu == "Tamamlandı")
+                                                {
+                                                    DurumClass = "badge bg-success";
+
+                                                }
+
+
+                                            }
+
+
+
+
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SonIslemZamani)
+
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.KayitZamani)
+
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AtanmisPersonel)
+
+                                            </td>
+                                            <td>
+                                                @if (item.Garanti == true)
+                                                {
+                                                    <div class="label label-success">
+
+                                                        <label>   Garantili   </label>
+
+                                                    </div>
+                                                }
+                                                else if (item.Anlasmali == true)
+                                                {
+                                                    <div class="label label-success">
+                                                        <label>   Anlaşmalı   </label>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.Fiyat) <label>₺</label>
+                                                }
+
+
+
+
+                                            </td>
+                                            <td style="text-align: center">
+                                                <div class="@DurumClass">
+                                                    @Html.DisplayFor(modelItem => item.Durumu, new { @class = "@DurumClass" })
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <span class="pull-right-container">
+
+                                                    <button class="btn btn-primary btn-rounded btn-sm" onclick="FormGoster('../Teknik/TeknikKarti/?TeknikServisID=@item.TeknikServisID','TeknikModal')"
+                                                            data-toggle="tooltip" data-placement="bottom" title="Detay">
+                                                        <span class="fa fa-search"></span>
+                                                    </button>
+
+                                                    <button class="btn btn-warning btn-rounded btn-sm" onclick="FormGoster('../Teknik/TeknikKarti/?TeknikServisID=@item.TeknikServisID','TeknikModal')"
+                                                            data-toggle="tooltip" data-placement="bottom" title="Düzenle">
+                                                        <span class="fa fa-edit"></span>
+                                                    </button>
+
+
+
+                                                    <button class="btn btn-danger btn-rounded btn-sm" onclick="FormGoster('../Teknik/TeknikSil/?TeknikServisID=@item.TeknikServisID','TeknikSilModal')"
+                                                            data-toggle="tooltip" data-placement="bottom" title="Sil">
+                                                        <span class="fa fa-trash"></span>
+                                                    </button>
+
+
+
+                                                </span>
+                                                @*@Url.Action("Düzenle", "Edit",null, new { /* id=item.PrimaryKey */ @class= "fa fa-edit" }) |
+                                                    @Html.ActionLink("Detay", "Details", new { /* id=item.PrimaryKey */ }) |
+                                                    @Html.ActionLink("Sil", "Delete", new { /* id=item.PrimaryKey */ })*@
+                                            </td>
+
+
+
+
+
+
+                                        </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        <br />
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+
+
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->
+
+
+
+
+
+
+
+
+<script>
+
+                            $(function () {
+                                //alert('merhaba');
+
+                                //$.get("/Anasayfa/KategoriYukle", function (data)
+                                //{
+                                //    console.log(data);
+                                //    $("#liste").html(data);
+                                //});
+
+                                $("#btnListele").click(function () {
+                                    $("#btnListele").attr("disabled", "disabled");
+                                    $("#loading").show(300);
+                                    $.get("/Anasayfa/KategoriYukle", function (data) {
+                                        console.log(data);
+                                        $("#liste").html(data);
+
+                                        $("#loading").hide(300);
+                                        $("#btnListele").removeAttr("disabled");
+                                    });
+                                });
+
+
+
+
+                                $("#btnKaydet").click(function () {
+                                    $("#btnKaydet").attr("disabled", "disabled");
+                                    $("#loading").show(300);
+
+                                    var kategoriAdi = $("#txtKategori").val();
+
+                                    $.get("/Anasayfa/KategoriKaydet", { kadi: kategoriAdi }, function (data) {
+                                        console.log(data);
+                                        $("#liste").html(data);
+
+                                        $("#loading").hide(300);
+                                        $("#btnKaydet").removeAttr("disabled");
+                                    });
+                                });
+
+
+                            });
+
+                            function Kaydet() {
+
+                                var adi = $("#txtKategori").val();
+                                var id = $("#txtId").val();
+
+                                $.ajax({
+                                    url: "/Anasayfa/KategoriKaydet2",
+                                    method: 'POST',
+                                    data: { kadi: adi, kid: id },
+                                    beforeSend: function () { $("#loading").show(300); }
+                                })
+                                    .done(function (d) {
+                                        console.log(d);
+                                        $("#liste").html(d);
+                                    })
+                                    .fail(function () {
+                                        console.log("Hata oluştu.");
+                                        alert("Hata oluştu.");
+                                    })
+                                    .always(function () {
+                                        $("#loading").hide(300);
+
+                                    });
+                            }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+

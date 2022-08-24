@@ -1,0 +1,178 @@
+﻿
+@model List<TeknikServis.Entittes.Models.StokView>
+
+@{
+    Layout = null;
+    ViewBag.Title = "StokListesiKart";
+}
+<!-- /.row -->
+
+
+
+
+
+
+
+<div class="card-body" style="padding:0.50rem">
+    
+
+
+
+    @if (Model.Count == 0)
+    {
+
+        if (Session["Role"].ToString() == "Personel")
+        {
+            <br />
+            <div class="callout callout-info lead">
+                <h4>Uyarı!</h4>
+                <p>Şu anda size atanan hiçbir teknik servis/arıza kaydı bulunmamaktadır.</p>
+            </div>
+
+        }
+        else
+        {
+            <br />
+            <div class="callout callout-warning lead">
+                <h4>Uyarı!</h4>
+                <p>Henüz hiçbir stok kaydı yok.</p>
+            </div>
+
+        }
+
+
+
+
+
+
+
+    }
+
+    else
+    {
+        <table data-order='[[ 0, "desc" ]]' id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr style="text-align: center">
+                 
+
+                    <th style="text-align: center">
+                        Barkod No
+                    </th>
+
+
+                  
+                    <th style="text-align: center">
+                        Kategorisi
+                    </th>
+
+                    <th style="text-align: center">
+                        Türü
+                    </th>
+
+                    <th style="text-align: center">
+                        Marka
+                    </th>
+
+                    <th style="text-align: center">
+                        Açıklama
+                    </th>
+
+
+                    <th style="text-align: center">
+
+                    </th>
+
+
+
+                 
+
+                    <th style="text-align: center">
+
+                    </th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model.OrderByDescending(modelItem => modelItem.StokID).ToList())
+
+                {
+
+
+                    <tr style="text-align: center;cursor:pointer;" ondblclick="FormGoster('../../Stok/StokKarti/?StokID=@item.StokID','StokEkleModal')">
+
+
+                      
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BarkodNo)
+                        </td>
+
+                        
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Kategorisi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Turu)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Markasi)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Aciklama)
+                        </td>
+                        <td>
+                            @if (item.DonanimMi == true)
+                            {
+                                <div style="text-align: center;" class="badge bg-secondary">
+                                    <label style="color: white; text-align: center;padding-top:4px">Donanım</label>
+                                </div>
+                            }
+
+
+
+
+                            else
+                            {
+                                <div style="text-align: center;" class="badge bg-info">
+                                    <label style="color: white; text-align: center;padding-top:4px">Donanım</label>
+                                </div>
+                            }
+
+                        </td>
+
+                       
+
+
+
+                        <td>
+
+                            <a style="margin-bottom:20px;" onclick="FormGoster('../../Stok/StokKarti/?StokID=0','StokEkleModal')" class="btn btn-m btn-success fa fa-plus btn-m pull-right"></a>
+
+
+
+                        </td>
+                    </tr>
+
+
+                }
+
+
+
+            </tbody>
+
+
+        </table>
+    }
+</div>
+
+
+
+
+
+
+<!-- /.box-footer -->
+<!-- /.box -->
+<!-- /.col -->

@@ -1,0 +1,95 @@
+﻿
+@model TeknikServis.Entittes.Models.Not
+@{
+    ViewBag.Title = "NotEkle";
+    Layout = null;
+}
+
+
+
+
+
+
+
+@using (Html.BeginForm("NotEkle", "Anasayfa", FormMethod.Post, new { id = "FrmDuyuruEkleKartiDB" }))
+{
+    @Html.HiddenFor(x => x.NotID)
+    @Html.Hidden("MTXDuyurusuMu",true)
+    <div class="row">
+
+        <div class="form-group col-md-12">
+
+            <div class="col-md-12" style="margin-top: 1px;">
+
+
+                <br />
+
+                <div class="col-md-8" style="margin-top: 1px;">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-heading"></i></span>
+
+                        </div>
+                        @Html.TextBoxFor(x => x.duyurubasligi, new { @class = "form-control", @placeholder = "Duyuru Başlığını Ne Olsun?", @id = "DuyuruB" })
+
+                    </div>
+                </div>
+                <div class="col-md-12" style="margin-top: 1px;">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text"><i class="fa fa-bullhorn"></i></span>
+
+                        </div>
+                        @Html.TextAreaFor(x => x.NotIcerigi, new { @class = "form-control", @placeholder = "Duyuru İçeriği Nedir?", @id = "DuyuruI" })
+
+                    </div>
+                </div>
+
+
+              
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Önem Derecesi</label>
+                        <div class="form-group clearfix">
+                            <div class="icheck-success d-inline">
+                                @Html.RadioButtonFor(x => x.onemderecesi, "dusuk", new { id = "radioPrimary1", namse = "r1", @class = "icheck-success d-checked" })
+                                <label for="radioPrimary1">
+                                </label>
+                            </div>
+                            <div class="icheck-warning d-inline">
+                                @Html.RadioButtonFor(x => x.onemderecesi, "orta", new { id = "radioPrimary2", namse = "r1", @class = "icheck-warning d-inline" })
+                                <label for="radioPrimary2">
+                                </label>
+                            </div>
+                            <div class="icheck-danger d-inline">
+                                @Html.RadioButtonFor(x => x.onemderecesi, "yuksek", new { id = "radioPrimary3", namse = "r1", @class = "icheck-danger d-inline " })
+                                <label for="radioPrimary3">
+                                </label>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+
+
+
+
+                <a onclick="DuyuruKaydet()" class="btn btn-m btn-success btn-m pull-right">+</a>
+
+            </div>
+            </div>
+    </div>
+
+
+
+}
